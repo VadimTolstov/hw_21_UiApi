@@ -8,8 +8,13 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import models.CreateTestCaseBody;
 import models.CreateTestCaseResponse;
+import models.StepBodyModel;
+import models.StepTestCaseResponse;
+import models.data.ApiData;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
@@ -28,7 +33,8 @@ public class CreateTestcaseTests {
 
     static String login = "allure8",
             password = "allure8",
-            projectId = "2237";
+            projectId = "2237",
+            leafId = "18046";
 
     @BeforeAll
     static void setUp() {
@@ -104,45 +110,7 @@ public class CreateTestcaseTests {
                     .statusCode(200)
                     .body("statusName", is("Draft"))
                     .body("name", is(testCaseName));
-        /*
 
-  -H 'Cookie: XSRF-TOKEN=9b5cd8b4-8b79-4f0b-9444-2360d68184e4; ALLURE_TESTOPS_SESSION=20af13f6-96b3-4cd3-8d35-b5cfe01c442c' \
-  -H 'Origin: https://allure.autotests.cloud' \
-            -H 'Sec-Fetch-Dest: empty' \
-            -H 'Sec-Fetch-Mode: cors' \
-            -H 'Sec-Fetch-Site: same-origin' \
-            -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
-            -H 'X-XSRF-TOKEN: 9b5cd8b4-8b79-4f0b-9444-2360d68184e4' \
-            -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
-            -H 'sec-ch-ua-mobile: ?0' \
-            -H 'sec-ch-ua-platform: "macOS"' \
-            --data-raw '{"name":"test test 3"}' \
-            --compressed
-         */
-
-//           curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf?projectId=2237&treeId=&' \
-//            -H 'Accept: application/json, text/plain, */*' \
-//            -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
-//            -H 'Cache-Control: no-cache' \
-//            -H 'Connection: keep-alive' \
-//            -H 'Content-Type: application/json;charset=UTF-8' \
-//            -H 'Cookie: XSRF-TOKEN=d524ce6f-b1e7-4980-a362-af0780af3337; ALLURE_TESTOPS_SESSION=750321c7-a8f1-4645-97fd-e1404be964d5' \
-//            -H 'Origin: https://allure.autotests.cloud' \
-//            -H 'Pragma: no-cache' \
-//            -H 'Sec-Fetch-Dest: empty' \
-//            -H 'Sec-Fetch-Mode: cors' \
-//            -H 'Sec-Fetch-Site: same-origin' \
-//            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
-//            -H 'X-XSRF-TOKEN: d524ce6f-b1e7-4980-a362-af0780af3337' \
-//            -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
-//            -H 'sec-ch-ua-mobile: ?0' \
-//            -H 'sec-ch-ua-platform: "Windows"' \
-//            --data-raw '{"name":"121"}' \
-//            --compressed
-
-
-//            $("[data-testid=input__create_test_case]").setValue(testCaseName)
-//                    .pressEnter();
         });
 
         step("Verify testcase name", () -> {
@@ -249,7 +217,11 @@ public class CreateTestcaseTests {
         });
     }
 
+    String xxsrfToken = "b59ca870-aba5-4074-9c07-3873cb9bcae6";
+    String allureToken = "75059ba1-8928-4d4b-b0a7-7df4e01fc33f";
+
     @Test
+    @DisplayName("Создание тест кейса")
     void createWitApiUIExtendedTest() {
         Faker faker = new Faker();
         String testCaseName = faker.name().fullName();
@@ -261,9 +233,9 @@ public class CreateTestcaseTests {
         CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
                 given()
                         .log().all()
-                        .header("X-XSRF-TOKEN", "01391561-7eea-4e9b-9c11-4f333247b0f3")
-                        .cookies("XSRF-TOKEN", "01391561-7eea-4e9b-9c11-4f333247b0f3",
-                                "ALLURE_TESTOPS_SESSION", "3b6566d3-d1e7-4ea9-8199-ab65ce763a1d")
+                        .header("X-XSRF-TOKEN", xxsrfToken)
+                        .cookies("XSRF-TOKEN", xxsrfToken,
+                                "ALLURE_TESTOPS_SESSION", allureToken)
                         .contentType("application/json;charset=UTF-8")
                         .body(testCaseBody)
                         .queryParam("projectId", projectId)
@@ -281,7 +253,7 @@ public class CreateTestcaseTests {
         step("Verify testcase name", () -> {
             open("/favicon.ico");
 
-            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", "3b6566d3-d1e7-4ea9-8199-ab65ce763a1d");
+            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", allureToken);
             getWebDriver().manage().addCookie(authoriztionCookie);
 
             Integer testCesaId = createTestCaseResponse.getId();
@@ -293,13 +265,110 @@ public class CreateTestcaseTests {
     }
 
     @Test
+    @DisplayName("Изменение имяни тест кейса")
+    void redactirovanieTest() {
+        Faker faker = new Faker();
+        String testCaseName = faker.name().fullName();
+
+        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
+        testCaseBody.setName(testCaseName);
+
+        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
+                given()
+                        .log().all()
+                        .header("X-XSRF-TOKEN", xxsrfToken)
+                        .cookies("XSRF-TOKEN", xxsrfToken,
+                                "ALLURE_TESTOPS_SESSION", allureToken)
+                        .contentType("application/json;charset=UTF-8")
+                        .body(testCaseBody)
+                        .queryParam("projectId", projectId)
+                        .queryParam("leafId", leafId)
+                        .when()
+                        .post("/api/rs/testcasetree/leaf/rename")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .log().all()
+                        .statusCode(200)
+                        .body("statusName", is("Draft"))
+                        .body("name", is(testCaseName))
+                        .extract().as(CreateTestCaseResponse.class));
+
+        step("Verify testcase name", () -> {
+            open("/favicon.ico");
+
+//            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", allureToken);
+            getWebDriver().manage().addCookie(new Cookie("ALLURE_TESTOPS_SESSION", allureToken));
+
+            Integer testCesaId = createTestCaseResponse.getId();
+            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
+            open(testCaseUrl);
+            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
+        });
+    }
+
+    @Test
+    @DisplayName("Добавление, редактирование и удаление шагов тест кейса")
+    void shagiTest() {
+
+
+        StepBodyModel stepBodyModel = new StepBodyModel();
+
+
+        StepTestCaseResponse stepTestCaseResponse = step("Create testcase", () ->
+                given()
+                        .log().all()
+                        .header("X-XSRF-TOKEN", xxsrfToken)
+                        .cookies("XSRF-TOKEN", xxsrfToken,
+                                "ALLURE_TESTOPS_SESSION", allureToken)
+                        .contentType("application/json;charset=UTF-8")
+                        .body(stepBodyModel)
+//                        .queryParam("projectId", projectId)
+//                        .queryParam("leafId", leafId)
+                        .when()
+                        .post("/api/rs/testcase/18460/scenario")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .log().all()
+                        .statusCode(200)
+//                        .body("statusName", is("Draft"))
+//                        .body("name", is(testCaseName))
+                        .extract().as(StepTestCaseResponse.class));
+
+        step("Verify testcase name", () -> {
+  //          open("/favicon.ico");
+
+//            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", allureToken);
+//            getWebDriver().manage().addCookie(new Cookie("ALLURE_TESTOPS_SESSION", allureToken));
+
+//            Integer testCesaId = stepTestCaseResponse.();
+//            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
+//            open(testCaseUrl);
+////            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
+        });
+    }
+
+//    curl 'https://allure.autotests.cloud/api/rs/testcase/18025/scenario' \
+//            -H 'Accept: application/json, text/plain, */*' \
+//            -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
+//            -H 'Connection: keep-alive' \
+//            -H 'Content-Type: application/json;charset=UTF-8' \
+//            -H 'Cookie: XSRF-TOKEN=1a864e3a-59c3-41f5-9b32-2e26fd7fdba4; ALLURE_TESTOPS_SESSION=03a4c0d0-99c0-4fc8-8b18-e8344d8c5548' \
+//            -H 'Origin: https://allure.autotests.cloud' \
+//            -H 'Sec-Fetch-Dest: empty' \
+//            -H 'Sec-Fetch-Mode: cors' \
+//            -H 'Sec-Fetch-Site: same-origin' \
+//            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
+//            -H 'X-XSRF-TOKEN: 1a864e3a-59c3-41f5-9b32-2e26fd7fdba4' \
+//            -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
+//            -H 'sec-ch-ua-mobile: ?0' \
+//            -H 'sec-ch-ua-platform: "Windows"' \
+//            --data-raw '{"steps":[{"name":"12231","spacing":""},{"name":"123","spacing":""}],"workPath":[1]}' \
+//            --compressed
+    @Test
+    @Disabled
     void createWitApiUIExtendedTest33() {
-//        Faker faker = new Faker();
-//        String testCaseName = faker.name().fullName();
-//
-//
-//        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-//        testCaseBody.setName(testCaseName);
 
         Selenide.open("https://allure.autotests.cloud/login");
         String xsrfTofen = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
@@ -319,63 +388,11 @@ public class CreateTestcaseTests {
         Cookie cookie = new Cookie("ALLURE_TESTOPS_SESSION", sessionId, "allure.autotests.cloud", "/", expDate);
         WebDriverRunner.getWebDriver().manage().addCookie(cookie);
         Selenide.refresh();
-
-//    }
-//                .contentType("application/json;charset=UTF-8")
-//                .body(testCaseBody)
-//                .queryParam("projectId", projectId)
-//                .when()
-//                .post("/api/rs/testcasetree/leaf")
-//                .then()
-//                .log().status()
-//                .log().body()
-//                .log().all()
-//                .statusCode(200)
-//                .body("statusName", is("Draft"))
-//                .body("name", is(testCaseName))
-//                .extract().as(CreateTestCaseResponse.class));
-//
-//        step("Verify testcase name", () -> {
-//            open("/favicon.ico");
-//
-//            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", "3b6566d3-d1e7-4ea9-8199-ab65ce763a1d");
-//            getWebDriver().manage().addCookie(authoriztionCookie);
-//
-//            Integer testCesaId = createTestCaseResponse.getId();
-//            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
-//            open(testCaseUrl);
-//
-//            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
-//        });
     }
-//    curl 'https://allure.autotests.cloud/api/login/system' \
-//            -H 'Accept: application/json, text/plain, */*' \
-//            -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
-//            -H 'Cache-Control: no-cache' \
-//            -H 'Connection: keep-alive' \
-//            -H 'Content-Type: application/x-www-form-urlencoded' \
-//            -H 'Cookie: REDIRECT_URI=L3Byb2plY3QvMjIzNy90ZXN0LWNhc2VzLzE3ODg0P3NlYXJjaD1XM3NpYVdRaU9pSnpkR0YwZFhNaUxDSjBlWEJsSWpvaWJHOXVaMEZ5Y21GNUlpd2lkbUZzZFdVaU9sc2lMVEVpWFgxZCZ0cmVlSWQ9MA==; XSRF-TOKEN=01391561-7eea-4e9b-9c11-4f333247b0f3' \
-//            -H 'Origin: https://allure.autotests.cloud' \
-//            -H 'Pragma: no-cache' \
-//            -H 'Sec-Fetch-Dest: empty' \
-//            -H 'Sec-Fetch-Mode: cors' \
-//            -H 'Sec-Fetch-Site: same-origin' \
-//            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
-//            -H 'X-XSRF-TOKEN: 01391561-7eea-4e9b-9c11-4f333247b0f3' \
-//            -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
-//            -H 'sec-ch-ua-mobile: ?0' \
-//            -H 'sec-ch-ua-platform: "Windows"' \
-//            --data-raw 'username=allure8&password=allure8' \
-//            --compressed
 
     @Test
+    @Disabled
     void createWitApiUIExtendedTest32() {
-//        Faker faker = new Faker();
-//        String testCaseName = faker.name().fullName();
-//
-//
-//        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-//        testCaseBody.setName(testCaseName);
 
         Selenide.open("https://allure.autotests.cloud/login");
         String xsrfTofen = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
@@ -394,13 +411,6 @@ public class CreateTestcaseTests {
                 .statusCode(200)
                 .extract()
                 .cookie("ALLURE_TESTOPS_SESSION");
-
-//                .contentType(ContentType.MULTIPART)
-//                .cookie("XSRF-TOKEN", xsrfTofen)
-//                .multiPart("username", "allure8")
-//                .multiPart("password", " allure8")
-//                .post("https://allure.autotests.cloud/api/login/system")
-//                .then().log().all().extract().cookie("ALLURE_TESTOPS_SESSION");
 
         Date expDate = new Date();
         expDate.setTime(expDate.getTime() + (10000 * 10000));
