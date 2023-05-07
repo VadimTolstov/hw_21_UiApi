@@ -35,6 +35,8 @@ public class CreateTestcaseTests {
             password = "allure8",
             projectId = "2237",
             leafId = "18046";
+    String xxsrfToken = "8806e9d1-c1ef-4acf-860e-c9078087d0f1";
+    String allureToken = "ed2bbde7-fa05-44c2-8b17-7c91d8e2cfcb";
 
     @BeforeAll
     static void setUp() {
@@ -44,181 +46,6 @@ public class CreateTestcaseTests {
 
         RestAssured.baseURI = "https://allure.autotests.cloud";
     }
-
-    @Test
-    void createWitUIOnlyTest() {
-        Faker faker = new Faker();
-        String testCaseName = faker.name().fullName();
-
-        step("Authorize", () -> {
-            open("/");
-            $(byName("username")).setValue(login);
-            $(byName("password")).setValue(password);
-            $("button[type='submit']").click();
-            $(byName("username")).setValue(login);
-            $(byName("password")).setValue(password);
-            $("button[type='submit']").click();
-
-        });
-        step("Go to project", () -> {
-            open("/project/2237/test-cases");
-            open("/project/2237/test-cases");
-        });
-
-        step("Create testcase", () -> {
-            $("[data-testid=input__create_test_case]").setValue(testCaseName)
-                    .pressEnter();
-        });
-
-        step("Verify testcase name", () -> {
-            $(".LoadableTree__view").shouldHave(text(testCaseName));
-        });
-    }
-
-    @Test
-    void createWitApiOnlyTest() {
-        Faker faker = new Faker();
-        String testCaseName = faker.name().fullName();
-
-//        step("Authorize", () -> {
-//            open("/");
-//            $(byName("username")).setValue(login);
-//            $(byName("password")).setValue(password);
-//            $("button[type='submit']").click();
-//        });
-//        step("Go to project", () -> {
-//            open("/project/2220/test-cases");
-//        });
-
-        step("Create testcase", () -> {
-            CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-            testCaseBody.setName(testCaseName);
-
-            given()
-                    .log().all()
-                    .header("X-XSRF-TOKEN", "d524ce6f-b1e7-4980-a362-af0780af3337")
-                    .cookies("XSRF-TOKEN", "d524ce6f-b1e7-4980-a362-af0780af3337",
-                            "ALLURE_TESTOPS_SESSION", "750321c7-a8f1-4645-97fd-e1404be964d5")
-                    .contentType("application/json;charset=UTF-8")
-                    .body(testCaseBody)
-                    .queryParam("projectId", projectId)
-                    .when()
-                    .post("/api/rs/testcasetree/leaf")
-                    .then()
-                    .log().status()
-                    .log().all()
-                    .statusCode(200)
-                    .body("statusName", is("Draft"))
-                    .body("name", is(testCaseName));
-
-        });
-
-        step("Verify testcase name", () -> {
-//            $(".LoadableTree__view").shouldHave(text(testCaseName));
-        });
-    }
-
-    public String id;
-
-    @Test
-    void editingTestUsingApi() {
-        Faker faker = new Faker();
-        String testCaseName = faker.name().fullName();
-
-
-        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-        testCaseBody.setName(testCaseName);
-
-        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
-                given()
-                        .log().all()
-                        .header("X-XSRF-TOKEN", "9b5cd8b4-8b79-4f0b-9444-2360d68184e4")
-                        .cookies("XSRF-TOKEN", "9b5cd8b4-8b79-4f0b-9444-2360d68184e4",
-                                "ALLURE_TESTOPS_SESSION", "20af13f6-96b3-4cd3-8d35-b5cfe01c442c")
-                        .contentType("application/json;charset=UTF-8")
-                        .body(testCaseBody)
-                        .queryParam("projectId", projectId)
-                        .when()
-                        .post("/api/rs/testcasetree/leaf")
-                        .then()
-                        .log().status()
-                        .log().body()
-                        .log().all()
-                        .statusCode(200)
-                        .body("statusName", is("Draft"))
-                        .body("name", is(testCaseName))
-                        .extract().as(CreateTestCaseResponse.class));
-
-        step("Verify testcase name", () -> {
-            Assertions.assertThat(createTestCaseResponse.getName()).isEqualTo(testCaseName);
-//            $(".LoadableTree__view").shouldHave(text(testCaseName));
-        });
-//   curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf/rename?projectId=2237&&search=W3siaWQiOiJzdGF0dXMiLCJ0eXBlIjoibG9uZ0FycmF5IiwidmFsdWUiOlsiLTEiXX1d&leafId=17969' \
-//  -H 'Accept: application/json, text/plain, */*' \
-//  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
-//  -H 'Cache-Control: no-cache' \
-//  -H 'Connection: keep-alive' \
-//  -H 'Content-Type: application/json;charset=UTF-8' \
-//  -H 'Cookie: XSRF-TOKEN=d524ce6f-b1e7-4980-a362-af0780af3337; ALLURE_TESTOPS_SESSION=750321c7-a8f1-4645-97fd-e1404be964d5' \
-//  -H 'Origin: https://allure.autotests.cloud' \
-//  -H 'Pragma: no-cache' \
-//  -H 'Sec-Fetch-Dest: empty' \
-//  -H 'Sec-Fetch-Mode: cors' \
-//  -H 'Sec-Fetch-Site: same-origin' \
-//  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36' \
-//  -H 'X-XSRF-TOKEN: d524ce6f-b1e7-4980-a362-af0780af3337' \
-//  -H 'sec-ch-ua: "Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"' \
-//  -H 'sec-ch-ua-mobile: ?0' \
-//  -H 'sec-ch-ua-platform: "Windows"' \
-//  --data-raw '{"name":"Carroll"}' \
-//  --compressed
-    }
-
-    @Test
-    void editingTestUsingApi2() {
-        Faker faker = new Faker();
-        String testCaseName = faker.name().fullName();
-
-
-        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-        testCaseBody.setName(testCaseName);
-
-        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
-                given()
-                        .log().all()
-                        .header("X-XSRF-TOKEN", "01391561-7eea-4e9b-9c11-4f333247b0f3")
-                        .cookies("XSRF-TOKEN", "01391561-7eea-4e9b-9c11-4f333247b0f3",
-                                "ALLURE_TESTOPS_SESSION", "3b6566d3-d1e7-4ea9-8199-ab65ce763a1d")
-                        .contentType("application/json;charset=UTF-8")
-                        .body(testCaseBody)
-                        .queryParam("projectId", projectId)
-                        .when()
-                        .post("/api/rs/testcasetree/leaf")
-                        .then()
-                        .log().status()
-                        .log().body()
-                        .log().all()
-                        .statusCode(200)
-                        .body("statusName", is("Draft"))
-                        .body("name", is(testCaseName))
-                        .extract().as(CreateTestCaseResponse.class));
-
-        step("Verify testcase name", () -> {
-            open("/favicon.ico");
-
-            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", "3b6566d3-d1e7-4ea9-8199-ab65ce763a1d");
-            getWebDriver().manage().addCookie(authoriztionCookie);
-
-            Integer testCesaId = createTestCaseResponse.getId();
-            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
-            open(testCaseUrl);
-
-            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
-        });
-    }
-
-    String xxsrfToken = "b59ca870-aba5-4074-9c07-3873cb9bcae6";
-    String allureToken = "75059ba1-8928-4d4b-b0a7-7df4e01fc33f";
 
     @Test
     @DisplayName("Создание тест кейса")
@@ -266,7 +93,7 @@ public class CreateTestcaseTests {
 
     @Test
     @DisplayName("Изменение имяни тест кейса")
-    void redactirovanieTest() {
+    void editingTest() {
         Faker faker = new Faker();
         String testCaseName = faker.name().fullName();
 
@@ -308,12 +135,10 @@ public class CreateTestcaseTests {
     }
 
     @Test
-    @DisplayName("Добавление, редактирование и удаление шагов тест кейса")
-    void shagiTest() {
-
+    @DisplayName("Добавление шагов тест кейса")
+    void stepTest() {
 
         StepBodyModel stepBodyModel = new StepBodyModel();
-
 
         StepTestCaseResponse stepTestCaseResponse = step("Create testcase", () ->
                 given()
@@ -321,7 +146,7 @@ public class CreateTestcaseTests {
                         .header("X-XSRF-TOKEN", xxsrfToken)
                         .cookies("XSRF-TOKEN", xxsrfToken,
                                 "ALLURE_TESTOPS_SESSION", allureToken)
-                        .contentType("application/json;charset=UTF-8")
+                        .contentType(ContentType.JSON)
                         .body(stepBodyModel)
 //                        .queryParam("projectId", projectId)
 //                        .queryParam("leafId", leafId)
@@ -336,17 +161,6 @@ public class CreateTestcaseTests {
 //                        .body("name", is(testCaseName))
                         .extract().as(StepTestCaseResponse.class));
 
-        step("Verify testcase name", () -> {
-  //          open("/favicon.ico");
-
-//            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", allureToken);
-//            getWebDriver().manage().addCookie(new Cookie("ALLURE_TESTOPS_SESSION", allureToken));
-
-//            Integer testCesaId = stepTestCaseResponse.();
-//            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
-//            open(testCaseUrl);
-////            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
-        });
     }
 
 //    curl 'https://allure.autotests.cloud/api/rs/testcase/18025/scenario' \

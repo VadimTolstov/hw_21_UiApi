@@ -8,8 +8,7 @@ public class ApiData {
 
     private String testCaseName = faker.name().fullName(),
             stepTestCaseOne = faker.name().fullName(),
-            stepTestCaseTwo = faker.name().firstName(),
-            commentProject = "всё отлично";
+            stepTestCaseTwo = faker.name().firstName();
 
 
     public String getTestCaseName() {
@@ -24,7 +23,4 @@ public class ApiData {
         return stepTestCaseTwo;
     }
 
-    public String getCommentProject() {
-        return commentProject;
-    }
 }
