@@ -6,10 +6,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import models.CreateTestCaseBody;
-import models.CreateTestCaseResponse;
-import models.StepBodyModel;
-import models.StepTestCaseResponse;
+import models.*;
 import models.data.ApiData;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
 import java.util.Date;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byName;
@@ -35,8 +33,8 @@ public class CreateTestcaseTests {
             password = "allure8",
             projectId = "2237",
             leafId = "18046";
-    String xxsrfToken = "8806e9d1-c1ef-4acf-860e-c9078087d0f1";
-    String allureToken = "ed2bbde7-fa05-44c2-8b17-7c91d8e2cfcb";
+    String xxsrfToken = "4e40e83b-964e-4341-ae60-2db46874a588";
+    String allureToken = "cd3f11e6-05a1-4852-bb12-d078c0a89630";
 
     @BeforeAll
     static void setUp() {
@@ -135,35 +133,36 @@ public class CreateTestcaseTests {
     }
 
     @Test
-    @DisplayName("Добавление шагов тест кейса")
-    void stepTest() {
+    @DisplayName("Обновление шагов тест-кейса")
+    void updateTestCaseStepsTest() {
+        // В идеале тут создать тест-кейс, который будет исключительно для этого теста
 
-        StepBodyModel stepBodyModel = new StepBodyModel();
+        // Создаем тестовые данные - нашу модель с шагами теста
+        TestCaseScenarioDto scenarioDto = new TestCaseScenarioDto()
+                .addStep(new TestCaseScenarioDto.Step("Step 1", "st-1"))
+                .addStep(new TestCaseScenarioDto.Step("Step 2", "st-2"))
+                .addStep(new TestCaseScenarioDto.Step("Step 3", "st-3"));
 
-        StepTestCaseResponse stepTestCaseResponse = step("Create testcase", () ->
-                given()
-                        .log().all()
+
+        TestCaseScenarioDto response = step("Update testcase steps", () ->
+                given().log().all()
                         .header("X-XSRF-TOKEN", xxsrfToken)
                         .cookies("XSRF-TOKEN", xxsrfToken,
                                 "ALLURE_TESTOPS_SESSION", allureToken)
                         .contentType(ContentType.JSON)
-                        .body(stepBodyModel)
-//                        .queryParam("projectId", projectId)
-//                        .queryParam("leafId", leafId)
+                        .body(scenarioDto)
                         .when()
                         .post("/api/rs/testcase/18460/scenario")
                         .then()
-                        .log().status()
-                        .log().body()
                         .log().all()
                         .statusCode(200)
-//                        .body("statusName", is("Draft"))
-//                        .body("name", is(testCaseName))
-                        .extract().as(StepTestCaseResponse.class));
+                        .extract().as(TestCaseScenarioDto.class));
 
+        // Теперь в переменной response содержится ответ сервера. Можем с ним что-нибудь сделать
+        // Например, проверить, что кол-во созданных шагов = 3 (кол-ву, которое изначально добавили)
     }
 
-//    curl 'https://allure.autotests.cloud/api/rs/testcase/18025/scenario' \
+    //    curl 'https://allure.autotests.cloud/api/rs/testcase/18025/scenario' \
 //            -H 'Accept: application/json, text/plain, */*' \
 //            -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
 //            -H 'Connection: keep-alive' \
