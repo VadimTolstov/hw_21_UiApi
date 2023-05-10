@@ -202,6 +202,25 @@ public class CreateTestcaseTests {
         Selenide.refresh();
     }
 
+//    curl 'https://allure.autotests.cloud/api/login/system' \
+//            -H 'Accept: application/json, text/plain, */*' \
+//            -H 'Accept-Language: ru,en;q=0.9' \
+//            -H 'Cache-Control: no-cache' \
+//            -H 'Connection: keep-alive' \
+//            -H 'Content-Type: application/x-www-form-urlencoded' \
+//            -H 'Cookie: _cc_id=b1975b0072d5e90371807e01eb50f935; _ga_MVRXK93D28=GS1.1.1680503960.1.0.1680504022.0.0.0; _ga=GA1.1.930498322.1680503961; XSRF-TOKEN=4009dad4-7721-4ee4-9e76-edc2b82a9128; REDIRECT_URI=L3Byb2plY3QvMjIzNy90ZXN0LWNhc2VzLzE4NDYwP3RyZWVJZD0wP3RyZWVJZD0w' \
+//            -H 'Origin: https://allure.autotests.cloud' \
+//            -H 'Pragma: no-cache' \
+//            -H 'Sec-Fetch-Dest: empty' \
+//            -H 'Sec-Fetch-Mode: cors' \
+//            -H 'Sec-Fetch-Site: same-origin' \
+//            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 YaBrowser/23.3.3.719 Yowser/2.5 Safari/537.36' \
+//            -H 'X-XSRF-TOKEN: 4009dad4-7721-4ee4-9e76-edc2b82a9128' \
+//            -H 'sec-ch-ua: "Chromium";v="110", "Not A(Brand";v="24", "YaBrowser";v="23"' \
+//            -H 'sec-ch-ua-mobile: ?0' \
+//            -H 'sec-ch-ua-platform: "Windows"' \
+//            --data-raw 'username=allure8&password=allure8' \
+//            --compressed
     @Test
     void AuthorizationTest2() {
 
@@ -210,6 +229,7 @@ public class CreateTestcaseTests {
 
         String sessionId = given()
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .header("X-XSRF-TOKEN", xsrfTofen)
                 .cookie("XSRF-TOKEN", xsrfTofen)
                 .formParam("username", "allure8")
                 .formParam("password", "allure8")
