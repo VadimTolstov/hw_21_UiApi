@@ -33,8 +33,8 @@ public class CreateTestcaseTests {
             password = "allure8",
             projectId = "2237",
             leafId = "18046";
-    String xxsrfToken = "4e40e83b-964e-4341-ae60-2db46874a588";
-    String allureToken = "cd3f11e6-05a1-4852-bb12-d078c0a89630";
+    String xxsrfToken = "4009dad4-7721-4ee4-9e76-edc2b82a9128";
+    String allureToken = "08bf21d8-d1af-4b55-b2fb-111263d86b0a";
 
     @BeforeAll
     static void setUp() {
@@ -180,8 +180,7 @@ public class CreateTestcaseTests {
 //            --data-raw '{"steps":[{"name":"12231","spacing":""},{"name":"123","spacing":""}],"workPath":[1]}' \
 //            --compressed
     @Test
-    @Disabled
-    void createWitApiUIExtendedTest33() {
+    void Authorization1() {
 
         Selenide.open("https://allure.autotests.cloud/login");
         String xsrfTofen = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
@@ -204,16 +203,14 @@ public class CreateTestcaseTests {
     }
 
     @Test
-    @Disabled
-    void createWitApiUIExtendedTest32() {
+    void AuthorizationTest2() {
 
         Selenide.open("https://allure.autotests.cloud/login");
         String xsrfTofen = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
 
         String sessionId = given()
-                .cookie("XSRF-TOKEN", xsrfTofen)
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-//                .cookie("XSRF-TOKEN", xsrfTofen)
+                .cookie("XSRF-TOKEN", xsrfTofen)
                 .formParam("username", "allure8")
                 .formParam("password", "allure8")
                 .log().all()
@@ -232,5 +229,9 @@ public class CreateTestcaseTests {
         Selenide.refresh();
 
     }
+
+
+
+
 
 }
