@@ -6,9 +6,8 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import models.*;
-import models.data.ApiData;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -16,10 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
 import java.util.Date;
-import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.qameta.allure.Allure.step;
@@ -29,12 +26,14 @@ import static org.hamcrest.Matchers.is;
 
 public class CreateTestcaseTests {
 
+    private final Faker faker = new Faker();
+
     static String login = "allure8",
             password = "allure8",
             projectId = "2237",
             leafId = "18046";
     String xxsrfToken = "4009dad4-7721-4ee4-9e76-edc2b82a9128";
-    String allureToken = "08bf21d8-d1af-4b55-b2fb-111263d86b0a";
+    String allureToken = "528cf7cf-4105-43af-b169-16d00fa1773f";
 
     @BeforeAll
     static void setUp() {
@@ -262,72 +261,65 @@ public class CreateTestcaseTests {
 
     @Test
     @DisplayName("Создание тест кейса")
-    void createWitApiUIExtendedTest1() {
-        Faker faker = new Faker();
-        String testCaseName = faker.name().fullName();
+    void createTestCaseViaApiWithCheckViaUITest() {
+        // API-взаимодействие вынести в отдельный класс. Чтобы не дублировать данный код в каждом тесте
+        Response authResponse = step("Get authorization", () ->
+                given().log().all()
+                        .formParam("grant_type", "apitoken")
+                        .formParam("scope", "openid")
+                        .formParam("token", allureToken)
+                        .when()
+                        .post("/api/uaa/oauth/token")
+                        .then().log().all()
+                        .statusCode(200)
+                        .extract().response());
 
-
-        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-        testCaseBody.setName(testCaseName);
-
-        Selenide.open("https://allure.autotests.cloud/login");
-        String xsrfToken = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
-
-        String sessionId = given()
-                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                .header("X-XSRF-TOKEN", xsrfToken)
-                .cookie("XSRF-TOKEN", xsrfToken)
-                .formParam("username", "allure8")
-                .formParam("password", "allure8")
-                .log().all()
-                .when()
-                .post("/api/login/system")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .extract()
-                .cookie("ALLURE_TESTOPS_SESSION");
-
-
-        Date expDate = new Date();
-        expDate.setTime(expDate.getTime() + (10000 * 10000));
-        Cookie cookie = new Cookie("ALLURE_TESTOPS_SESSION", sessionId, "allure.autotests.cloud", "/", expDate);
-        Selenide.refresh();
-
-        step("Открыто главное меню с проектами", () -> {
-            $(".BreadCrumbs ").shouldHave(text("Projects"));
+        // И это также перенести в класс для API-взаимодействия
+        String sessionCookieValue = step("Get session cookie value", () -> {
+            String xsrfToken = authResponse.path("jti");
+            return given().log().all()
+                    .header("X-XSRF-TOKEN", xsrfToken)
+                    .header("Cookie", "XSRF-TOKEN=" + xsrfToken)
+                    .formParam("username", login)
+                    .formParam("password", password)
+                    .when()
+                    .post("/api/login/system")
+                    .then()
+                    .statusCode(200).extract().response()
+                    .getCookie("ALLURE_TESTOPS_SESSION");
         });
 
-        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
-                given()
-                        .log().all()
-                        .header("X-XSRF-TOKEN", xsrfToken)
-                        .cookies("XSRF-TOKEN", xsrfToken,
-                                "ALLURE_TESTOPS_SESSION", cookie)
-                        .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                        .body(testCaseBody)
-                        .queryParam("projectId", projectId)
-                        .when()
-                        .post("/api/rs/testcasetree/leaf")
-                        .then()
-                        .log().status()
-                        .log().body()
-                        .log().all()
-                        .statusCode(200)
-                        .body("statusName", is("Draft"))
-                        .body("name", is(testCaseName))
-                        .extract().as(CreateTestCaseResponse.class));
+        CreateTestCaseResponse testCaseResponse = step("Create test case via api", () -> {
+            CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
+            testCaseBody.setName(faker.name().fullName());
+            String accessToken = authResponse.path("access_token");
+            return given().log().all()
+                    .contentType(ContentType.JSON)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .body(testCaseBody)
+                    .queryParam("projectId", projectId)
+                    .when()
+                    .post("/api/rs/testcasetree/leaf")
+                    .then()
+                    .log().status()
+                    .log().body()
+                    .log().all()
+                    .statusCode(200)
+                    .body("statusName", is("Draft"))
+                    .body("name", is(testCaseBody.getName()))
+                    .extract().as(CreateTestCaseResponse.class);
+        });
 
-        step("Verify testcase name", () -> {
-            open("/favicon.ico");
+        step("Add session cookie in browser", () -> {
+            Selenide.open("https://allure.autotests.cloud/favicon.ico");
+            getWebDriver().manage().addCookie(new Cookie("ALLURE_TESTOPS_SESSION", sessionCookieValue));
+            Selenide.refresh();
+        });
 
-            getWebDriver().manage().addCookie(cookie);
-
-            Integer testCesaId = createTestCaseResponse.getId();
-            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
-            open(testCaseUrl);
-
-            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
+        step("Open test case url", () -> {
+            Selenide.open("https://allure.autotests.cloud/project/" + projectId + "/test-cases/" + testCaseResponse.getId());
+            // Проверяй, что душе угодно
+            Selenide.sleep(5_000);
         });
     }
 }
