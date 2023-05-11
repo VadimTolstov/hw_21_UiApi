@@ -135,6 +135,7 @@ public class CreateTestcaseTests {
     @Test
     @DisplayName("Обновление шагов тест-кейса")
     void updateTestCaseStepsTest() {
+
         // В идеале тут создать тест-кейс, который будет исключительно для этого теста
 
         // Создаем тестовые данные - нашу модель с шагами теста
@@ -180,6 +181,7 @@ public class CreateTestcaseTests {
 //            --data-raw '{"steps":[{"name":"12231","spacing":""},{"name":"123","spacing":""}],"workPath":[1]}' \
 //            --compressed
     @Test
+    @Disabled("Не работает с ContentType.MULTIPART")
     void Authorization1() {
 
         Selenide.open("https://allure.autotests.cloud/login");
@@ -188,6 +190,7 @@ public class CreateTestcaseTests {
 
         String sessionId = given()
                 .contentType(ContentType.MULTIPART)
+                .header("X-XSRF-TOKEN", xsrfTofen)
                 .cookie("XSRF-TOKEN", xsrfTofen)
                 .multiPart("username", "allure8")
                 .multiPart("password", " allure8")
@@ -221,16 +224,20 @@ public class CreateTestcaseTests {
 //            -H 'sec-ch-ua-platform: "Windows"' \
 //            --data-raw 'username=allure8&password=allure8' \
 //            --compressed
+
+    Cookie cookie = new Cookie("ALLURE_TESTOPS_SESSION", "allure.autotests.cloud");
+
     @Test
+    @DisplayName("Авторизация пользователя")
     void AuthorizationTest2() {
 
         Selenide.open("https://allure.autotests.cloud/login");
-        String xsrfTofen = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
+        String xsrfToken = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
 
         String sessionId = given()
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                .header("X-XSRF-TOKEN", xsrfTofen)
-                .cookie("XSRF-TOKEN", xsrfTofen)
+                .header("X-XSRF-TOKEN", xsrfToken)
+                .cookie("XSRF-TOKEN", xsrfToken)
                 .formParam("username", "allure8")
                 .formParam("password", "allure8")
                 .log().all()
@@ -244,14 +251,83 @@ public class CreateTestcaseTests {
 
         Date expDate = new Date();
         expDate.setTime(expDate.getTime() + (10000 * 10000));
-        Cookie cookie = new Cookie("ALLURE_TESTOPS_SESSION", sessionId, "allure.autotests.cloud", "/", expDate);
+        cookie = new Cookie("ALLURE_TESTOPS_SESSION", sessionId, "allure.autotests.cloud", "/", expDate);
         WebDriverRunner.getWebDriver().manage().addCookie(cookie);
         Selenide.refresh();
 
+        step("Открыто главное меню с проектами", () -> {
+            $(".BreadCrumbs ").shouldHave(text("Projects"));
+        });
     }
 
+    @Test
+    @DisplayName("Создание тест кейса")
+    void createWitApiUIExtendedTest1() {
+        Faker faker = new Faker();
+        String testCaseName = faker.name().fullName();
 
 
+        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
+        testCaseBody.setName(testCaseName);
+
+        Selenide.open("https://allure.autotests.cloud/login");
+        String xsrfToken = WebDriverRunner.getWebDriver().manage().getCookieNamed("XSRF-TOKEN").getValue();
+
+        String sessionId = given()
+                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .header("X-XSRF-TOKEN", xsrfToken)
+                .cookie("XSRF-TOKEN", xsrfToken)
+                .formParam("username", "allure8")
+                .formParam("password", "allure8")
+                .log().all()
+                .when()
+                .post("/api/login/system")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .cookie("ALLURE_TESTOPS_SESSION");
 
 
+        Date expDate = new Date();
+        expDate.setTime(expDate.getTime() + (10000 * 10000));
+        Cookie cookie = new Cookie("ALLURE_TESTOPS_SESSION", sessionId, "allure.autotests.cloud", "/", expDate);
+        Selenide.refresh();
+
+        step("Открыто главное меню с проектами", () -> {
+            $(".BreadCrumbs ").shouldHave(text("Projects"));
+        });
+
+        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
+                given()
+                        .log().all()
+                        .header("X-XSRF-TOKEN", xsrfToken)
+                        .cookies("XSRF-TOKEN", xsrfToken,
+                                "ALLURE_TESTOPS_SESSION", cookie)
+                        .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                        .body(testCaseBody)
+                        .queryParam("projectId", projectId)
+                        .when()
+                        .post("/api/rs/testcasetree/leaf")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .log().all()
+                        .statusCode(200)
+                        .body("statusName", is("Draft"))
+                        .body("name", is(testCaseName))
+                        .extract().as(CreateTestCaseResponse.class));
+
+        step("Verify testcase name", () -> {
+            open("/favicon.ico");
+
+            getWebDriver().manage().addCookie(cookie);
+
+            Integer testCesaId = createTestCaseResponse.getId();
+            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
+            open(testCaseUrl);
+
+            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
+        });
+    }
 }
