@@ -72,7 +72,6 @@ public class CreateTestcaseTests extends TestBase {
         Selenide.closeWebDriver();
     }
 
-
     @Test
     @WithLogin
     @DisplayName("Обновление шагов тест-кейса V2.0")
@@ -91,7 +90,7 @@ public class CreateTestcaseTests extends TestBase {
                 given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
-                        .header("Authorization", "Bearer " + accessToken)
+                        .header("Authorization", "Bearer " + AuthorizationApi.getAuthorization().getAccessToken())
                         .body(scenarioDto)
                         .when()
                         .post("/api/rs/testcase/" + testCaseId + "/scenario")
@@ -100,7 +99,7 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().as(TestCaseScenarioDto.class)
         );
-        // Теперь в переменной response содержится ответ сервера. Можем с ним что-нибудь сделать
+
         step("Api verify  name[0] in response", () ->
                 assertEquals("Step 1", response.getSteps().get(0).getName()));
         step("Api verify  name[1] in response", () ->
@@ -121,7 +120,7 @@ public class CreateTestcaseTests extends TestBase {
     }
 
         @Test
-    @Disabled("Не работает с @BeforeEach")
+    @Disabled("Не работает с @BeforeEach, кейс создается в тесте")
     @WithLogin
     @DisplayName("Обновление шагов тест-кейса")
     void updateTestCaseStepsTest1() {
