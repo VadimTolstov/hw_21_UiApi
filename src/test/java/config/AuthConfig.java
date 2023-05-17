@@ -10,8 +10,8 @@ import org.aeonbits.owner.Config;
 
 public interface AuthConfig extends Config {
 
-    @Key("usernameSelenoid")
-    String usernameSelenoid();
+    @Key("userNameSelenoid")
+    String userNameSelenoid();
 
     @Key("passwordSelenoid")
     String passwordSelenoid();
@@ -19,8 +19,8 @@ public interface AuthConfig extends Config {
     @Key("apiToken")
     String apiToken();
 
-    @Key("usernameAllure")
-    String usernameAllure();
+    @Key("userNameAllure")
+    String userNameAllure();
 
     @Key("passwordAllure")
     String passwordAllure();

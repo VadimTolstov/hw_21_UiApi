@@ -29,7 +29,7 @@ public class AuthorizationApi {
         return with().filter(withCustomTemplates())
                 .header("X-XSRF-TOKEN", xsrfToken)
                 .header("Cookie", "XSRF-TOKEN=" + xsrfToken)
-                .formParam("username", Auth.config.usernameAllure())
+                .formParam("username", Auth.config.userNameAllure())
                 .formParam("password", Auth.config.passwordAllure())
                 .when()
                 .post(AuthEndPoint.LOGIN)
