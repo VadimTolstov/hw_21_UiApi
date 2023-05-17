@@ -54,9 +54,9 @@ public class CreateTestcaseTests extends TestBase {
     }
 
     @AfterEach
+
     public void closeWebDriver() {
         testCaseApi.deleteTestCase(testCaseId);
-        Selenide.closeWebDriver();
     }
 
     @Test
@@ -85,11 +85,11 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().as(TestCaseScenarioDto.class));
 
-        step("Api verify  name step1 {step1} in response", () ->
+        step("Api verify  name  {step1} in response", () ->
                 assertEquals(step1, response.getSteps().get(0).getName()));
-        step("Api verify name step2 {step2} in response", () ->
+        step("Api verify name  {step2} in response", () ->
                 assertEquals(step2, response.getSteps().get(1).getName()));
-        step("Api verify name step3 {step3} in response", () ->
+        step("Api verify name  {step3} in response", () ->
                 assertEquals(step3, response.getSteps().get(2).getName()));
 
         step("Open test case url", () -> {
@@ -105,7 +105,7 @@ public class CreateTestcaseTests extends TestBase {
     }
 
     @Test
-    @Disabled("Не работает с @BeforeEach, кейс создается в тесте")
+    @Disabled("Устарел, не работает с @BeforeEach, кейс создается в тесте")
     @WithLogin
     @DisplayName("Обновление шагов тест-кейса")
     void updateTestCaseStepsTest1() {
