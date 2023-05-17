@@ -54,7 +54,7 @@ public class CreateTestcaseTests extends TestBase {
     }
 
     @AfterEach
-
+    @Step("Удаляем test cesa по api")
     public void closeWebDriver() {
         testCaseApi.deleteTestCase(testCaseId);
     }
@@ -85,11 +85,11 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().as(TestCaseScenarioDto.class));
 
-        step("Api verify  name  {step1} in response", () ->
+        step("Api verify step1 in response", () ->
                 assertEquals(step1, response.getSteps().get(0).getName()));
-        step("Api verify name  {step2} in response", () ->
+        step("Api verify name step2 in response", () ->
                 assertEquals(step2, response.getSteps().get(1).getName()));
-        step("Api verify name  {step3} in response", () ->
+        step("Api verify name  step3 in response", () ->
                 assertEquals(step3, response.getSteps().get(2).getName()));
 
         step("Open test case url", () -> {
