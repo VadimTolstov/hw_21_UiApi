@@ -12,7 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
-
 public class TestBase {
     TestCaseApiDataGenerator testCaseApiDataGenerator = new TestCaseApiDataGenerator();
 
@@ -32,8 +31,7 @@ public class TestBase {
     void addAttachments() {
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        Selenide.closeWebDriver();
-       if (WebDriver.config.getRemoteUrl() != null) {
+        if (WebDriver.config.getRemoteUrl() != null) {
             Attach.addVideo();
         }
         Selenide.closeWebDriver();
