@@ -19,10 +19,15 @@ import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class Attach {
     @Attachment(value = "{attachName}", type = "image/png")
-    public static byte[] screenshotAs(String attachName, SelenideElement locator) {
-        WebDriverWait wait = new WebDriverWait(getWebDriver(), Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOf(locator));
-        return ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
+    public static byte[] screenshotAs(String attachName) {
+        try {
+            byte[] result = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            return result;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return new byte[0];
     }
 
     @Attachment(value = "Page source", type = "text/plain")
