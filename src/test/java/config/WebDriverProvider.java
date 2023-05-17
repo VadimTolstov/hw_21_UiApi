@@ -18,7 +18,7 @@ public class WebDriverProvider {
 
         if (WebDriver.config.getRemoteUrl() != null) {
             Configuration.remote = "https://" + Auth.config.userNameSelenoid() + ":" +
-                                   Auth.config.passwordAllure() + "@" + WebDriver.config.getRemoteUrl() + "/wd/hub";
+                                   Auth.config.passwordSelenoid() + "@" + WebDriver.config.getRemoteUrl() + "/wd/hub";
         }
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
