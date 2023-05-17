@@ -141,8 +141,7 @@ public class CreateTestcaseTests extends TestBase {
                 .addStep(new TestCaseScenarioDto.Step(step2, "st-2"))
                 .addStep(new TestCaseScenarioDto.Step(step3, "st-3"));
 
-        String accessToken = AuthorizationApi.getAuthorization().getAccessToken();
-        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
+                TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
                 given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
