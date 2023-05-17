@@ -17,6 +17,9 @@ public class TestCaseApiDataGenerator {
     public String getStepTestCaseTwo() {
         return faker.name().firstName();
     }
+    public String getStepTestCaseThree() {
+        return faker.name().name();
+    }
 
     public String getTestDescription() {
         return faker.backToTheFuture().quote();
