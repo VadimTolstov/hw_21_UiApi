@@ -6,7 +6,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Map;
 
 public class WebDriverProvider {
-    public static String remoteUrl;
+
     public static void configure() {
         Configuration.baseUrl = WebDriver.config.getBaseUrl();
         Configuration.browserSize = WebDriver.config.getBrowserSize();
@@ -14,7 +14,7 @@ public class WebDriverProvider {
         Configuration.browser = browserWithVersion[0];
         Configuration.browserVersion = browserWithVersion[1];
         Configuration.pageLoadStrategy = "eager";
-        remoteUrl = WebDriver.config.getRemoteUrl();
+
 
         if (WebDriver.config.getRemoteUrl() != null) {
             Configuration.remote = "https://" + Auth.config.usernameSelenoid() + ":" +
