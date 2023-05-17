@@ -33,8 +33,9 @@ public class TestBase {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Selenide.closeWebDriver();
-        if (WebDriver.config.getRemoteUrl() != null) {
+       if (WebDriver.config.getRemoteUrl() != null) {
             Attach.addVideo();
         }
+        Selenide.closeWebDriver();
     }
 }
