@@ -61,11 +61,42 @@ public class CreateTestcaseTests extends TestBase {
         testCaseApi.deleteTestCase(testCaseId);
     }
 
-//    @Test
-//    @WithLogin
-//    @DisplayName("Редактирование имяни тест кейса")
-//    void updateTestCase
-
+    @Test
+    @WithLogin
+    @DisplayName("Редактирование имени тест кейса")
+    void changingNameTestCase(){
+        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
+                given().log().all()
+                        .filter(withCustomTemplates())
+                        .contentType(ContentType.JSON)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .body(scenarioDto)
+                        .when()
+                        .post("/api/rs/testcase/" + testCaseId + "/scenario")
+                        .then()
+                        .log().all()
+                        .statusCode(200)
+                        .extract().as(TestCaseScenarioDto.class));
+    }
+//    curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf/rename?projectId=2237&&leafId=18024' \
+//            -H 'Accept: application/json, text/plain, */*' \
+//            -H 'Accept-Language: ru,en;q=0.9' \
+//            -H 'Cache-Control: no-cache' \
+//            -H 'Connection: keep-alive' \
+//            -H 'Content-Type: application/json;charset=UTF-8' \
+//            -H 'Cookie: _cc_id=b1975b0072d5e90371807e01eb50f935; _ga_MVRXK93D28=GS1.1.1680503960.1.0.1680504022.0.0.0; _ga=GA1.1.930498322.1680503961; XSRF-TOKEN=75ac0f12-f612-4b7d-bf30-7b31d1711dc2; REDIRECT_URI=L3Byb2plY3QvMjIzNy90ZXN0LWNhc2VzLzE5NDU2P3RyZWVJZD0w; ALLURE_TESTOPS_SESSION=bf78c525-4cb4-4fb8-847c-4facd8e205ff' \
+//            -H 'Origin: https://allure.autotests.cloud' \
+//            -H 'Pragma: no-cache' \
+//            -H 'Sec-Fetch-Dest: empty' \
+//            -H 'Sec-Fetch-Mode: cors' \
+//            -H 'Sec-Fetch-Site: same-origin' \
+//            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 YaBrowser/23.3.4.603 Yowser/2.5 Safari/537.36' \
+//            -H 'X-XSRF-TOKEN: 75ac0f12-f612-4b7d-bf30-7b31d1711dc2' \
+//            -H 'sec-ch-ua: "Chromium";v="110", "Not A(Brand";v="24", "YaBrowser";v="23"' \
+//            -H 'sec-ch-ua-mobile: ?0' \
+//            -H 'sec-ch-ua-platform: "Windows"' \
+//            --data-raw '{"name":"11енгнегенг"}' \
+//            --compressed
     @Test
     @WithLogin
     @DisplayName("Обновление шагов тест-кейса V2.0")
