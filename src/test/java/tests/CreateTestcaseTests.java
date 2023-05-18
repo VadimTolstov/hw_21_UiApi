@@ -2,6 +2,7 @@ package tests;
 
 import authorization.AuthorizationApi;
 import com.codeborne.selenide.Selenide;
+import com.github.javafaker.Faker;
 import helpers.WithLogin;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
@@ -12,14 +13,17 @@ import models.TestCaseScenarioDto;
 import models.specs.CreateTestCaseRequestDto;
 import models.specs.TestCaseDataResponseDto;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.Cookie;
 import testcase.TestCaseApi;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static java.lang.String.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,11 +60,11 @@ public class CreateTestcaseTests extends TestBase {
         this.accessToken = AuthorizationApi.getAuthorization().getAccessToken();
     }
 
-    @AfterEach
-    @Step("Удаляем test cesa по api")
-    public void deleteTestCase() {
-        testCaseApi.deleteTestCase(testCaseId);
-    }
+//    @AfterEach
+//    @Step("Удаляем test cesa по api")
+//    public void deleteTestCase() {
+//        testCaseApi.deleteTestCase(testCaseId);
+//    }
 
     @Test
     @WithLogin
@@ -80,10 +84,10 @@ public class CreateTestcaseTests extends TestBase {
 //                        .extract().as(TestCaseScenarioDto.class));
     CreateTestCaseBody bodu = new CreateTestCaseBody();
     bodu.setName(testCaseApiDataGenerator.getTestCaseName());
-        Response authResponse = step("Get authorization", () ->
+        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
                 given().log().all()
                         .filter(withCustomTemplates())
-                        .contentType(ContentType.JSON)
+                        .contentType("application/json;charset=UTF-8")
                         .body(bodu)
                         .header("Authorization", "Bearer " + accessToken)
                         .formParam("projectId", PROJECT_ID)
@@ -92,10 +96,51 @@ public class CreateTestcaseTests extends TestBase {
                         .post("api/rs/testcasetree/leaf/rename")
                         .then().log().all()
                         .statusCode(200)
-                        .extract().response());
+                        .extract().as(CreateTestCaseResponse.class));
+
         step("Open test case url", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
         });
+
+//        Faker faker = new Faker();
+//        String testCaseName = faker.name().fullName();
+//
+//        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
+//        testCaseBody.setName(testCaseName);
+//
+//        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
+//                given()
+//                        .log().all()
+//                        .header("X-XSRF-TOKEN", xxsrfToken)
+//                        .cookies("XSRF-TOKEN", xxsrfToken,
+//                                "ALLURE_TESTOPS_SESSION", allureToken)
+//                        .contentType("application/json;charset=UTF-8")
+//                        .body(testCaseBody)
+//                        .queryParam("projectId", projectId)
+//                        .queryParam("leafId", leafId)
+//                        .when()
+//                        .post("/api/rs/testcasetree/leaf/rename")
+//                        .then()
+//                        .log().status()
+//                        .log().body()
+//                        .log().all()
+//                        .statusCode(200)
+//                        .body("statusName", is("Draft"))
+//                        .body("name", is(testCaseName))
+//                        .extract().as(CreateTestCaseResponse.class));
+//
+//        step("Verify testcase name", () -> {
+//            open("/favicon.ico");
+//
+////            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", allureToken);
+//            getWebDriver().manage().addCookie(new Cookie("ALLURE_TESTOPS_SESSION", allureToken));
+//
+//            Integer testCesaId = createTestCaseResponse.getId();
+//            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
+//            open(testCaseUrl);
+//            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
+      //  });
+    //}
     }
 
     //    curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf/rename?projectId=2237&&leafId=18024' \
