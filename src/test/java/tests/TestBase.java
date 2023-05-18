@@ -32,7 +32,7 @@ public class TestBase {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        if (WebDriver.config.getRemoteUrl() != null) {
+        if (WebDriver.config.getRemoteUrl() != null ) {
             Attach.addVideo();
         }
         Selenide.closeWebDriver();

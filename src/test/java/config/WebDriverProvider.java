@@ -16,7 +16,7 @@ public class WebDriverProvider {
         Configuration.pageLoadStrategy = "eager";
 
 
-        if (WebDriver.config.getRemoteUrl() != null) {
+        if (WebDriver.config.getRemoteUrl() != null)   {
             Configuration.remote = "https://" + Auth.config.userNameSelenoid() + ":" +
                                    Auth.config.passwordSelenoid() + "@" + WebDriver.config.getRemoteUrl() + "/wd/hub";
         }
