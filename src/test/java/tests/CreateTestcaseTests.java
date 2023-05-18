@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import helpers.WithLogin;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import models.CreateTestCaseBody;
 import models.CreateTestCaseResponse;
 import models.TestCaseScenarioDto;
@@ -64,21 +65,40 @@ public class CreateTestcaseTests extends TestBase {
     @Test
     @WithLogin
     @DisplayName("Редактирование имени тест кейса")
-    void changingNameTestCase(){
-        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
+    void changingNameTestCase() {
+//        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
+//                given().log().all()
+//                        .filter(withCustomTemplates())
+//                        .contentType(ContentType.JSON)
+//                        .header("Authorization", "Bearer " + accessToken)
+//                        .body(scenarioDto)
+//                        .when()
+//                        .post("/api/rs/testcase/" + testCaseId + "/scenario")
+//                        .then()
+//                        .log().all()
+//                        .statusCode(200)
+//                        .extract().as(TestCaseScenarioDto.class));
+    CreateTestCaseBody bodu = new CreateTestCaseBody();
+    bodu.setName(testCaseApiDataGenerator.getTestCaseName());
+        Response authResponse = step("Get authorization", () ->
                 given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
+                        .body(bodu)
                         .header("Authorization", "Bearer " + accessToken)
-                        .body(scenarioDto)
+                        .formParam("projectId", PROJECT_ID)
+                        .formParam("leafId", testCaseId)
                         .when()
-                        .post("/api/rs/testcase/" + testCaseId + "/scenario")
-                        .then()
-                        .log().all()
+                        .post("api/rs/testcasetree/leaf/rename")
+                        .then().log().all()
                         .statusCode(200)
-                        .extract().as(TestCaseScenarioDto.class));
+                        .extract().response());
+        step("Open test case url", () -> {
+            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
+        });
     }
-//    curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf/rename?projectId=2237&&leafId=18024' \
+
+    //    curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf/rename?projectId=2237&&leafId=18024' \
 //            -H 'Accept: application/json, text/plain, */*' \
 //            -H 'Accept-Language: ru,en;q=0.9' \
 //            -H 'Cache-Control: no-cache' \
@@ -126,7 +146,8 @@ public class CreateTestcaseTests extends TestBase {
         step("Api verify step 1 in response", () ->
                 assertEquals(step1, response.getSteps().get(0).getName()));
         step("Api verify name step2 in response", () ->
-                assertEquals(step2, response.getSteps().get(1).getName()));   step("Api verify name  step3 in response", () ->
+                assertEquals(step2, response.getSteps().get(1).getName()));
+        step("Api verify name  step3 in response", () ->
                 assertEquals(step3, response.getSteps().get(2).getName()));
 
         step("Open test case url", () -> {
@@ -178,7 +199,7 @@ public class CreateTestcaseTests extends TestBase {
                 .addStep(new TestCaseScenarioDto.Step(step2, "st-2"))
                 .addStep(new TestCaseScenarioDto.Step(step3, "st-3"));
 
-                TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
+        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
                 given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
