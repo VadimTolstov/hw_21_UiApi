@@ -25,4 +25,8 @@ public class TestCaseApiDataGenerator {
     public String getTestDescription() {
         return faker.backToTheFuture().quote();
     }
+
+    public String getComment() {
+        return faker.address().fullAddress();
+    }
 }

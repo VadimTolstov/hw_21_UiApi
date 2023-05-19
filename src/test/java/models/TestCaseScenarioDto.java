@@ -29,9 +29,8 @@ public class TestCaseScenarioDto {
         public Step(String name, String keyword) {
             this.name = name;
             this.keyword = keyword;
-
-
         }
     }
-
 }
+
+//   --data-raw '{"steps":[{"name":"впвап","spacing":""},{"name":"вап","spacing":""},{"name":"вап","spacing":""}],"workPath":[2]}' \

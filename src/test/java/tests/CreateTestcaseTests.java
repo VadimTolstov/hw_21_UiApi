@@ -7,15 +7,15 @@ import helpers.WithLogin;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import models.CreateTestCaseBody;
-import models.CreateTestCaseResponse;
-import models.DescriptionTestCaseDto;
-import models.TestCaseScenarioDto;
+import models.*;
 import models.specs.CreateTestCaseRequestDto;
+import models.specs.Tag;
 import models.specs.TestCaseDataResponseDto;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.Cookie;
 import testcase.TestCaseApi;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -76,8 +76,9 @@ public class CreateTestcaseTests extends TestBase {
             $(".TestCaseLayout__name").shouldHave(text(testCaseName));
         });
 
+        String changing =testCaseApiDataGenerator.getTestCaseName();
         CreateTestCaseBody body = new CreateTestCaseBody();
-        body.setName(testCaseApiDataGenerator.getTestCaseName());
+        body.setName(changing);
         CreateTestCaseResponse createTestCaseResponse = step("Редактируем тест кейс", () ->
                 given().log().body()
                         .filter(withCustomTemplates())
@@ -92,7 +93,10 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().as(CreateTestCaseResponse.class));
 
-        step("Проверяем, что имя test cases изменилось ", () -> {
+        step("Api verify  changing in response", () ->
+                assertEquals(changing, createTestCaseResponse.getName()));
+
+        step("Проверяем, что changing test cases изменилось ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             $(".TestCaseLayout__name").shouldHave(text(createTestCaseResponse.getName()));
         });
@@ -102,11 +106,12 @@ public class CreateTestcaseTests extends TestBase {
     @WithLogin
     @DisplayName("Добавление описания test cases")
     void descriptionTestCase() {
+        String description = testCaseApiDataGenerator.getTestDescription();
         DescriptionTestCaseDto descriptionTestCaseDto = new DescriptionTestCaseDto();
-        descriptionTestCaseDto.setDescription(testCaseApiDataGenerator.getTestDescription());
+        descriptionTestCaseDto.setDescription(description);
         descriptionTestCaseDto.setId(testCaseId);
 
-        TestCaseDataResponseDto testCaseDataResponseDto = step("Редактируем test cases", () ->
+        TestCaseDataResponseDto testCaseDataResponseDto = step("Добавляем описание test cases", () ->
                 given().log().body()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
@@ -118,7 +123,10 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().as(TestCaseDataResponseDto.class));
 
-        step("Проверяем, что описание test cases добавлены ", () -> {
+        step("Api verify  description in response", () ->
+                assertEquals(description, testCaseDataResponseDto.getDescription()));
+
+        step("Проверяем, что description test cases добавлены ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
         });
@@ -128,29 +136,30 @@ public class CreateTestcaseTests extends TestBase {
     @WithLogin
     @DisplayName("Добавление tag к test cases")
     void addendumTagTestCase() {
-        DescriptionTestCaseDto descriptionTestCaseDto = new DescriptionTestCaseDto();
-        descriptionTestCaseDto.setDescription(testCaseApiDataGenerator.getTestDescription());
-        descriptionTestCaseDto.setId(testCaseId);
 
-        TestCaseDataResponseDto testCaseDataResponseDto = step("Редактируем test cases", () ->
-                given().log().body()
+        TestCaseTagDto testCaseTagDto = new TestCaseTagDto();
+
+        Response authResponse = step("Редактируем test cases", () ->
+                given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
                         .header("Authorization", "Bearer " + accessToken)
-                        .body(descriptionTestCaseDto)
+                        .body(list)
                         .when()
                         .post("api/rs/testcase/" + testCaseId + "/tag")
                         .then().log().body()
                         .statusCode(200)
-                        .extract().as(TestCaseDataResponseDto.class));
+                        .extract().response());
+
 
         step("Проверяем, что tag добавлен в test cases ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-           // $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
+            // $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
+        Selenide.sleep(5000);
         });
     }
 
-//    curl 'https://allure.autotests.cloud/api/rs/testcase/19477/tag' \
+    //    curl 'https://allure.autotests.cloud/api/rs/testcase/19477/tag' \
 //            -H 'Accept: application/json, text/plain, */*' \
 //            -H 'Accept-Language: ru,en;q=0.9' \
 //            -H 'Cache-Control: no-cache' \
@@ -169,10 +178,39 @@ public class CreateTestcaseTests extends TestBase {
 //            -H 'sec-ch-ua-platform: "Windows"' \
 //            --data-raw '[{"id":1034,"name":"45"}]' \
 //            --compressed
+    @Test
+    @WithLogin
+    @DisplayName("Добавление comment test cases")
+    void commentTestCase() {
+        String comment = testCaseApiDataGenerator.getComment();
+        TestCaseCommentDto testCaseCommentDto = new TestCaseCommentDto();
+        testCaseCommentDto.setBody(comment);
+        testCaseCommentDto.setTestCaseId(testCaseId);
+
+        TestCaseCommentDto responseDto = step("Добовляем comment test cases", () ->
+                given().log().body()
+                        .filter(withCustomTemplates())
+                        .contentType(ContentType.JSON)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .body(testCaseCommentDto)
+                        .when()
+                        .post("/api/rs/comment")
+                        .then().log().body()
+                        .statusCode(200)
+                        .extract().as(TestCaseCommentDto.class));
+
+        step("Api verify comment 1 in response", () ->
+                assertEquals(comment, responseDto.getBody()));
+
+        step("Проверяем, comment в test cases добавлены ", () -> {
+            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
+            $(".Comment__body").shouldHave(text(responseDto.getBody()));
+        });
+    }
 
     @Test
     @WithLogin
-    @DisplayName("Обновление шагов тест-кейса V2.0")
+    @DisplayName("Обновление шагов test cases V2.0")
     void updateTestCaseStepsTest2() {
         String step1 = testCaseApiDataGenerator.getStepTestCaseOne();
         String step2 = testCaseApiDataGenerator.getStepTestCaseTwo();
@@ -285,6 +323,3 @@ public class CreateTestcaseTests extends TestBase {
         });
     }
 }
-
-
-
