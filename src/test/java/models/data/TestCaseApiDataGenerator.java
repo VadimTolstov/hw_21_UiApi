@@ -17,6 +17,7 @@ public class TestCaseApiDataGenerator {
     public String getStepTestCaseTwo() {
         return faker.name().firstName();
     }
+
     public String getStepTestCaseThree() {
         return faker.name().name();
     }

@@ -9,6 +9,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.CreateTestCaseBody;
 import models.CreateTestCaseResponse;
+import models.DescriptionTestCaseDto;
 import models.TestCaseScenarioDto;
 import models.specs.CreateTestCaseRequestDto;
 import models.specs.TestCaseDataResponseDto;
@@ -60,108 +61,115 @@ public class CreateTestcaseTests extends TestBase {
         this.accessToken = AuthorizationApi.getAuthorization().getAccessToken();
     }
 
-//    @AfterEach
-//    @Step("Удаляем test cesa по api")
-//    public void deleteTestCase() {
-//        testCaseApi.deleteTestCase(testCaseId);
-//    }
+    @AfterEach
+    @Step("Удаляем test cesa по api")
+    public void deleteTestCase() {
+        testCaseApi.deleteTestCase(testCaseId);
+    }
 
     @Test
     @WithLogin
     @DisplayName("Редактирование имени тест кейса")
     void changingNameTestCase() {
-//        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
-//                given().log().all()
-//                        .filter(withCustomTemplates())
-//                        .contentType(ContentType.JSON)
-//                        .header("Authorization", "Bearer " + accessToken)
-//                        .body(scenarioDto)
-//                        .when()
-//                        .post("/api/rs/testcase/" + testCaseId + "/scenario")
-//                        .then()
-//                        .log().all()
-//                        .statusCode(200)
-//                        .extract().as(TestCaseScenarioDto.class));
-    CreateTestCaseBody bodu = new CreateTestCaseBody();
-    bodu.setName(testCaseApiDataGenerator.getTestCaseName());
-        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
-                given().log().all()
+        step("Проверяем, что у созданного test cases есть имя", () -> {
+            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
+            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
+        });
+
+        CreateTestCaseBody body = new CreateTestCaseBody();
+        body.setName(testCaseApiDataGenerator.getTestCaseName());
+        CreateTestCaseResponse createTestCaseResponse = step("Редактируем тест кейс", () ->
+                given().log().body()
                         .filter(withCustomTemplates())
-                        .contentType("application/json;charset=UTF-8")
-                        .body(bodu)
+                        .contentType(ContentType.JSON)
                         .header("Authorization", "Bearer " + accessToken)
-                        .formParam("projectId", PROJECT_ID)
-                        .formParam("leafId", testCaseId)
+                        .queryParam("projectId", PROJECT_ID)
+                        .queryParam("leafId", testCaseId)
+                        .body(body)
                         .when()
                         .post("api/rs/testcasetree/leaf/rename")
-                        .then().log().all()
+                        .then().log().body()
                         .statusCode(200)
                         .extract().as(CreateTestCaseResponse.class));
 
-        step("Open test case url", () -> {
+        step("Проверяем, что имя test cases изменилось ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
+            $(".TestCaseLayout__name").shouldHave(text(createTestCaseResponse.getName()));
         });
-
-//        Faker faker = new Faker();
-//        String testCaseName = faker.name().fullName();
-//
-//        CreateTestCaseBody testCaseBody = new CreateTestCaseBody();
-//        testCaseBody.setName(testCaseName);
-//
-//        CreateTestCaseResponse createTestCaseResponse = step("Create testcase", () ->
-//                given()
-//                        .log().all()
-//                        .header("X-XSRF-TOKEN", xxsrfToken)
-//                        .cookies("XSRF-TOKEN", xxsrfToken,
-//                                "ALLURE_TESTOPS_SESSION", allureToken)
-//                        .contentType("application/json;charset=UTF-8")
-//                        .body(testCaseBody)
-//                        .queryParam("projectId", projectId)
-//                        .queryParam("leafId", leafId)
-//                        .when()
-//                        .post("/api/rs/testcasetree/leaf/rename")
-//                        .then()
-//                        .log().status()
-//                        .log().body()
-//                        .log().all()
-//                        .statusCode(200)
-//                        .body("statusName", is("Draft"))
-//                        .body("name", is(testCaseName))
-//                        .extract().as(CreateTestCaseResponse.class));
-//
-//        step("Verify testcase name", () -> {
-//            open("/favicon.ico");
-//
-////            Cookie authoriztionCookie = new Cookie("ALLURE_TESTOPS_SESSION", allureToken);
-//            getWebDriver().manage().addCookie(new Cookie("ALLURE_TESTOPS_SESSION", allureToken));
-//
-//            Integer testCesaId = createTestCaseResponse.getId();
-//            String testCaseUrl = format("/project/%s/test-cases/%s?", projectId, testCesaId);
-//            open(testCaseUrl);
-//            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
-      //  });
-    //}
     }
 
-    //    curl 'https://allure.autotests.cloud/api/rs/testcasetree/leaf/rename?projectId=2237&&leafId=18024' \
+    @Test
+    @WithLogin
+    @DisplayName("Добавление описания test cases")
+    void descriptionTestCase() {
+        DescriptionTestCaseDto descriptionTestCaseDto = new DescriptionTestCaseDto();
+        descriptionTestCaseDto.setDescription(testCaseApiDataGenerator.getTestDescription());
+        descriptionTestCaseDto.setId(testCaseId);
+
+        TestCaseDataResponseDto testCaseDataResponseDto = step("Редактируем test cases", () ->
+                given().log().body()
+                        .filter(withCustomTemplates())
+                        .contentType(ContentType.JSON)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .body(descriptionTestCaseDto)
+                        .when()
+                        .patch("api/rs/testcase/" + testCaseId)
+                        .then().log().body()
+                        .statusCode(200)
+                        .extract().as(TestCaseDataResponseDto.class));
+
+        step("Проверяем, что описание test cases добавлены ", () -> {
+            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
+            $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
+        });
+    }
+
+    @Test
+    @WithLogin
+    @DisplayName("Добавление tag к test cases")
+    void addendumTagTestCase() {
+        DescriptionTestCaseDto descriptionTestCaseDto = new DescriptionTestCaseDto();
+        descriptionTestCaseDto.setDescription(testCaseApiDataGenerator.getTestDescription());
+        descriptionTestCaseDto.setId(testCaseId);
+
+        TestCaseDataResponseDto testCaseDataResponseDto = step("Редактируем test cases", () ->
+                given().log().body()
+                        .filter(withCustomTemplates())
+                        .contentType(ContentType.JSON)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .body(descriptionTestCaseDto)
+                        .when()
+                        .post("api/rs/testcase/" + testCaseId + "/tag")
+                        .then().log().body()
+                        .statusCode(200)
+                        .extract().as(TestCaseDataResponseDto.class));
+
+        step("Проверяем, что tag добавлен в test cases ", () -> {
+            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
+           // $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
+        });
+    }
+
+//    curl 'https://allure.autotests.cloud/api/rs/testcase/19477/tag' \
 //            -H 'Accept: application/json, text/plain, */*' \
 //            -H 'Accept-Language: ru,en;q=0.9' \
 //            -H 'Cache-Control: no-cache' \
 //            -H 'Connection: keep-alive' \
 //            -H 'Content-Type: application/json;charset=UTF-8' \
-//            -H 'Cookie: _cc_id=b1975b0072d5e90371807e01eb50f935; _ga_MVRXK93D28=GS1.1.1680503960.1.0.1680504022.0.0.0; _ga=GA1.1.930498322.1680503961; XSRF-TOKEN=75ac0f12-f612-4b7d-bf30-7b31d1711dc2; REDIRECT_URI=L3Byb2plY3QvMjIzNy90ZXN0LWNhc2VzLzE5NDU2P3RyZWVJZD0w; ALLURE_TESTOPS_SESSION=bf78c525-4cb4-4fb8-847c-4facd8e205ff' \
+//            -H 'Cookie: _cc_id=b1975b0072d5e90371807e01eb50f935; _ga_MVRXK93D28=GS1.1.1680503960.1.0.1680504022.0.0.0; _ga=GA1.1.930498322.1680503961; XSRF-TOKEN=1885bb10-2557-4dfc-b809-f385b821ad3f; REDIRECT_URI=L3Byb2plY3QvMjIzNy90ZXN0LWNhc2VzLzE3ODg0P3RyZWVJZD0w; ALLURE_TESTOPS_SESSION=511e4628-f85c-4e3e-94a1-28c9a7ad6e1b' \
 //            -H 'Origin: https://allure.autotests.cloud' \
 //            -H 'Pragma: no-cache' \
 //            -H 'Sec-Fetch-Dest: empty' \
 //            -H 'Sec-Fetch-Mode: cors' \
 //            -H 'Sec-Fetch-Site: same-origin' \
 //            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 YaBrowser/23.3.4.603 Yowser/2.5 Safari/537.36' \
-//            -H 'X-XSRF-TOKEN: 75ac0f12-f612-4b7d-bf30-7b31d1711dc2' \
+//            -H 'X-XSRF-TOKEN: 1885bb10-2557-4dfc-b809-f385b821ad3f' \
 //            -H 'sec-ch-ua: "Chromium";v="110", "Not A(Brand";v="24", "YaBrowser";v="23"' \
 //            -H 'sec-ch-ua-mobile: ?0' \
 //            -H 'sec-ch-ua-platform: "Windows"' \
-//            --data-raw '{"name":"11енгнегенг"}' \
+//            --data-raw '[{"id":1034,"name":"45"}]' \
 //            --compressed
+
     @Test
     @WithLogin
     @DisplayName("Обновление шагов тест-кейса V2.0")
@@ -277,3 +285,6 @@ public class CreateTestcaseTests extends TestBase {
         });
     }
 }
+
+
+
