@@ -2,29 +2,26 @@ package tests;
 
 import authorization.AuthorizationApi;
 import com.codeborne.selenide.Selenide;
-import com.github.javafaker.Faker;
 import helpers.WithLogin;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.*;
 import models.specs.CreateTestCaseRequestDto;
-import models.specs.Tag;
 import models.specs.TestCaseDataResponseDto;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.Cookie;
 import testcase.TestCaseApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static java.lang.String.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -136,10 +133,15 @@ public class CreateTestcaseTests extends TestBase {
     @WithLogin
     @DisplayName("Добавление tag к test cases")
     void addendumTagTestCase() {
+        TestCaseTagDto tag1 = new TestCaseTagDto();
+        TestCaseTagDto tag2 = new TestCaseTagDto();
+        tag1.setId(166L);
+        tag1.setName("API");
+        tag2.setId(1052L);
+        tag2.setName("REGRESS");
 
-        TestCaseTagDto testCaseTagDto = new TestCaseTagDto();
-
-        Response authResponse = step("Редактируем test cases", () ->
+        List<TestCaseTagDto> list = List.of(tag1, tag2);
+        Response response = step("Добовляем tag в test cases", () ->
                 given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
@@ -151,8 +153,8 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().response());
 
-
-        step("Проверяем, что tag добавлен в test cases ", () -> {
+        List<TestCaseDataResponseDto> list1 =response.
+              step("Проверяем, что tag добавлен в test cases ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             // $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
         Selenide.sleep(5000);
