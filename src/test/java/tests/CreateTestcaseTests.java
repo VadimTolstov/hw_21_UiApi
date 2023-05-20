@@ -154,14 +154,16 @@ public class CreateTestcaseTests extends TestBase {
                         .post("api/rs/testcase/" + testCaseId + "/tag")
                         .then().log().body());
 
-        // String responseString = response.extract().asString();
-
         TestCaseTagDto[] listTestCase = response.extract().as(TestCaseTagDto[].class);
         var tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag1.getName());
         var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag1.getId());
+        var tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag2.getName());
+        var tag2Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag2.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag2.getId());
 
         assertThat(tag1Name).as("API").isEqualTo(tag1.getName());
         assertThat(tag1Id).as(String.valueOf(166L)).isEqualTo(tag1.getId());
+        assertThat(tag2Name).as("REGRESS").isEqualTo(tag2.getName());
+        assertThat(tag2Id).as(String.valueOf(1052L)).isEqualTo(tag2.getId());
 
         step("Проверяем, что tag добавлен в test cases ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
