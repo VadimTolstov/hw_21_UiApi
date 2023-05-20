@@ -6,13 +6,16 @@ import helpers.WithLogin;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 import models.*;
 import models.specs.CreateTestCaseRequestDto;
 import models.specs.TestCaseDataResponseDto;
+import org.assertj.core.error.MultipleAssertionsError;
 import org.junit.jupiter.api.*;
 import testcase.TestCaseApi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.text;
@@ -73,7 +76,7 @@ public class CreateTestcaseTests extends TestBase {
             $(".TestCaseLayout__name").shouldHave(text(testCaseName));
         });
 
-        String changing =testCaseApiDataGenerator.getTestCaseName();
+        String changing = testCaseApiDataGenerator.getTestCaseName();
         CreateTestCaseBody body = new CreateTestCaseBody();
         body.setName(changing);
         CreateTestCaseResponse createTestCaseResponse = step("Редактируем тест кейс", () ->
@@ -141,7 +144,7 @@ public class CreateTestcaseTests extends TestBase {
         tag2.setName("REGRESS");
 
         List<TestCaseTagDto> list = List.of(tag1, tag2);
-        Response response = step("Добовляем tag в test cases", () ->
+        ValidatableResponse response = step("Добовляем tag в test cases", () ->
                 given().log().all()
                         .filter(withCustomTemplates())
                         .contentType(ContentType.JSON)
@@ -149,15 +152,21 @@ public class CreateTestcaseTests extends TestBase {
                         .body(list)
                         .when()
                         .post("api/rs/testcase/" + testCaseId + "/tag")
-                        .then().log().body()
-                        .statusCode(200)
-                        .extract().response());
+                        .then().log().body());
 
-        List<TestCaseDataResponseDto> list1 =response.
-              step("Проверяем, что tag добавлен в test cases ", () -> {
+        // String responseString = response.extract().asString();
+
+        TestCaseTagDto[] listTestCase = response.extract().as(TestCaseTagDto[].class);
+        var tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag1.getName());
+        var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag1.getId());
+
+        assertThat(tag1Name).as("API").isEqualTo(tag1.getName());
+        assertThat(tag1Id).as(String.valueOf(166L)).isEqualTo(tag1.getId());
+
+        step("Проверяем, что tag добавлен в test cases ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             // $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
-        Selenide.sleep(5000);
+            Selenide.sleep(5000);
         });
     }
 
