@@ -195,7 +195,7 @@ public class CreateTestcaseTests extends TestBase {
 
     @Test
     @WithLogin
-    @DisplayName("Обновление шагов test cases V2.0")
+    @DisplayName("Обновление шагов test cases V2.01")
     void updateTestCaseStepsTest2() {
         String step1 = testCaseApiDataGenerator.getStepTestCaseOne();
         String step2 = testCaseApiDataGenerator.getStepTestCaseTwo();
