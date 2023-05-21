@@ -115,12 +115,12 @@ public class ApiTestCaseTests extends TestBase {
     @WithLogin
     @DisplayName("Добавление tag к test case")
     void addendumTagTestCase() {
-        TestCaseTagRequest tag1 = new TestCaseTagRequest();
+        TestCaseTagRequest tag1 = new TestCaseTagRequest();//в модели добавить id как TestCaseTagResponse
         TestCaseTagRequest tag2 = new TestCaseTagRequest();
-       // tag1.setId(166L);
-        tag1.setName(tag1Name);
-       // tag2.setId(1052L);
-        tag2.setName(tag2Name);
+//        tag1.setId(166L);
+        tag1.setName(tag1Name); // для созданого тега был id 166L  name API
+//        tag2.setId(1052L);
+        tag2.setName(tag2Name); // для созданого тега был id 1052L  name REGRESS
 
         List<TestCaseTagRequest> list = List.of(tag1, tag2);
 
@@ -129,7 +129,7 @@ public class ApiTestCaseTests extends TestBase {
 
 //
         this.tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
- //       var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
+//        var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
         this.tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag2.getName());
 //        var tag2Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag2.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag2.getName());
 
@@ -144,7 +144,6 @@ public class ApiTestCaseTests extends TestBase {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             $("[data-testid='section__tags']").shouldHave(text(tag1Name)).shouldHave(visible);
             $("[data-testid='section__tags']").shouldHave(text(tag2Name)).shouldHave(visible);
-            Selenide.sleep(5000);
         });
     }
 
