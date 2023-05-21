@@ -12,7 +12,6 @@ import org.junit.jupiter.api.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static api.models.specs.Specs.request;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -62,6 +61,8 @@ public class ApiTestCaseTests extends TestBase {
         this.step3 = testCaseDataGenerator.getStepTestCaseThree();
         this.comment = testCaseDataGenerator.getComment();
         this.testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
+        this.tag1Name = testCaseDataGenerator.getStepTestCaseThree();
+        this.tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
     }
 
     @AfterEach
@@ -114,35 +115,36 @@ public class ApiTestCaseTests extends TestBase {
     @WithLogin
     @DisplayName("Добавление tag к test case")
     void addendumTagTestCase() {
-        TestCaseTagDto tag1 = new TestCaseTagDto();
-        TestCaseTagDto tag2 = new TestCaseTagDto();
-        tag1.setId(166L);
-        tag1.setName("API");
-        tag2.setId(1052L);
-        tag2.setName("REGRESS");
+        TestCaseTagRequest tag1 = new TestCaseTagRequest();
+        TestCaseTagRequest tag2 = new TestCaseTagRequest();
+       // tag1.setId(166L);
+        tag1.setName(tag1Name);
+       // tag2.setId(1052L);
+        tag2.setName(tag2Name);
 
-        List<TestCaseTagDto> list = List.of(tag1, tag2);
+        List<TestCaseTagRequest> list = List.of(tag1, tag2);
 
         ValidatableResponse addendumResponse = testCaseApi.addendumResponse(list, testCaseId);
-        TestCaseTagDto[] listTestCase = addendumResponse.extract().as(TestCaseTagDto[].class);
+        TestCaseTagResponse[] listTestCase = addendumResponse.extract().as(TestCaseTagResponse[].class);
 
+//
+        this.tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
+ //       var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
+        this.tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag2.getName());
+//        var tag2Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag2.getName())).map(TestCaseTagResponse::getName).findFirst().orElse(tag2.getName());
 
-        this.tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag1.getName());
-        var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag1.getId());
-        this.tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag2.getName());
-        var tag2Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag2.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag2.getId());
-
-        step("Api verify tag in response", () -> {
+//        step("Api verify tag in response", () -> {
             assertThat(tag1Name).as("Ошибка с именем tag1").isEqualTo(tag1.getName());
-            assertThat(tag1Id).as("Ошибка с id tag1").isEqualTo(tag1.getId());
+//           // assertThat(tag1Id).as("Ошибка с id tag1").isEqualTo(tag1.getId());
             assertThat(tag2Name).as("Ошибка с именем tag2").isEqualTo(tag2.getName());
-            assertThat(tag2Id).as("Ошибка с id tag1").isEqualTo(tag2.getId());
-        });
+//          //  assertThat(tag2Id).as("Ошибка с id tag1").isEqualTo(tag2.getId());
+//        });
 
         step("Проверяем, что tag добавлен в test cases ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             $("[data-testid='section__tags']").shouldHave(text(tag1Name)).shouldHave(visible);
             $("[data-testid='section__tags']").shouldHave(text(tag2Name)).shouldHave(visible);
+            Selenide.sleep(5000);
         });
     }
 

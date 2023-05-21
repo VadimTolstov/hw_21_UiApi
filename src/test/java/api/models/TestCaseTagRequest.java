@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TestCaseTagDto {
+public class TestCaseTagRequest {
 
-    private Long id;
     private String name;
 }
 
