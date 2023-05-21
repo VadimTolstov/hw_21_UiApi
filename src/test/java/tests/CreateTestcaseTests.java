@@ -8,6 +8,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import models.*;
 import models.specs.CreateTestCaseRequestDto;
+import models.specs.Specs;
 import models.specs.TestCaseDataResponseDto;
 import org.junit.jupiter.api.*;
 import testcase.TestCaseApi;
@@ -22,6 +23,8 @@ import static com.codeborne.selenide.Selenide.$x;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static models.specs.Specs.request;
+import static models.specs.Specs.response;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -77,17 +80,14 @@ public class CreateTestcaseTests extends TestBase {
         CreateTestCaseBody body = new CreateTestCaseBody();
         body.setName(changing);
         CreateTestCaseResponse createTestCaseResponse = step("Редактируем тест кейс", () ->
-                given().log().body()
-                        .filter(withCustomTemplates())
-                        .contentType(ContentType.JSON)
-                        .header("Authorization", "Bearer " + accessToken)
+                given(request)
                         .queryParam("projectId", PROJECT_ID)
                         .queryParam("leafId", testCaseId)
                         .body(body)
                         .when()
-                        .post("api/rs/testcasetree/leaf/rename")
-                        .then().log().body()
-                        .statusCode(200)
+                        .post("testcasetree/leaf/rename")
+                        .then()
+                        .spec(response)
                         .extract().as(CreateTestCaseResponse.class));
 
         step("Api verify  changing in response", () ->
@@ -109,15 +109,11 @@ public class CreateTestcaseTests extends TestBase {
         descriptionTestCaseDto.setId(testCaseId);
 
         TestCaseDataResponseDto testCaseDataResponseDto = step("Добавляем описание test cases", () ->
-                given().log().body()
-                        .filter(withCustomTemplates())
-                        .contentType(ContentType.JSON)
-                        .header("Authorization", "Bearer " + accessToken)
+                given(request)
                         .body(descriptionTestCaseDto)
                         .when()
-                        .patch("api/rs/testcase/" + testCaseId)
-                        .then().log().body()
-                        .statusCode(200)
+                        .patch("testcase/" + testCaseId)
+                        .then().spec(response)
                         .extract().as(TestCaseDataResponseDto.class));
 
         step("Api verify  description in response", () ->
@@ -142,13 +138,10 @@ public class CreateTestcaseTests extends TestBase {
 
         List<TestCaseTagDto> list = List.of(tag1, tag2);
         ValidatableResponse response = step("Добовляем tag в test cases", () ->
-                given().log().all()
-                        .filter(withCustomTemplates())
-                        .contentType(ContentType.JSON)
-                        .header("Authorization", "Bearer " + accessToken)
+                given(request)
                         .body(list)
                         .when()
-                        .post("api/rs/testcase/" + testCaseId + "/tag")
+                        .post("testcase/" + testCaseId + "/tag")
                         .then().log().body());
 
         TestCaseTagDto[] listTestCase = response.extract().as(TestCaseTagDto[].class);
@@ -183,15 +176,12 @@ public class CreateTestcaseTests extends TestBase {
         testCaseCommentDto.setTestCaseId(testCaseId);
 
         TestCaseCommentDto responseDto = step("Добовляем comment test cases", () ->
-                given().log().body()
-                        .filter(withCustomTemplates())
-                        .contentType(ContentType.JSON)
-                        .header("Authorization", "Bearer " + accessToken)
+                given(request)
                         .body(testCaseCommentDto)
                         .when()
-                        .post("/api/rs/comment")
-                        .then().log().body()
-                        .statusCode(200)
+                        .post("comment")
+                        .then()
+                        .spec(response)
                         .extract().as(TestCaseCommentDto.class));
 
         step("Api verify comment in response", () ->
@@ -217,16 +207,12 @@ public class CreateTestcaseTests extends TestBase {
                 .addStep(new TestCaseScenarioDto.Step(step3, "st-3"));
 
         TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
-                given().log().all()
-                        .filter(withCustomTemplates())
-                        .contentType(ContentType.JSON)
-                        .header("Authorization", "Bearer " + accessToken)
+                given(request)
                         .body(scenarioDto)
                         .when()
-                        .post("/api/rs/testcase/" + testCaseId + "/scenario")
+                        .post("testcase/" + testCaseId + "/scenario")
                         .then()
-                        .log().all()
-                        .statusCode(200)
+                        .spec(Specs.response)
                         .extract().as(TestCaseScenarioDto.class));
 
         step("Api verify step 1 in response", () ->

@@ -16,7 +16,7 @@ public class Specs {
            .filter(CustomAllureListener.withCustomTemplates())
            .log().uri()
            .log().body()
-           //.baseUri() todo
+           //.baseUri() todo .baseUri(Project.config.apiBaseUrl())
            .contentType(ContentType.JSON)
            .header("Authorization", "Bearer " + AuthorizationApi.getAuthorization().getAccessToken())
            .basePath("api/rs/");
