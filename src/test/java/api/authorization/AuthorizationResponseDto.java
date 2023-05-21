@@ -1,4 +1,4 @@
-package authorization;
+package api.authorization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

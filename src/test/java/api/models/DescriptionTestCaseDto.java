@@ -1,15 +1,11 @@
-package models;
+package api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TestCaseTagDto {
-
-    private Long id;
-    private String name;
-
+public class DescriptionTestCaseDto {
+    String description;
+    Long id;
 }
-
-//[{"id":166,"name":"API"}]

@@ -1,6 +1,6 @@
 package helpers;
 
-import authorization.AuthorizationApi;
+import api.authorization.AuthorizationApi;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.Cookie;

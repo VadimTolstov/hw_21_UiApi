@@ -1,6 +1,6 @@
-package testcase.specs;
+package api.pages.specs;
 
-import authorization.AuthorizationApi;
+import api.authorization.AuthorizationApi;
 import io.restassured.builder.RequestSpecBuilder;
 
 import io.restassured.http.ContentType;

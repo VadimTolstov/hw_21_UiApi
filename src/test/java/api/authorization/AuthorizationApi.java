@@ -1,7 +1,7 @@
-package authorization;
+package api.authorization;
 
 import config.Auth;
-import endpoint.AuthEndPoint;
+import api.endpoint.AuthEndPoint;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;

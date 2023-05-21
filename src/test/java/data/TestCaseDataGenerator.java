@@ -1,8 +1,8 @@
-package models.data;
+package data;
 
 import com.github.javafaker.Faker;
 
-public class TestCaseApiDataGenerator {
+public class TestCaseDataGenerator {
 
     static final Faker faker = new Faker();
 

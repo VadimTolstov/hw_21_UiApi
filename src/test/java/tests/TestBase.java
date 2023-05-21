@@ -7,13 +7,13 @@ import config.WebDriverProvider;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
-import models.data.TestCaseApiDataGenerator;
+import data.TestCaseDataGenerator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 public class TestBase {
-    TestCaseApiDataGenerator testCaseApiDataGenerator = new TestCaseApiDataGenerator();
+    TestCaseDataGenerator testCaseDataGenerator = new TestCaseDataGenerator();
 
     @BeforeAll
     static void setUp() {

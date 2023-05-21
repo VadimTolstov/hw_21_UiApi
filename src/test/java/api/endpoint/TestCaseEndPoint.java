@@ -1,4 +1,4 @@
-package endpoint;
+package api.endpoint;
 
 public class TestCaseEndPoint {
     public static final String CREATE = "/api/rs/testcase";

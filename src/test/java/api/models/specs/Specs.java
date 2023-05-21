@@ -1,6 +1,6 @@
-package models.specs;
+package api.models.specs;
 
-import authorization.AuthorizationApi;
+import api.authorization.AuthorizationApi;
 import helpers.CustomAllureListener;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;

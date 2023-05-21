@@ -1,17 +1,17 @@
 package tests;
 
-import authorization.AuthorizationApi;
+import api.authorization.AuthorizationApi;
+import api.models.*;
 import com.codeborne.selenide.Selenide;
 import helpers.WithLogin;
-import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
-import models.*;
-import models.specs.CreateTestCaseRequestDto;
-import models.specs.Specs;
-import models.specs.TestCaseDataResponseDto;
+
+import api.models.CreateTestCaseRequestDto;
+import api.models.specs.Specs;
+import api.models.TestCaseDataResponseDto;
 import org.junit.jupiter.api.*;
-import testcase.TestCaseApi;
+import api.pages.TestCaseApi;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,15 +23,15 @@ import static com.codeborne.selenide.Selenide.$x;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static models.specs.Specs.request;
-import static models.specs.Specs.response;
+import static api.models.specs.Specs.request;
+import static api.models.specs.Specs.response;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @DisplayName("Ui and Api tests Allure")
-public class CreateTestcaseTests extends TestBase {
+public class ApiTestCaseTests extends TestBase {
     String testCaseName,
             testCaseDescription,
             accessToken;
@@ -41,10 +41,9 @@ public class CreateTestcaseTests extends TestBase {
     private static final Long PROJECT_ID = 2237L;
 
     @BeforeEach
-    @Step("Создание test cesa по api")
     public void createTestCase() {
-        this.testCaseName = testCaseApiDataGenerator.getTestCaseName();
-        this.testCaseDescription = testCaseApiDataGenerator.getTestDescription();
+        this.testCaseName = testCaseDataGenerator.getTestCaseName();
+        this.testCaseDescription = testCaseDataGenerator.getTestDescription();
 
         CreateTestCaseRequestDto testCase = CreateTestCaseRequestDto.builder()
                 .name(testCaseName)
@@ -62,59 +61,43 @@ public class CreateTestcaseTests extends TestBase {
     }
 
     @AfterEach
-    @Step("Удаляем test cesa по api")
     public void deleteTestCase() {
         testCaseApi.deleteTestCase(testCaseId);
     }
 
     @Test
     @WithLogin
-    @DisplayName("Редактирование имени тест кейса")
+    @DisplayName("Редактирование имени test case")
     void changingNameTestCase() {
-        step("Проверяем, что у созданного test cases есть имя", () -> {
+        step("Проверяем, что у созданного test case есть имя", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
             $(".TestCaseLayout__name").shouldHave(text(testCaseName));
         });
 
-        String changing = testCaseApiDataGenerator.getTestCaseName();
         CreateTestCaseBody body = new CreateTestCaseBody();
-        body.setName(changing);
-        CreateTestCaseResponse createTestCaseResponse = step("Редактируем тест кейс", () ->
-                given(request)
-                        .queryParam("projectId", PROJECT_ID)
-                        .queryParam("leafId", testCaseId)
-                        .body(body)
-                        .when()
-                        .post("testcasetree/leaf/rename")
-                        .then()
-                        .spec(response)
-                        .extract().as(CreateTestCaseResponse.class));
+        body.setName(testCaseDataGenerator.getTestCaseName());
+
+        CreateTestCaseResponse testCaseResponse = testCaseApi.createTestCaseResponse(body, PROJECT_ID, testCaseId);
 
         step("Api verify  changing in response", () ->
-                assertEquals(changing, createTestCaseResponse.getName()));
+                assertThat(testCaseResponse.getName()).isEqualTo(body.getName()));
 
         step("Проверяем, что changing test cases изменилось ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            $(".TestCaseLayout__name").shouldHave(text(createTestCaseResponse.getName()));
+            $(".TestCaseLayout__name").shouldHave(text(testCaseResponse.getName()));
         });
     }
 
     @Test
     @WithLogin
-    @DisplayName("Добавление описания test cases")
+    @DisplayName("Добавление описания в test case")
     void descriptionTestCase() {
-        String description = testCaseApiDataGenerator.getTestDescription();
+        String description = testCaseDataGenerator.getTestDescription();
         DescriptionTestCaseDto descriptionTestCaseDto = new DescriptionTestCaseDto();
         descriptionTestCaseDto.setDescription(description);
         descriptionTestCaseDto.setId(testCaseId);
 
-        TestCaseDataResponseDto testCaseDataResponseDto = step("Добавляем описание test cases", () ->
-                given(request)
-                        .body(descriptionTestCaseDto)
-                        .when()
-                        .patch("testcase/" + testCaseId)
-                        .then().spec(response)
-                        .extract().as(TestCaseDataResponseDto.class));
+        TestCaseDataResponseDto testCaseDataResponseDto = testCaseApi.descriptionTestCase(descriptionTestCaseDto, testCaseId);
 
         step("Api verify  description in response", () ->
                 assertEquals(description, testCaseDataResponseDto.getDescription()));
@@ -168,69 +151,52 @@ public class CreateTestcaseTests extends TestBase {
 
     @Test
     @WithLogin
-    @DisplayName("Добавление comment test cases")
+    @DisplayName("Добавление comment test case")
     void commentTestCase() {
-        String comment = testCaseApiDataGenerator.getComment();
-        TestCaseCommentDto testCaseCommentDto = new TestCaseCommentDto();
-        testCaseCommentDto.setBody(comment);
-        testCaseCommentDto.setTestCaseId(testCaseId);
+        String comment = testCaseDataGenerator.getComment();
+        TestCaseCommentDto requestComment = new TestCaseCommentDto();
+        requestComment.setBody(comment);
+        requestComment.setTestCaseId(testCaseId);
 
-        TestCaseCommentDto responseDto = step("Добовляем comment test cases", () ->
-                given(request)
-                        .body(testCaseCommentDto)
-                        .when()
-                        .post("comment")
-                        .then()
-                        .spec(response)
-                        .extract().as(TestCaseCommentDto.class));
+        TestCaseCommentDto responseComment = testCaseApi.responseComment(requestComment);
 
         step("Api verify comment in response", () ->
-                assertEquals(comment, responseDto.getBody()));
+                assertEquals(comment, responseComment.getBody()));
 
         step("Проверяем, comment в test cases добавлены ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            $(".Comment__body").shouldHave(text(responseDto.getBody())).shouldHave(visible);
+            $(".Comment__body").shouldHave(text(responseComment.getBody())).shouldHave(visible);
         });
     }
 
     @Test
     @WithLogin
-    @DisplayName("Обновление шагов test cases V2.0")
+    @DisplayName("Обновление шагов в test case")
     void updateTestCaseStepsTest2() {
-        String step1 = testCaseApiDataGenerator.getStepTestCaseOne();
-        String step2 = testCaseApiDataGenerator.getStepTestCaseTwo();
-        String step3 = testCaseApiDataGenerator.getStepTestCaseThree();
 
         TestCaseScenarioDto scenarioDto = new TestCaseScenarioDto()
-                .addStep(new TestCaseScenarioDto.Step(step1, "st-1"))
-                .addStep(new TestCaseScenarioDto.Step(step2, "st-2"))
-                .addStep(new TestCaseScenarioDto.Step(step3, "st-3"));
+                .addStep(new TestCaseScenarioDto.Step(testCaseDataGenerator.getStepTestCaseOne(), "st-1"))
+                .addStep(new TestCaseScenarioDto.Step(testCaseDataGenerator.getStepTestCaseTwo(), "st-2"))
+                .addStep(new TestCaseScenarioDto.Step(testCaseDataGenerator.getStepTestCaseThree(), "st-3"));
 
-        TestCaseScenarioDto response = step("Добовляем в test case steps по api", () ->
-                given(request)
-                        .body(scenarioDto)
-                        .when()
-                        .post("testcase/" + testCaseId + "/scenario")
-                        .then()
-                        .spec(Specs.response)
-                        .extract().as(TestCaseScenarioDto.class));
+        TestCaseScenarioDto responseTestCaseScenario = testCaseApi.response(scenarioDto, testCaseId);
 
         step("Api verify step 1 in response", () ->
-                assertEquals(step1, response.getSteps().get(0).getName()));
+                assertEquals(scenarioDto.getSteps().get(0).getName(), responseTestCaseScenario.getSteps().get(0).getName()));
         step("Api verify name step2 in response", () ->
-                assertEquals(step2, response.getSteps().get(1).getName()));
+                assertEquals(scenarioDto.getSteps().get(1).getName(), responseTestCaseScenario.getSteps().get(1).getName()));
         step("Api verify name  step3 in response", () ->
-                assertEquals(step3, response.getSteps().get(2).getName()));
+                assertEquals(scenarioDto.getSteps().get(2).getName(), responseTestCaseScenario.getSteps().get(2).getName()));
 
         step("Open test case url", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            $x("//pre[text()='" + step1 + "']").shouldHave(text(step1));
+            $x("//pre[text()='" + scenarioDto.getSteps().get(0).getName() + "']").shouldHave(text(scenarioDto.getSteps().get(0).getName()));
         });
 
         step("UI verify step in test case ", () -> {
-            $x("//pre[text()='" + step1 + "']").shouldHave(text(step1)).shouldHave(visible);
-            $x("//pre[text()='" + step2 + "']").shouldHave(text(step2)).shouldHave(visible);
-            $x("//pre[text()='" + step3 + "']").shouldHave(text(step3)).shouldHave(visible);
+            $x("//pre[text()='" + scenarioDto.getSteps().get(0).getName() + "']").shouldHave(text(scenarioDto.getSteps().get(0).getName())).shouldHave(visible);
+            $x("//pre[text()='" + scenarioDto.getSteps().get(1).getName() + "']").shouldHave(text(scenarioDto.getSteps().get(1).getName())).shouldHave(visible);
+            $x("//pre[text()='" + scenarioDto.getSteps().get(2).getName() + "']").shouldHave(text(scenarioDto.getSteps().get(2).getName())).shouldHave(visible);
         });
     }
 

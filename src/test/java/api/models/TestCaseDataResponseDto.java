@@ -1,14 +1,13 @@
-package models.specs;
+package api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateTestCaseRequestDto {
-    private final String name,
+public class TestCaseDataResponseDto {
+    private String name,
             description;
-    private final Long projectId;
+    private Long projectId,
+            id;
 }
