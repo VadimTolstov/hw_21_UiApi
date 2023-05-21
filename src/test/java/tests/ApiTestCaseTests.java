@@ -33,7 +33,9 @@ public class ApiTestCaseTests extends TestBase {
             step1,
             step2,
             step3,
-            comment;
+            comment,
+            tag1Name,
+            tag2Name;
     Long testCaseId;
 
     private final TestCaseApi testCaseApi = new TestCaseApi();
@@ -125,9 +127,9 @@ public class ApiTestCaseTests extends TestBase {
         TestCaseTagDto[] listTestCase = addendumResponse.extract().as(TestCaseTagDto[].class);
 
 
-        var tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag1.getName());
+        this.tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag1.getName());
         var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag1.getId());
-        var tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag2.getName());
+        this.tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag2.getName());
         var tag2Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag2.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag2.getId());
 
         step("Api verify tag in response", () -> {
