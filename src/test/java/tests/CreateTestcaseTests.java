@@ -155,42 +155,27 @@ public class CreateTestcaseTests extends TestBase {
                         .then().log().body());
 
         TestCaseTagDto[] listTestCase = response.extract().as(TestCaseTagDto[].class);
+
+
         var tag1Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag1.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag1.getName());
         var tag1Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag1.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag1.getId());
         var tag2Name = Arrays.stream(listTestCase).filter(f -> f.getId().equals(tag2.getId())).map(TestCaseTagDto::getName).findFirst().orElse(tag2.getName());
         var tag2Id = Arrays.stream(listTestCase).filter(f -> f.getName().equals(tag2.getName())).map(TestCaseTagDto::getId).findFirst().orElse(tag2.getId());
 
-        assertThat(tag1Name).as("API").isEqualTo(tag1.getName());
-        assertThat(tag1Id).as(String.valueOf(166L)).isEqualTo(tag1.getId());
-        assertThat(tag2Name).as("REGRESS").isEqualTo(tag2.getName());
-        assertThat(tag2Id).as(String.valueOf(1052L)).isEqualTo(tag2.getId());
+        step("Api verify tag in response", () -> {
+            assertThat(tag1Name).as("Ошибка с именем tag1").isEqualTo(tag1.getName());
+            assertThat(tag1Id).as("Ошибка с id tag1").isEqualTo(tag1.getId());
+            assertThat(tag2Name).as("Ошибка с именем tag2").isEqualTo(tag2.getName());
+            assertThat(tag2Id).as("Ошибка с id tag1").isEqualTo(tag2.getId());
+        });
 
         step("Проверяем, что tag добавлен в test cases ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            // $("[data-testid='section__description']").shouldHave(text(testCaseDataResponseDto.getDescription()));
-            Selenide.sleep(5000);
+            $("[data-testid='section__tags']").shouldHave(text(tag1Name)).shouldHave(visible);
+            $("[data-testid='section__tags']").shouldHave(text(tag2Name)).shouldHave(visible);
         });
     }
 
-    //    curl 'https://allure.autotests.cloud/api/rs/testcase/19477/tag' \
-//            -H 'Accept: application/json, text/plain, */*' \
-//            -H 'Accept-Language: ru,en;q=0.9' \
-//            -H 'Cache-Control: no-cache' \
-//            -H 'Connection: keep-alive' \
-//            -H 'Content-Type: application/json;charset=UTF-8' \
-//            -H 'Cookie: _cc_id=b1975b0072d5e90371807e01eb50f935; _ga_MVRXK93D28=GS1.1.1680503960.1.0.1680504022.0.0.0; _ga=GA1.1.930498322.1680503961; XSRF-TOKEN=1885bb10-2557-4dfc-b809-f385b821ad3f; REDIRECT_URI=L3Byb2plY3QvMjIzNy90ZXN0LWNhc2VzLzE3ODg0P3RyZWVJZD0w; ALLURE_TESTOPS_SESSION=511e4628-f85c-4e3e-94a1-28c9a7ad6e1b' \
-//            -H 'Origin: https://allure.autotests.cloud' \
-//            -H 'Pragma: no-cache' \
-//            -H 'Sec-Fetch-Dest: empty' \
-//            -H 'Sec-Fetch-Mode: cors' \
-//            -H 'Sec-Fetch-Site: same-origin' \
-//            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 YaBrowser/23.3.4.603 Yowser/2.5 Safari/537.36' \
-//            -H 'X-XSRF-TOKEN: 1885bb10-2557-4dfc-b809-f385b821ad3f' \
-//            -H 'sec-ch-ua: "Chromium";v="110", "Not A(Brand";v="24", "YaBrowser";v="23"' \
-//            -H 'sec-ch-ua-mobile: ?0' \
-//            -H 'sec-ch-ua-platform: "Windows"' \
-//            --data-raw '[{"id":1034,"name":"45"}]' \
-//            --compressed
     @Test
     @WithLogin
     @DisplayName("Добавление comment test cases")
@@ -212,12 +197,12 @@ public class CreateTestcaseTests extends TestBase {
                         .statusCode(200)
                         .extract().as(TestCaseCommentDto.class));
 
-        step("Api verify comment 1 in response", () ->
+        step("Api verify comment in response", () ->
                 assertEquals(comment, responseDto.getBody()));
 
         step("Проверяем, comment в test cases добавлены ", () -> {
             Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            $(".Comment__body").shouldHave(text(responseDto.getBody()));
+            $(".Comment__body").shouldHave(text(responseDto.getBody())).shouldHave(visible);
         });
     }
 
