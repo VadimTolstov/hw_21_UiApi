@@ -29,4 +29,8 @@ public class TestCaseDataGenerator {
     public String getComment() {
         return faker.address().fullAddress();
     }
+
+    public String getTestCaseNewName() {
+        return faker.name().lastName();
+    }
 }

@@ -5,6 +5,9 @@ import api.models.*;
 import api.models.specs.Specs;
 import api.pages.specs.BaseApi;
 import io.qameta.allure.Step;
+import io.restassured.response.ValidatableResponse;
+
+import java.util.List;
 
 import static api.models.specs.Specs.request;
 import static api.models.specs.Specs.response;
@@ -66,7 +69,7 @@ public class TestCaseApi extends BaseApi {
                 .extract().as(TestCaseDataResponseDto.class);
     }
 
-    @Step("Обновляем шагов в test case")
+    @Step("Обновляем шагов в test case через Api")
     public TestCaseScenarioDto response(TestCaseScenarioDto scenarioDto, Long testCaseId) {
         return given(request)
                 .body(scenarioDto)
@@ -77,14 +80,23 @@ public class TestCaseApi extends BaseApi {
                 .extract().as(TestCaseScenarioDto.class);
     }
 
-    @Step("Добовляем comment в test case")
+    @Step("Добовляем comment в test case через Api")
     public TestCaseCommentDto responseComment(TestCaseCommentDto requestComment) {
-      return   given(request)
+        return given(request)
                 .body(requestComment)
                 .when()
                 .post("comment")
                 .then()
                 .spec(response)
                 .extract().as(TestCaseCommentDto.class);
+    }
+
+    @Step("Добавляем tag к test case через Api")
+    public ValidatableResponse addendumResponse(List list, Long testCaseId) {
+        return given(request)
+                .body(list)
+                .when()
+                .post("testcase/" + testCaseId + "/tag")
+                .then().log().body();
     }
 }
