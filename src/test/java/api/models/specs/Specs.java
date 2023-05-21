@@ -9,6 +9,7 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 import static io.restassured.RestAssured.with;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class Specs {
 
@@ -23,6 +24,7 @@ public class Specs {
 
    public static ResponseSpecification response = new ResponseSpecBuilder()
            .log(LogDetail.ALL)
+           .expectBody(notNullValue())
            .expectStatusCode(200)
            .build();
 }
