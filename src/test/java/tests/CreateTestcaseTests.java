@@ -5,16 +5,13 @@ import com.codeborne.selenide.Selenide;
 import helpers.WithLogin;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import models.*;
 import models.specs.CreateTestCaseRequestDto;
 import models.specs.TestCaseDataResponseDto;
-import org.assertj.core.error.MultipleAssertionsError;
 import org.junit.jupiter.api.*;
 import testcase.TestCaseApi;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
