@@ -2,6 +2,7 @@ package tests;
 
 import api.models.*;
 import api.pages.TestCaseApi;
+import api.pages.specs.ApiVerify;
 import com.codeborne.selenide.Selenide;
 import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ui.UiVerify;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,24 +26,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Ui and Api tests Allure")
 public class ApiTestCaseTests extends TestBase {
+
+    UiVerify uiVerify = new UiVerify();
+    ApiVerify apiVerify = new ApiVerify();
     String testCaseName,
-            testCaseNewName,
-            testCaseDescription,
-            step1,
-            step2,
-            step3,
-            comment,
-            tag1Name,
-            tag2Name;
+            testCaseDescription;
+
+    String step1 = testCaseDataGenerator.getStepTestCaseOne();
+    String step2 = testCaseDataGenerator.getStepTestCaseTwo();
+    String step3 = testCaseDataGenerator.getStepTestCaseThree();
+    String comment = testCaseDataGenerator.getComment();
+    String testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
+    String tag1Name = testCaseDataGenerator.getStepTestCaseThree();
+    String tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
+
     Long testCaseId;
 
     private final TestCaseApi testCaseApi = new TestCaseApi();
-    private static final Long PROJECT_ID = 2237L;
+    private final Long PROJECT_ID = 2237L;
 
     @BeforeEach
+    @DisplayName("Создаем test case")
     public void createTestCase() {
-        this.testCaseName = testCaseDataGenerator.getTestCaseName();
-        this.testCaseDescription = testCaseDataGenerator.getTestDescription();
+        testCaseName = testCaseDataGenerator.getTestCaseName();
+        testCaseDescription = testCaseDataGenerator.getTestDescription();
 
         CreateTestCaseRequestDto testCase = CreateTestCaseRequestDto.builder()
                 .name(testCaseName)
@@ -53,17 +61,11 @@ public class ApiTestCaseTests extends TestBase {
 
         assertThat(testCaseResponseData.getId()).isNotNull();
 
-        this.testCaseId = testCaseResponseData.getId();
-        this.step1 = testCaseDataGenerator.getStepTestCaseOne();
-        this.step2 = testCaseDataGenerator.getStepTestCaseTwo();
-        this.step3 = testCaseDataGenerator.getStepTestCaseThree();
-        this.comment = testCaseDataGenerator.getComment();
-        this.testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
-        this.tag1Name = testCaseDataGenerator.getStepTestCaseThree();
-        this.tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
+        testCaseId = testCaseResponseData.getId();
     }
 
     @AfterEach
+    @DisplayName("Удаляем test case")
     public void deleteTestCase() {
         testCaseApi.deleteTestCase(testCaseId);
     }
@@ -72,10 +74,10 @@ public class ApiTestCaseTests extends TestBase {
     @WithLogin
     @DisplayName("Редактирование имени test case")
     void changingNameTestCase() {
-        step("Проверяем, что у созданного test case есть имя", () -> {
-            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            $(".TestCaseLayout__name").shouldHave(text(testCaseName));
-        });
+
+        step("Проверяем что у test case есть имя", () ->
+                uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
+                        .verifyNameTestCase(testCaseName));
 
         CreateTestCaseBody body = new CreateTestCaseBody();
         body.setName(testCaseNewName);
@@ -85,11 +87,11 @@ public class ApiTestCaseTests extends TestBase {
         step("Api verify  changing in response", () ->
                 assertThat(testCaseResponse.getName()).isEqualTo(body.getName()));
 
-        step("Проверяем, что changing test cases изменилось ", () -> {
-            Selenide.open("https://allure.autotests.cloud/project/" + PROJECT_ID + "/test-cases/" + testCaseId);
-            $(".TestCaseLayout__name").shouldHave(text(testCaseNewName));
-        });
+        step("Проверяем, что имя test cases изменилось ", () ->
+                uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
+                        .verifyNameTestCase(testCaseNewName));
     }
+
 
     @Test
     @WithLogin
