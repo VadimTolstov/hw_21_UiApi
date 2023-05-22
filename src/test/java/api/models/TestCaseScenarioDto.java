@@ -26,9 +26,9 @@ public class TestCaseScenarioDto {
     public static class Step {
         private String name, keyword;
 
-        public Step(String name, String keyword) {
+        public Step(String name) {
             this.name = name;
-            this.keyword = keyword;
+
         }
     }
 }
