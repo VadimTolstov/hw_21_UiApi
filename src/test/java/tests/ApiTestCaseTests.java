@@ -2,7 +2,7 @@ package tests;
 
 import api.models.*;
 import api.pages.TestCaseApi;
-import api.pages.specs.ApiVerify;
+import api.pages.ApiVerify;
 import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;

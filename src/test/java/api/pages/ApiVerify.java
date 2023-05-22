@@ -1,4 +1,4 @@
-package api.pages.specs;
+package api.pages;
 
 import api.models.*;
 import io.qameta.allure.Step;
