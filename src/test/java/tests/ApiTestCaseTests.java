@@ -24,16 +24,16 @@ public class ApiTestCaseTests extends TestBase {
 
     UiVerify uiVerify = new UiVerify();
     ApiVerify apiVerify = new ApiVerify();
-    String testCaseName,
+    private String testCaseName,
             testCaseDescription;
 
-    String step1 = testCaseDataGenerator.getStepTestCaseOne();
-    String step2 = testCaseDataGenerator.getStepTestCaseTwo();
-    String step3 = testCaseDataGenerator.getStepTestCaseThree();
-    String comment = testCaseDataGenerator.getComment();
-    String testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
-    String tag1Name = testCaseDataGenerator.getStepTestCaseThree();
-    String tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
+    private String step1 = testCaseDataGenerator.getStepTestCaseOne();
+    private String step2 = testCaseDataGenerator.getStepTestCaseTwo();
+    private String step3 = testCaseDataGenerator.getStepTestCaseThree();
+    private String comment = testCaseDataGenerator.getComment();
+    private String testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
+    private String tag1Name = testCaseDataGenerator.getStepTestCaseThree();
+    private String tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
 
     Long testCaseId;
 
