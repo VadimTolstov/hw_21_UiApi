@@ -33,4 +33,8 @@ public class TestCaseDataGenerator {
     public String getTestCaseNewName() {
         return faker.name().lastName();
     }
+
+    public String getNewDescriptionTest() {
+        return faker.backToTheFuture().character();
+    }
 }

@@ -3,6 +3,7 @@ package tests;
 import api.models.*;
 import api.pages.TestCaseApi;
 import api.pages.ApiVerify;
+import com.codeborne.selenide.Selenide;
 import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -27,13 +28,14 @@ public class ApiTestCaseTests extends TestBase {
     private String testCaseName,
             testCaseDescription;
 
-    private String step1 = testCaseDataGenerator.getStepTestCaseOne();
-    private String step2 = testCaseDataGenerator.getStepTestCaseTwo();
-    private String step3 = testCaseDataGenerator.getStepTestCaseThree();
-    private String comment = testCaseDataGenerator.getComment();
-    private String testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
-    private String tag1Name = testCaseDataGenerator.getStepTestCaseThree();
-    private String tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
+    String step1 = testCaseDataGenerator.getStepTestCaseOne();
+    String step2 = testCaseDataGenerator.getStepTestCaseTwo();
+    String step3 = testCaseDataGenerator.getStepTestCaseThree();
+    String comment = testCaseDataGenerator.getComment();
+    String testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
+    String tag1Name = testCaseDataGenerator.getStepTestCaseThree();
+    String tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
+    String testCaseNewDescription = testCaseDataGenerator.getNewDescriptionTest();
 
     Long testCaseId;
 
@@ -74,6 +76,7 @@ public class ApiTestCaseTests extends TestBase {
             uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
                     .verifyNameTestCase(testCaseName);
         });
+
         step("Изменяем имя test case через api", () -> {
             CreateTestCaseBody body = new CreateTestCaseBody();
             body.setName(testCaseNewName);
@@ -83,7 +86,7 @@ public class ApiTestCaseTests extends TestBase {
             apiVerify.verifyChangingNameTestCase(testCaseResponse, body);
         });
 
-        step("Проверяем через ui, что имя test cases изменилось ", () -> {
+        step("Проверяем через ui, что имя test case изменилось ", () -> {
             uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
                     .verifyNameTestCase(testCaseNewName);
         });
@@ -94,8 +97,13 @@ public class ApiTestCaseTests extends TestBase {
     @WithLogin
     @DisplayName("Добавление описания в test case")
     void descriptionTestCase() {
+        step("Проверяем через ui, что у  test cases есть описание", () -> {
+            uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
+                    .verifyDescriptionTestCase(testCaseDescription);
+        });
+
         DescriptionTestCaseDto descriptionTestCaseDto = new DescriptionTestCaseDto();
-        descriptionTestCaseDto.setDescription(testCaseDescription);
+        descriptionTestCaseDto.setDescription(testCaseNewDescription);
         descriptionTestCaseDto.setId(testCaseId);
 
         step("Добовляем описание в test case через api", () -> {
@@ -104,9 +112,9 @@ public class ApiTestCaseTests extends TestBase {
             apiVerify.verifyDescriptionTestCase(testCaseDataResponseDto, descriptionTestCaseDto);
         });
 
-        step("Проверяем через ui, что описания  добавилось в test cases", () -> {
+        step("Проверяем через ui, что описания  поменялось в test case", () -> {
             uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
-            uiVerify.verifyDescriptionTestCase(testCaseDescription);
+            uiVerify.verifyDescriptionTestCase(testCaseNewDescription);
         });
     }
 
@@ -133,7 +141,7 @@ public class ApiTestCaseTests extends TestBase {
                     .verifyAddendumTagTestCase(tag2Name, tag2);
         });
 
-        step("Проверяем через ui, что tag добавлен в test cases ", () -> {
+        step("Проверяем через ui, что tag добавлен в test case ", () -> {
             uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
             uiVerify.verifyAddendumTagTestCase(tag1Name)
                     .verifyAddendumTagTestCase(tag2Name);
@@ -154,7 +162,7 @@ public class ApiTestCaseTests extends TestBase {
             assertEquals(comment, responseComment.getBody());
         });
 
-        step("Проверяем через ui, что коментарий в test cases добавлены ", () -> {
+        step("Проверяем через ui, что коментарий в test case добавлены ", () -> {
             uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
             uiVerify.verifyCommentTestCase(comment);
         });
@@ -175,7 +183,7 @@ public class ApiTestCaseTests extends TestBase {
             apiVerify.verifyStepTagTestCase(step1, step2, step3, responseTestCaseScenario);
         });
 
-        step("Проверяем через ui, что шаги в test cases добавлены ", () -> {
+        step("Проверяем через ui, что шаги в test case добавлены ", () -> {
             uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
             uiVerify.verifyUpdateTestCaseStepsTest(step1)
                     .verifyUpdateTestCaseStepsTest(step2)
