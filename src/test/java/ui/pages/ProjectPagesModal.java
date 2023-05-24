@@ -12,7 +12,7 @@ public class ProjectPagesModal {
 
     @Step("Проверяем, что проект {projectName} создан")
     public ProjectPagesModal verifyNewProject(String projectName) {
-        $("[title=" + projectName + "]").shouldHave(visible).shouldHave(text(projectName));
+        $("[title='" + projectName + "']").shouldHave(visible).shouldHave(text(projectName));
         return this;
     }
 
@@ -23,4 +23,5 @@ public class ProjectPagesModal {
         $x("//button[contains(@class, 'ProjectSettings__confirm-button')]//span").click();
 
     }
+
 }

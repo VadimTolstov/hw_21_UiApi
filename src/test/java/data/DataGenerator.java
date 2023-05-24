@@ -39,6 +39,6 @@ public class DataGenerator {
     }
 
     public String getNewProject() {
-        return faker.name().lastName();
+        return faker.name().fullName();
     }
 }

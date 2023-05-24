@@ -9,7 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ui.UiVerify;
+import ui.pages.TestCasePagesModal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Ui and Api tests Allure")
 public class ApiTestCaseTests extends TestBase {
 
-    UiVerify uiVerify = new UiVerify();
+    TestCasePagesModal testCasePages = new TestCasePagesModal();
     ApiVerify apiVerify = new ApiVerify();
     private String testCaseName,
             testCaseDescription;
@@ -72,7 +72,7 @@ public class ApiTestCaseTests extends TestBase {
     void changingNameTestCase() {
 
         step("Проверяем через ui, что у test case есть имя", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
                     .verifyNameTestCase(testCaseName);
         });
 
@@ -86,7 +86,7 @@ public class ApiTestCaseTests extends TestBase {
         });
 
         step("Проверяем через ui, что имя test case изменилось ", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
                     .verifyNameTestCase(testCaseNewName);
         });
     }
@@ -97,7 +97,7 @@ public class ApiTestCaseTests extends TestBase {
     @DisplayName("Добавление описания в test case")
     void descriptionTestCase() {
         step("Проверяем через ui, что у  test cases есть описание", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId)
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
                     .verifyDescriptionTestCase(testCaseDescription);
         });
 
@@ -112,8 +112,8 @@ public class ApiTestCaseTests extends TestBase {
         });
 
         step("Проверяем через ui, что описания  поменялось в test case", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
-            uiVerify.verifyDescriptionTestCase(testCaseNewDescription);
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId);
+            testCasePages.verifyDescriptionTestCase(testCaseNewDescription);
         });
     }
 
@@ -141,8 +141,8 @@ public class ApiTestCaseTests extends TestBase {
         });
 
         step("Проверяем через ui, что tag добавлен в test case ", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
-            uiVerify.verifyAddendumTagTestCase(tag1Name)
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId);
+            testCasePages.verifyAddendumTagTestCase(tag1Name)
                     .verifyAddendumTagTestCase(tag2Name);
         });
     }
@@ -162,8 +162,8 @@ public class ApiTestCaseTests extends TestBase {
         });
 
         step("Проверяем через ui, что коментарий в test case добавлены ", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
-            uiVerify.verifyCommentTestCase(comment);
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId);
+            testCasePages.verifyCommentTestCase(comment);
         });
     }
 
@@ -183,10 +183,10 @@ public class ApiTestCaseTests extends TestBase {
         });
 
         step("Проверяем через ui, что шаги в test case добавлены ", () -> {
-            uiVerify.openPageTestCase(PROJECT_ID, testCaseId);
-            uiVerify.verifyUpdateTestCaseStepsTest(step1)
-                    .verifyUpdateTestCaseStepsTest(step2)
-                    .verifyUpdateTestCaseStepsTest(step3);
+            testCasePages.openPageTestCase(PROJECT_ID, testCaseId);
+            testCasePages.verifyStepsTestCase(step1)
+                    .verifyStepsTestCase(step2)
+                    .verifyStepsTestCase(step3);
         });
     }
 }
