@@ -2,7 +2,7 @@ package data;
 
 import com.github.javafaker.Faker;
 
-public class TestCaseDataGenerator {
+public class DataGenerator {
 
     static final Faker faker = new Faker();
 
@@ -36,5 +36,9 @@ public class TestCaseDataGenerator {
 
     public String getNewDescriptionTest() {
         return faker.backToTheFuture().character();
+    }
+
+    public String getNewProject() {
+        return faker.name().lastName();
     }
 }

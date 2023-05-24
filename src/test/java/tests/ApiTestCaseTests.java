@@ -3,7 +3,6 @@ package tests;
 import api.models.*;
 import api.pages.TestCaseApi;
 import api.pages.ApiVerify;
-import com.codeborne.selenide.Selenide;
 import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -28,14 +27,14 @@ public class ApiTestCaseTests extends TestBase {
     private String testCaseName,
             testCaseDescription;
 
-    String step1 = testCaseDataGenerator.getStepTestCaseOne();
-    String step2 = testCaseDataGenerator.getStepTestCaseTwo();
-    String step3 = testCaseDataGenerator.getStepTestCaseThree();
-    String comment = testCaseDataGenerator.getComment();
-    String testCaseNewName = testCaseDataGenerator.getTestCaseNewName();
-    String tag1Name = testCaseDataGenerator.getStepTestCaseThree();
-    String tag2Name = testCaseDataGenerator.getStepTestCaseTwo();
-    String testCaseNewDescription = testCaseDataGenerator.getNewDescriptionTest();
+    String step1 = dataGenerator.getStepTestCaseOne();
+    String step2 = dataGenerator.getStepTestCaseTwo();
+    String step3 = dataGenerator.getStepTestCaseThree();
+    String comment = dataGenerator.getComment();
+    String testCaseNewName = dataGenerator.getTestCaseNewName();
+    String tag1Name = dataGenerator.getStepTestCaseThree();
+    String tag2Name = dataGenerator.getStepTestCaseTwo();
+    String testCaseNewDescription = dataGenerator.getNewDescriptionTest();
 
     Long testCaseId;
 
@@ -45,8 +44,8 @@ public class ApiTestCaseTests extends TestBase {
     @BeforeEach
     @DisplayName("Создаем test case")
     public void createTestCase() {
-        testCaseName = testCaseDataGenerator.getTestCaseName();
-        testCaseDescription = testCaseDataGenerator.getTestDescription();
+        testCaseName = dataGenerator.getTestCaseName();
+        testCaseDescription = dataGenerator.getTestDescription();
 
         CreateTestCaseRequestDto testCase = CreateTestCaseRequestDto.builder()
                 .name(testCaseName)
