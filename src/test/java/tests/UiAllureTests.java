@@ -49,7 +49,7 @@ public class UiAllureTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Добовляем шаги в test case")
+    @DisplayName("Добавляем шаги в test case")
     public void createStepTestCase() {
         String nameTestCase = dataGenerator.getTestCaseName();
         String step1 = dataGenerator.getStepTestCaseOne();
@@ -71,7 +71,7 @@ public class UiAllureTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Добовляем Описание в test case")
+    @DisplayName("Добавляем описание в test case")
     public void createDescriptionTestCase() {
         String nameTestCase = dataGenerator.getTestCaseName();
         String DescriptionTestCase = dataGenerator.getTestDescription();
@@ -84,4 +84,7 @@ public class UiAllureTests extends TestBase {
                 .saveDataTestCase()
                 .verifyDescriptionTestCase(DescriptionTestCase);
     }
+
+    @Test
+    @DisplayName("Добавляем")
 }

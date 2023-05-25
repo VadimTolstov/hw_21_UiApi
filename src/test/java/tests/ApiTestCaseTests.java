@@ -94,7 +94,7 @@ public class ApiTestCaseTests extends TestBase {
 
     @Test
     @WithLogin
-    @DisplayName("Добавление описания в test case")
+    @DisplayName("Добавляем описания в test case")
     void descriptionTestCase() {
         step("Проверяем через ui, что у  test cases есть описание", () -> {
             testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
@@ -105,7 +105,7 @@ public class ApiTestCaseTests extends TestBase {
         descriptionTestCaseDto.setDescription(testCaseNewDescription);
         descriptionTestCaseDto.setId(testCaseId);
 
-        step("Добовляем описание в test case через api", () -> {
+        step("Добавляем описание в test case через api", () -> {
             TestCaseDataResponseDto testCaseDataResponseDto = testCaseApi.descriptionTestCase(descriptionTestCaseDto, testCaseId);
 
             apiVerify.verifyDescriptionTestCase(testCaseDataResponseDto, descriptionTestCaseDto);
@@ -129,7 +129,7 @@ public class ApiTestCaseTests extends TestBase {
 
         List<TestCaseTagRequest> list = List.of(tag1, tag2);
 
-        step("Добовляем tag в test case", () -> {
+        step("Добавляем tag в test case", () -> {
             ValidatableResponse addendumResponse = testCaseApi.addendumResponse(list, testCaseId);
             TestCaseTagResponse[] listTestCase = addendumResponse.extract().as(TestCaseTagResponse[].class);
 
@@ -155,7 +155,7 @@ public class ApiTestCaseTests extends TestBase {
         requestComment.setBody(comment);
         requestComment.setTestCaseId(testCaseId);
 
-        step("Добовляем коментарий в test case в через api", () -> {
+        step("Добавляем коментарий в test case в через api", () -> {
             TestCaseCommentDto responseComment = testCaseApi.responseComment(requestComment);
 
             assertEquals(comment, responseComment.getBody());
@@ -169,7 +169,7 @@ public class ApiTestCaseTests extends TestBase {
 
     @Test
     @WithLogin
-    @DisplayName("Добовлени шагов в test case")
+    @DisplayName("Добавляем шагов в test case")
     void updateTestCaseStepsTest() {
         TestCaseScenarioDto scenarioDto = new TestCaseScenarioDto()
                 .addStep(new TestCaseScenarioDto.Step(step1))
