@@ -4,10 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ui.pages.TestCasePagesModal;
 import ui.pages.AuthorizationUi;
 import ui.pages.ProjectPagesModal;
 import ui.pages.ProjectsPagesModal;
+import ui.pages.TestCasePagesModal;
 
 @DisplayName("Ui tests Aller")
 public class UiAllureTests extends TestBase {
@@ -52,7 +52,7 @@ public class UiAllureTests extends TestBase {
     @DisplayName("Добовляем шаги в test case")
     public void createStepTestCase() {
         String nameTestCase = dataGenerator.getTestCaseName();
-        String step1 =dataGenerator.getStepTestCaseOne();
+        String step1 = dataGenerator.getStepTestCaseOne();
         String step2 = dataGenerator.getStepTestCaseTwo();
         String step3 = dataGenerator.getStepTestCaseThree();
 
@@ -60,20 +60,28 @@ public class UiAllureTests extends TestBase {
                 .openTestCasesPages()
                 .createTestCase(nameTestCase)
                 .openTestCase(nameTestCase)
-
-
+                .openStepTestCase()
+                .createStepTestCase(step1)
+                .createStepTestCase(step2)
+                .createStepTestCase(step3)
+                .saveDataTestCase()
+                .verifyStepTestCase(step1)
+                .verifyStepTestCase(step2)
+                .verifyStepTestCase(step3);
     }
-//    @Test
-//    @DisplayName("")
-//    public void createNewProject() {
-//        userAuthorization.authorizationUi();
-//
-//        projectsPagesModal
-//                .openModalCreateNewProject()
-//                .createProject(newProject);
-//
-//        projectPages
-//                .verifyNewProject(newProject)
-//                .deleteProject();
-//    }
+
+    @Test
+    @DisplayName("Добовляем Описание в test case")
+    public void createDescriptionTestCase() {
+        String nameTestCase = dataGenerator.getTestCaseName();
+        String DescriptionTestCase = dataGenerator.getTestDescription();
+
+        testCasePages
+                .openTestCasesPages()
+                .createTestCase(nameTestCase)
+                .openTestCase(nameTestCase)
+                .createDescriptionTestCase(DescriptionTestCase)
+                .saveDataTestCase()
+                .verifyDescriptionTestCase(DescriptionTestCase);
+    }
 }

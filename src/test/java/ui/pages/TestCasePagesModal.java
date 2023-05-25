@@ -4,7 +4,6 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -32,6 +31,7 @@ public class TestCasePagesModal {
         $("[name='test-cases-icon']").click();
         return this;
     }
+
     @Step("Создаем test case {name}")
     public TestCasePagesModal createTestCase(String name) {
         $("[data-testid='input__create_test_case']").setValue(name).pressEnter();
@@ -41,6 +41,31 @@ public class TestCasePagesModal {
     @Step("Открываем test case {}")
     public TestCasePagesModal openTestCase(String nameTestCase) {
         $(byText(nameTestCase)).click();
+        return this;
+    }
+
+    @Step("Открываем step в test case")
+    public TestCasePagesModal openStepTestCase() {
+        $x("//div[@class='ScenarioSection__name']/../..//div[@class='PaneSection__controls']").click();
+        return this;
+    }
+
+    @Step("Добовляем step {step} в test case")
+    public TestCasePagesModal createStepTestCase(String step) {
+        $(".TestCaseScenarioStepEdit__textarea").setValue(step).pressEnter();
+        return this;
+    }
+
+    @Step("Сохраняем данные в test case")
+    public TestCasePagesModal saveDataTestCase() {
+        $(byText("Submit")).click();
+        return this;
+    }
+
+    @Step("Добовляем description {description} в test case")
+    public TestCasePagesModal createDescriptionTestCase(String description) {
+        $x("//section[@data-testid='section__description']/../..//div[@class='PaneSection__controls']").click();
+        $("[name='description']").setValue(description);
         return this;
     }
 
@@ -68,11 +93,11 @@ public class TestCasePagesModal {
         return this;
     }
 
-    @Step("Проверяем, что шаг {step} добавлен в test case")
-    public TestCasePagesModal verifyStepsTestCase(String step) {
-        $x("//pre[text()='" + step + "']").shouldHave(text(step)).shouldHave(visible);
-        return this;
-    }
+//    @Step("Проверяем, что шаг {step} добавлен в test case")
+//    public TestCasePagesModal verifyStepsTestCase(String step) {
+//        $x("//pre[text()='" + step + "']").shouldHave(text(step)).shouldHave(visible);
+//        return this;
+//    }
 
     @Step("Проверяем, что test case {nameTestCase} создался")
     public TestCasePagesModal verifyTestCaseName(String nameTestCase) {
@@ -81,4 +106,9 @@ public class TestCasePagesModal {
         return this;
     }
 
+    @Step("Проверяем, что step {step} добавлен в test case")
+    public TestCasePagesModal verifyStepTestCase(String step) {
+        $("[data-testid='section__scenario']").shouldHave(visible).shouldHave(text(step));
+        return this;
+    }
 }

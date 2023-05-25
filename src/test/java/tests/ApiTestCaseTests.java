@@ -183,10 +183,11 @@ public class ApiTestCaseTests extends TestBase {
         });
 
         step("Проверяем через ui, что шаги в test case добавлены ", () -> {
-            testCasePages.openPageTestCase(PROJECT_ID, testCaseId);
-            testCasePages.verifyStepsTestCase(step1)
-                    .verifyStepsTestCase(step2)
-                    .verifyStepsTestCase(step3);
+            testCasePages
+                    .openPageTestCase(PROJECT_ID, testCaseId)
+                    .verifyStepTestCase(step1)
+                    .verifyStepTestCase(step2)
+                    .verifyStepTestCase(step3);
         });
     }
 }
