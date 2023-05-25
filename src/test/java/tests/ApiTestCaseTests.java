@@ -106,7 +106,7 @@ public class ApiTestCaseTests extends TestBase {
         descriptionTestCaseDto.setDescription(testCaseNewDescription);
         descriptionTestCaseDto.setId(testCaseId);
 
-        step("Добовляем описание в test case через api", () -> {
+        step("Добавляем описание в test case через api", () -> {
             TestCaseDataResponseDto testCaseDataResponseDto = testCaseApi.descriptionTestCase(descriptionTestCaseDto, testCaseId);
 
             apiVerify.verifyDescriptionTestCase(testCaseDataResponseDto, descriptionTestCaseDto);
@@ -130,7 +130,7 @@ public class ApiTestCaseTests extends TestBase {
 
         List<TestCaseTagRequest> list = List.of(tag1, tag2);
 
-        step("Добовляем tag в test case", () -> {
+        step("Добавляем tag в test case", () -> {
             ValidatableResponse addendumResponse = testCaseApi.addendumResponse(list, testCaseId);
             TestCaseTagResponse[] listTestCase = addendumResponse.extract().as(TestCaseTagResponse[].class);
 
@@ -150,13 +150,13 @@ public class ApiTestCaseTests extends TestBase {
 
     @Test
     @WithLogin
-    @DisplayName("Добавление коментарий к test case")
+    @DisplayName("Добавляем коментарий к test case")
     void commentTestCase() {
         TestCaseCommentDto requestComment = new TestCaseCommentDto();
         requestComment.setBody(comment);
         requestComment.setTestCaseId(testCaseId);
 
-        step("Добовляем коментарий в test case в через api", () -> {
+        step("Добавляем коментарий в test case в через api", () -> {
             TestCaseCommentDto responseComment = testCaseApi.responseComment(requestComment);
 
             assertEquals(comment, responseComment.getBody());
@@ -170,7 +170,7 @@ public class ApiTestCaseTests extends TestBase {
 
     @Test
     @WithLogin
-    @DisplayName("Добовлени шагов в test case")
+    @DisplayName("Добавлени шагов в test case")
     void updateTestCaseStepsTest() {
         TestCaseScenarioDto scenarioDto = new TestCaseScenarioDto()
                 .addStep(new TestCaseScenarioDto.Step(step1))
