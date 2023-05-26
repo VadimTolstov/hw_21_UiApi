@@ -1,15 +1,20 @@
 package tests;
 
+import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ui.pages.AuthorizationUi;
-import ui.pages.ProjectPagesModal;
-import ui.pages.ProjectsPagesModal;
-import ui.pages.TestCasePagesModal;
+import allure.ui.pages.AuthorizationUi;
+import allure.ui.pages.ProjectPagesModal;
+import allure.ui.pages.ProjectsPagesModal;
+import allure.ui.pages.TestCasePagesModal;
 
 @DisplayName("Ui tests Aller")
+@Epic("Ui")
+@Owner("толстов вадим")
 public class UiAllureTests extends TestBase {
     AuthorizationUi userAuthorization = new AuthorizationUi();
     ProjectsPagesModal projectsPagesModal = new ProjectsPagesModal();
@@ -17,6 +22,8 @@ public class UiAllureTests extends TestBase {
     TestCasePagesModal testCasePages = new TestCasePagesModal();
 
     @BeforeEach
+    @Epic("Ui")
+    @Owner("толстов вадим")
     @DisplayName("Создаем проект")
     public void createProject() {
         String newProject = dataGenerator.getNewProject();
@@ -32,12 +39,16 @@ public class UiAllureTests extends TestBase {
     }
 
     @AfterEach
+    @Epic("Ui")
+    @Owner("толстов вадим")
     @DisplayName("Удаляем проект")
     public void deleteProject() {
         projectPages.deleteProject();
     }
 
     @Test
+    @Epic("Ui")
+    @Owner("толстов вадим")
     @DisplayName("Создаем test case в проекте")
     public void createTestCase() {
         String nameTestCase = dataGenerator.getTestCaseName();
@@ -49,6 +60,8 @@ public class UiAllureTests extends TestBase {
     }
 
     @Test
+    @Epic("Ui")
+    @Owner("толстов вадим")
     @DisplayName("Добавляем шаги в test case")
     public void createStepTestCase() {
         String nameTestCase = dataGenerator.getTestCaseName();
@@ -71,6 +84,8 @@ public class UiAllureTests extends TestBase {
     }
 
     @Test
+    @Epic("Ui")
+    @Owner("толстов вадим")
     @DisplayName("Добавляем описание в test case")
     public void createDescriptionTestCase() {
         String nameTestCase = dataGenerator.getTestCaseName();
@@ -86,5 +101,20 @@ public class UiAllureTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Добавляем")
+    @Epic("Ui")
+    @Owner("толстов вадим")
+    @DisplayName("Добавляем tag в test case")
+    public void createTagTestCase() {
+        String nameTestCase = dataGenerator.getTestCaseName();
+        String tag1Name = dataGenerator.getStepTestCaseThree();
+        String tag2Name = dataGenerator.getStepTestCaseTwo();
+
+        testCasePages
+                .openTestCasesPages()
+                .createTestCase(nameTestCase)
+                .openTestCase(nameTestCase)
+                .openTagTestCase();
+        Selenide.sleep(6000);
+
+    }
 }
