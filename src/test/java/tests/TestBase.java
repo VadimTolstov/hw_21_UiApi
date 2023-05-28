@@ -3,16 +3,14 @@ package tests;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.Project;
-import data.DataGenerator;
 import drivers.WebDriverProvider;
-import helpers.Attach;
+import helpers.Attachments;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 public class TestBase {
-    DataGenerator dataGenerator = new DataGenerator();
 
     @BeforeAll
     static void setUp() {
@@ -35,16 +33,29 @@ public class TestBase {
 
     @AfterEach
     void addAttachments() {
-        Attach.screenshotAs("Last screenshot");
-        Attach.pageSource();
-        Attach.browserConsoleLogs();
-        if (Project.config.remoteDriverUrl() != null) {
-            Attach.addVideo();
-        }
+        attachEnvDependingTestArtifacts();
+//        Attachments.screenshotAs("Last screenshot");
+//        Attachments.pageSource();
+//        Attachments.browserConsoleLogs();
+//        if (Project.config.remoteDriverUrl() != null) {
+//            Attachments.addVideo();
+//        }
         Selenide.closeWebDriver();
     }
 
     private void attachEnvDependingTestArtifacts() {
-
+        Attachments.pageSource();
+        String sessionId = Attachments.getSessionId();
+        switch (Project.config.platform()) {
+            case "remote":
+                Attachments.screenshotAs("Last screenshot");
+                Attachments.browserConsoleLogs();
+                Attachments.addVideo();
+                break;
+            case "local":
+                Attachments.screenshotAs("Last screenshot");
+                Attachments.browserConsoleLogs();
+                break;
+        }
     }
 }
