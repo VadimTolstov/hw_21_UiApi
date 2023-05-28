@@ -22,10 +22,10 @@ public class TestBase {
 
     private static void selectDriver() {
         switch (Project.config.platform()) {
-            case "lacal":
+            case "local":
             case "remote":
                 WebDriverProvider.configure();
-                RestAssured.baseURI = "https://allure.autotests.cloud";
+                break;
         }
     }
 
@@ -43,5 +43,9 @@ public class TestBase {
             Attach.addVideo();
         }
         Selenide.closeWebDriver();
+    }
+
+    private void attachEnvDependingTestArtifacts() {
+
     }
 }

@@ -1,25 +1,15 @@
-package tests;
+package tests.ui;
 
 import com.codeborne.selenide.Selenide;
+import helpers.ApiTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import pages.AuthorizationUi;
-import pages.ProjectPagesModal;
-import pages.ProjectsPagesModal;
-import pages.TestCasePagesModal;
+import org.junit.jupiter.api.*;
 
 @DisplayName("Ui tests Allure")
 @Epic("UI")
 @Owner("толстов вадим")
-public class UiAllureTests extends TestBase {
-    AuthorizationUi userAuthorization = new AuthorizationUi();
-    ProjectsPagesModal projectsPagesModal = new ProjectsPagesModal();
-    ProjectPagesModal projectPages = new ProjectPagesModal();
-    TestCasePagesModal testCasePages = new TestCasePagesModal();
+public class UiAllureTests extends UiTestBase {
 
     @BeforeEach
     @Epic("Ui")
@@ -61,6 +51,7 @@ public class UiAllureTests extends TestBase {
 
     @Test
     @Epic("Ui")
+    @ApiTest
     @Owner("толстов вадим")
     @DisplayName("Добавляем шаги в test case")
     public void createStepTestCase() {
