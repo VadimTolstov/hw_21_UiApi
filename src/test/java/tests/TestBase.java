@@ -17,15 +17,15 @@ public class TestBase {
 
     @BeforeAll
     static void setUp() {
-        selectDriver();
+       // selectDriver();
         WebDriverProvider.configure();
 
         RestAssured.baseURI = "https://allure.autotests.cloud";
     }
 
-    private static void   selectDriver() {
-        switch ()
-    }
+//    private static void   selectDriver() {
+//        switch ()
+//    }
 
     @BeforeEach
     void addListener() {
