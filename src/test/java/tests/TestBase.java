@@ -17,15 +17,17 @@ public class TestBase {
 
     @BeforeAll
     static void setUp() {
-       // selectDriver();
-        WebDriverProvider.configure();
-
-        RestAssured.baseURI = "https://allure.autotests.cloud";
+        selectDriver();
     }
 
-//    private static void   selectDriver() {
-//        switch ()
-//    }
+    private static void selectDriver() {
+        switch (Project.config.platform()) {
+            case "lacal":
+            case "remote":
+                WebDriverProvider.configure();
+                RestAssured.baseURI = "https://allure.autotests.cloud";
+        }
+    }
 
     @BeforeEach
     void addListener() {
@@ -37,7 +39,7 @@ public class TestBase {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        if (Project.config.remoteDriverUrl() != null ) {
+        if (Project.config.remoteDriverUrl() != null) {
             Attach.addVideo();
         }
         Selenide.closeWebDriver();
