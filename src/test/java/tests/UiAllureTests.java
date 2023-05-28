@@ -7,10 +7,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import allure.ui.pages.AuthorizationUi;
-import allure.ui.pages.ProjectPagesModal;
-import allure.ui.pages.ProjectsPagesModal;
-import allure.ui.pages.TestCasePagesModal;
+import ui.pages.AuthorizationUi;
+import ui.pages.ProjectPagesModal;
+import ui.pages.ProjectsPagesModal;
+import ui.pages.TestCasePagesModal;
 
 @DisplayName("Ui tests Aller")
 @Epic("Ui")

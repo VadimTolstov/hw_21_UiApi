@@ -2,12 +2,12 @@ package tests;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import allure.config.WebDriver;
-import allure.config.WebDriverProvider;
-import allure.helpers.Attach;
+import config.WebDriver;
+import config.WebDriverProvider;
+import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
-import allure.data.DataGenerator;
+import data.DataGenerator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

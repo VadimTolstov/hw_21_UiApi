@@ -1,15 +1,15 @@
 package tests;
 
-import allure.api.models.*;
-import allure.api.pages.TestCaseApi;
-import allure.api.pages.ApiVerify;
-import allure.helpers.WithLogin;
+import api.models.*;
+import api.pages.TestCaseApi;
+import api.pages.ApiVerify;
+import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import allure.ui.pages.TestCasePagesModal;
+import ui.pages.TestCasePagesModal;
 
 import java.util.Arrays;
 import java.util.List;
