@@ -1,7 +1,7 @@
 package allure.api.pages;
 
 import allure.api.models.*;
-import api.models.*;
+
 import io.qameta.allure.Step;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

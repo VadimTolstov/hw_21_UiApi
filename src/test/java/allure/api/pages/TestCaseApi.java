@@ -5,7 +5,7 @@ import allure.api.models.*;
 import allure.api.models.specs.Specs;
 import allure.api.pages.specs.BaseApi;
 import allure.helpers.CustomAllureListener;
-import api.models.*;
+
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 

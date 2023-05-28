@@ -2,8 +2,8 @@ package tests;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import allure.config.WebDriver;
-import allure.config.WebDriverProvider;
+import allure.config.Project;
+import drivers.WebDriverProvider;
 import allure.helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
@@ -32,7 +32,7 @@ public class TestBase {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        if (WebDriver.config.getRemoteUrl() != null ) {
+        if (Project.config.remoteDriverUrl() != null ) {
             Attach.addVideo();
         }
         Selenide.closeWebDriver();

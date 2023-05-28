@@ -5,9 +5,9 @@ import org.aeonbits.owner.Config;
 @Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.Sources({
         "system:properties",
-        "classpath:${env}.properties"
+        "classpath:config/${platform}.properties"
 })
-public interface WebDriverConfig extends Config {
+public interface ProjectConfig extends Config {
 
     @Key("browserWithVersion")
     @DefaultValue("chrome,113.0")
@@ -18,9 +18,11 @@ public interface WebDriverConfig extends Config {
     String getBrowserSize();
 
     @Key("remoteDriverUrl")
-    String getRemoteUrl();
+    String remoteDriverUrl();
 
     @Key("baseUrl")
     @DefaultValue("https://allure.autotests.cloud")
     String getBaseUrl();
+
+    String platform();
 }

@@ -1,23 +1,29 @@
-package allure.config;
+package drivers;
 
+import allure.config.Auth;
+import allure.config.Project;
 import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
 
+import static allure.config.Project.isRemoteDriver;
+
 public class WebDriverProvider {
 
     public static void configure() {
-        Configuration.baseUrl = WebDriver.config.getBaseUrl();
-        Configuration.browserSize = WebDriver.config.getBrowserSize();
-        String[] browserWithVersion = WebDriver.config.getBrowserAndVersion();
+        Configuration.baseUrl = Project.config.getBaseUrl();
+        Configuration.browserSize = Project.config.getBrowserSize();
+        String[] browserWithVersion = Project.config.getBrowserAndVersion();
         Configuration.browser = browserWithVersion[0];
         Configuration.browserVersion = browserWithVersion[1];
         Configuration.pageLoadStrategy = "eager";
 
-        if (!(WebDriver.config.getRemoteUrl() == null) && !WebDriver.config.getRemoteUrl().isEmpty() ){
-            Configuration.remote = "https://" + Auth.config.userNameSelenoid() + ":" +
-                                   Auth.config.passwordSelenoid() + "@" + WebDriver.config.getRemoteUrl() + "/wd/hub";
+        if (isRemoteDriver()) {
+            Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
+                    Auth.config.userNameSelenoid(),
+                    Auth.config.passwordSelenoid(),
+                    Project.config.remoteDriverUrl());
         }
 
         DesiredCapabilities capabilities = new DesiredCapabilities();

@@ -12,8 +12,8 @@ import allure.ui.pages.ProjectPagesModal;
 import allure.ui.pages.ProjectsPagesModal;
 import allure.ui.pages.TestCasePagesModal;
 
-@DisplayName("Ui tests Aller")
-@Epic("Ui")
+@DisplayName("Ui tests Allure")
+@Epic("UI")
 @Owner("толстов вадим")
 public class UiAllureTests extends TestBase {
     AuthorizationUi userAuthorization = new AuthorizationUi();
