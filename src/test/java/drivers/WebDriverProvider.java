@@ -1,13 +1,13 @@
 package drivers;
 
-import allure.config.Auth;
-import allure.config.Project;
+import config.Auth;
+import config.Project;
 import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
 
-import static allure.config.Project.isRemoteDriver;
+import static config.Project.isRemoteDriver;
 
 public class WebDriverProvider {
 

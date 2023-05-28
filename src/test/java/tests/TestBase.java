@@ -2,12 +2,12 @@ package tests;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import allure.config.Project;
+import config.Project;
 import drivers.WebDriverProvider;
-import allure.helpers.Attach;
+import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
-import allure.data.DataGenerator;
+import data.DataGenerator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +17,14 @@ public class TestBase {
 
     @BeforeAll
     static void setUp() {
+        selectDriver();
         WebDriverProvider.configure();
 
         RestAssured.baseURI = "https://allure.autotests.cloud";
+    }
+
+    private static void   selectDriver() {
+        switch ()
     }
 
     @BeforeEach
