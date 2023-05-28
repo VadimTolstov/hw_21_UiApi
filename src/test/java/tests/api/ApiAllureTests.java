@@ -1,4 +1,4 @@
-package tests;
+package tests.api;
 
 import api.models.*;
 import api.pages.TestCaseApi;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.TestCasePagesModal;
+import tests.api.ApiTestBase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @DisplayName("Ui and Api tests Allure")
-public class ApiAllureTests extends TestBase {
+public class ApiAllureTests extends ApiTestBase {
 
     TestCasePagesModal testCasePages = new TestCasePagesModal();
     ApiVerify apiVerify = new ApiVerify();
