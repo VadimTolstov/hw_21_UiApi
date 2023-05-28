@@ -45,14 +45,14 @@ public class Attachments {
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
-    public static String addVideo() {
+    public static String addVideo(String sessionId) { //todo
         return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
-               + getVideoUrl()
+               + getVideoUrl(sessionId)
                + "' type='video/mp4'></video></body></html>";
     }
 
-    public static URL getVideoUrl() {
-        String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId() + ".mp4";
+    public static URL getVideoUrl(String sessionId) { //todo
+        String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId + ".mp4";
         try {
             return new URL(videoUrl);
         } catch (MalformedURLException e) {

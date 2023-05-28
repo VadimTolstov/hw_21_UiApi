@@ -10,6 +10,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import static com.codeborne.selenide.Selenide.sessionId;
+
 public class TestBase {
 
     @BeforeAll
@@ -34,12 +36,6 @@ public class TestBase {
     @AfterEach
     void addAttachments() {
         attachEnvDependingTestArtifacts();
-//        Attachments.screenshotAs("Last screenshot");
-//        Attachments.pageSource();
-//        Attachments.browserConsoleLogs();
-//        if (Project.config.remoteDriverUrl() != null) {
-//            Attachments.addVideo();
-//        }
         Selenide.closeWebDriver();
     }
 
@@ -50,7 +46,7 @@ public class TestBase {
             case "remote":
                 Attachments.screenshotAs("Last screenshot");
                 Attachments.browserConsoleLogs();
-                Attachments.addVideo();
+                Attachments.addVideo(sessionId);
                 break;
             case "local":
                 Attachments.screenshotAs("Last screenshot");
