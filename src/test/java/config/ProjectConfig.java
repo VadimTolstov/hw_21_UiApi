@@ -24,22 +24,27 @@ public interface ProjectConfig extends Config {
     @DefaultValue("https://allure.autotests.cloud")
     String getBaseUrl();
 
-    @DefaultValue("local")
+@DefaultValue("android_browserstack")
     String platform();
 
     @Key("browserstack.user")
+    @DefaultValue("bsuser_wTiNfW")
         String getBrowserstackUser();
 
     @Key("browserstack.key")
+    @DefaultValue("yCm6opRKbLpF6puwsqmz")
     String getBrowserstackKey();
 
     @Key("deviceName")
+    @DefaultValue("Google Pixel 3")
     String getDeviceName();
 
     @Key("platformVersion")
+    @DefaultValue("9.0")
     String getPlatformVersion();
 
     @Key("app")
+    @DefaultValue("bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c")
     String getApp();
 
     @Key("base_url")
