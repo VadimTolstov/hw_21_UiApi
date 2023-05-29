@@ -26,6 +26,10 @@ public class Project {
             case "remote":
                 Auth.validateProperty(config.remoteDriverUrl(), "remoteDriverUrl");
                 break;
+            case "android_browserstack":
+                Auth.validateProperty(config.getBrowserstackUser(), "browserstack.user");
+                Auth.validateProperty(config.getBrowserstackKey(), "browserstack.key");
+                break;
             default:
                 throw new IllegalStateException("Неправильное значение в 'platform' " + config);
         }

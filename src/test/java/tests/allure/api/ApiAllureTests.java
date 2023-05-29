@@ -1,4 +1,4 @@
-package tests.api;
+package tests.allure.api;
 
 import api.models.*;
 import api.pages.TestCaseApi;
@@ -9,8 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pages.TestCasePagesModal;
-import tests.api.ApiTestBase;
+import ui.pages.TestCasePagesModal;
 
 import java.util.Arrays;
 import java.util.List;

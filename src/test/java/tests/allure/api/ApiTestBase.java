@@ -1,4 +1,4 @@
-package tests.api;
+package tests.allure.api;
 
 import data.DataGenerator;
 import tests.TestBase;

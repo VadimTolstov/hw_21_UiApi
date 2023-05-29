@@ -1,12 +1,10 @@
-package tests.ui;
+package tests.allure.ui;
 
 import data.DataGenerator;
-import io.qameta.allure.Step;
-import org.junit.jupiter.api.BeforeEach;
-import pages.AuthorizationUi;
-import pages.ProjectPagesModal;
-import pages.ProjectsPagesModal;
-import pages.TestCasePagesModal;
+import ui.pages.AuthorizationUi;
+import ui.pages.ProjectPagesModal;
+import ui.pages.ProjectsPagesModal;
+import ui.pages.TestCasePagesModal;
 import tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.open;

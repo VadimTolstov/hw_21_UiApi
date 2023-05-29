@@ -1,4 +1,4 @@
-package tests.ui;
+package tests.allure.ui;
 
 import com.codeborne.selenide.Selenide;
 import helpers.ApiTest;

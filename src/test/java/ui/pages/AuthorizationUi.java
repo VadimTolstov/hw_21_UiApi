@@ -1,4 +1,4 @@
-package pages;
+package ui.pages;
 
 import config.Auth;
 import io.qameta.allure.Step;
