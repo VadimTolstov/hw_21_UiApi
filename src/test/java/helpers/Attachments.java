@@ -68,12 +68,12 @@ public class Attachments {
                + "' type='video/mp4'></video></body></html>";
     }
 
-//    @Attachment(value = "Browserstack full info link", type = "text/html", fileExtension = ".html")
-//    public static String browserstackFullInfoLink(String sessionId) {
-//        return "<html><body><a href='"
-//               + Browserstack.fullInfoPublicUrl(sessionId)
-//               + "'>Full info link</a></body></html>";
-//    }
+    @Attachment(value = "Browserstack full info link", type = "text/html", fileExtension = ".html")
+    public static String browserstackFullInfoLink(String sessionId) {
+        return "<html><body><a href='"
+               + Browserstack.fullInfoPublicUrl(sessionId)
+               + "'>Full info link</a></body></html>";
+    }
 
     public static String getSessionId() {
         return ((RemoteWebDriver) getWebDriver()).getSessionId().toString();

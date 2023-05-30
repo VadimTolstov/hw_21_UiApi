@@ -24,4 +24,11 @@ public interface AuthConfig extends Config {
 
     @Key("passwordAllure")
     String passwordAllure();
+
+
+    @Key("steamName")
+    String steamName();
+
+    @Key("steamPassword")
+    String steamPassword();
 }

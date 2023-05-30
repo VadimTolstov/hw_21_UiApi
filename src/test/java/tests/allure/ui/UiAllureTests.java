@@ -2,6 +2,7 @@ package tests.allure.ui;
 
 import com.codeborne.selenide.Selenide;
 import helpers.ApiTest;
+import helpers.Regress;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.*;
@@ -37,6 +38,7 @@ public class UiAllureTests extends UiTestBase {
     }
 
     @Test
+    @Regress
     @Epic("Ui")
     @Owner("толстов вадим")
     @DisplayName("Создаем test case в проекте")
@@ -50,8 +52,8 @@ public class UiAllureTests extends UiTestBase {
     }
 
     @Test
+    @Regress
     @Epic("Ui")
-    @ApiTest
     @Owner("толстов вадим")
     @DisplayName("Добавляем шаги в test case")
     public void createStepTestCase() {
@@ -75,6 +77,7 @@ public class UiAllureTests extends UiTestBase {
     }
 
     @Test
+    @Regress
     @Epic("Ui")
     @Owner("толстов вадим")
     @DisplayName("Добавляем описание в test case")
@@ -92,6 +95,7 @@ public class UiAllureTests extends UiTestBase {
     }
 
     @Test
+    @Regress
     @Epic("Ui")
     @Owner("толстов вадим")
     @DisplayName("Добавляем tag в test case")

@@ -28,7 +28,6 @@ public class BrowserstackAndroidDriver implements WebDriverProvider {
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
         mutableCapabilities.merge(capabilities);
         mutableCapabilities.setCapability("browserstack.appium_version", "1.22.0");
-
         mutableCapabilities.setCapability(MobileCapabilityType.NO_RESET, false);
         mutableCapabilities.setCapability("browserstack.user", config.getBrowserstackUser());
         mutableCapabilities.setCapability("browserstack.key", config.getBrowserstackKey());
@@ -36,10 +35,11 @@ public class BrowserstackAndroidDriver implements WebDriverProvider {
         mutableCapabilities.setCapability("device", config.getDeviceName());
         mutableCapabilities.setCapability("os_version", config.getPlatformVersion());
         mutableCapabilities.setCapability("project", "First Java Project");
-     //   mutableCapabilities.setCapability("language", "ru");
-      //  mutableCapabilities.setCapability("locale", "RU");
+        mutableCapabilities.setCapability("language", "ru");
+        mutableCapabilities.setCapability("locale", "RU");
         mutableCapabilities.setCapability("build", "browserstack-build-1");
         mutableCapabilities.setCapability("name", "first_test");
+
         try {
             return new RemoteWebDriver(
                     new URL(remoteDriver), mutableCapabilities);

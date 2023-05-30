@@ -60,7 +60,7 @@ public class TestBase {
                 break;
             case "android_browserstack":
                 Attachments.videoBrowserstack(sessionId);
-//                Attachments.browserstackFullInfoLink(sessionId);
+                Attachments.browserstackFullInfoLink(sessionId);
                 break;
         }
     }

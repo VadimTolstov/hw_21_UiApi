@@ -3,6 +3,7 @@ package tests.allure.api;
 import api.models.*;
 import api.pages.TestCaseApi;
 import api.pages.ApiVerify;
+import helpers.Regress;
 import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -67,6 +68,7 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Regress
     @WithLogin
     @DisplayName("Редактирование имени test case")
     void changingNameTestCase() {
@@ -93,6 +95,7 @@ public class ApiAllureTests extends ApiTestBase {
 
 
     @Test
+    @Regress
     @WithLogin
     @DisplayName("Добавляем описания в test case")
     void descriptionTestCase() {
@@ -118,6 +121,7 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Regress
     @WithLogin
     @DisplayName("Добавление tag в test case")
     void addendumTagTestCase() {
@@ -148,6 +152,7 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Regress
     @WithLogin
     @DisplayName("Добавление коментарий к test case")
     void commentTestCase() {
@@ -168,6 +173,7 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Regress
     @WithLogin
     @DisplayName("Добавляем шагов в test case")
     void updateTestCaseStepsTest() {

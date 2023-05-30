@@ -15,6 +15,11 @@ public class Auth {
     static {
         validateProperty(config.userNameAllure(), "userNameAllure");
         validateProperty(config.passwordAllure(), "passwordAllure");
+        validateProperty(config.apiToken(), "apiToken");
+        validateProperty(config.userNameSelenoid(), "userNameSelenoid");
+        validateProperty(config.passwordSelenoid(), "passwordSelenoid");
+        validateProperty(config.steamName(), "steamName");
+        validateProperty(config.steamPassword(), "steamPassword");
         logger.info(config.toString());
     }
 
