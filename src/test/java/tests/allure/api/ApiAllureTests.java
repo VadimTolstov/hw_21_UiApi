@@ -3,6 +3,7 @@ package tests.allure.api;
 import api.models.*;
 import api.pages.TestCaseApi;
 import api.pages.ApiVerify;
+import helpers.ApiTest;
 import helpers.Regress;
 import helpers.WithLogin;
 import io.restassured.response.ValidatableResponse;
@@ -27,15 +28,6 @@ public class ApiAllureTests extends ApiTestBase {
     ApiVerify apiVerify = new ApiVerify();
     private String testCaseName,
             testCaseDescription;
-
-    String step1 = dataGenerator.getStepTestCaseOne();
-    String step2 = dataGenerator.getStepTestCaseTwo();
-    String step3 = dataGenerator.getStepTestCaseThree();
-    String comment = dataGenerator.getComment();
-    String testCaseNewName = dataGenerator.getTestCaseNewName();
-    String tag1Name = dataGenerator.getStepTestCaseThree();
-    String tag2Name = dataGenerator.getStepTestCaseTwo();
-    String testCaseNewDescription = dataGenerator.getNewDescriptionTest();
 
     Long testCaseId;
 
@@ -68,10 +60,12 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Редактирование имени test case")
     void changingNameTestCase() {
+        String testCaseNewName = dataGenerator.getTestCaseNewName();
 
         step("Проверяем через ui, что у test case есть имя", () -> {
             testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
@@ -93,12 +87,14 @@ public class ApiAllureTests extends ApiTestBase {
         });
     }
 
-
     @Test
+    @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавляем описания в test case")
     void descriptionTestCase() {
+        String testCaseNewDescription = dataGenerator.getNewDescriptionTest();
+
         step("Проверяем через ui, что у  test cases есть описание", () -> {
             testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
                     .verifyDescriptionTestCase(testCaseDescription);
@@ -121,10 +117,14 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавление tag в test case")
     void addendumTagTestCase() {
+        String tag1Name = dataGenerator.getStepTestCaseThree();
+        String tag2Name = dataGenerator.getStepTestCaseTwo();
+
         TestCaseTagRequest tag1 = new TestCaseTagRequest();
         TestCaseTagRequest tag2 = new TestCaseTagRequest();
 
@@ -137,11 +137,11 @@ public class ApiAllureTests extends ApiTestBase {
             ValidatableResponse addendumResponse = testCaseApi.addendumResponse(list, testCaseId);
             TestCaseTagResponse[] listTestCase = addendumResponse.extract().as(TestCaseTagResponse[].class);
 
-            tag1Name = Arrays.stream(listTestCase).filter(f -> false).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
-            tag2Name = Arrays.stream(listTestCase).filter(f -> false).map(TestCaseTagResponse::getName).findFirst().orElse(tag2.getName());
+            String tag1NameV = Arrays.stream(listTestCase).filter(f -> false).map(TestCaseTagResponse::getName).findFirst().orElse(tag1.getName());
+            String tag2NameV = Arrays.stream(listTestCase).filter(f -> false).map(TestCaseTagResponse::getName).findFirst().orElse(tag2.getName());
 
-            apiVerify.verifyAddendumTagTestCase(tag1Name, tag1)
-                    .verifyAddendumTagTestCase(tag2Name, tag2);
+            apiVerify.verifyAddendumTagTestCase(tag1NameV, tag1)
+                    .verifyAddendumTagTestCase(tag2NameV, tag2);
         });
 
         step("Проверяем через ui, что tag добавлен в test case ", () -> {
@@ -152,10 +152,13 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавление коментарий к test case")
     void commentTestCase() {
+        String comment = dataGenerator.getComment();
+
         TestCaseCommentDto requestComment = new TestCaseCommentDto();
         requestComment.setBody(comment);
         requestComment.setTestCaseId(testCaseId);
@@ -173,10 +176,15 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавляем шагов в test case")
     void updateTestCaseStepsTest() {
+        String step1 = dataGenerator.getStepTestCaseOne();
+        String step2 = dataGenerator.getStepTestCaseTwo();
+        String step3 = dataGenerator.getStepTestCaseThree();
+
         TestCaseScenarioDto scenarioDto = new TestCaseScenarioDto()
                 .addStep(new TestCaseScenarioDto.Step(step1))
                 .addStep(new TestCaseScenarioDto.Step(step2))
