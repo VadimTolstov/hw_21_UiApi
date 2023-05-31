@@ -23,7 +23,7 @@ public class Browserstack {
 
     private static ExtractableResponse<Response> getSessionInfo(String sessionId) {
         return given()
-                .auth().basic(CFG.getBrowserstackUser(), CFG.getBrowserstackKey())
+                .auth().basic(CFG.browserstackUser(), CFG.browserstackKey())
                 .when()
                 .get("https://api.browserstack.com/app-automate/sessions/" + sessionId + ".json")
                 .then()

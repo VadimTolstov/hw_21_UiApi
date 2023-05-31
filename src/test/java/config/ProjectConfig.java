@@ -11,27 +11,27 @@ public interface ProjectConfig extends Config {
 
     @Key("browserWithVersion")
     @DefaultValue("chrome,113.0")
-    String[] getBrowserAndVersion();
+    String[] browserAndVersion();
 
     @Key("browserSize")
     @DefaultValue("1920x1080")
-    String getBrowserSize();
+    String browserSize();
 
     @Key("remoteDriverUrl")
     String remoteDriverUrl();
 
     @Key("baseUrl")
     @DefaultValue("https://allure.autotests.cloud")
-    String getBaseUrl();
+    String baseUrl();
 
 
     String platform();
 
     @Key("browserstack.user")
-    String getBrowserstackUser();
+    String browserstackUser();
 
     @Key("browserstack.key")
-    String getBrowserstackKey();
+    String browserstackKey();
 
     @Key("deviceName")
     String getDeviceName();
@@ -40,7 +40,7 @@ public interface ProjectConfig extends Config {
     String getPlatformVersion();
 
     @Key("app")
-    String getApp();
+    String app();
 
     @Key("base_url")
     @DefaultValue("https://api.browserstack.com/app-automate/sessions/%s.json")

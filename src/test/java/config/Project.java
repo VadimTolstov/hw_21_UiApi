@@ -21,14 +21,14 @@ public class Project {
         Auth.validateProperty(config.platform(), "platform");
         switch (config.platform()) {
             case "local":
-                Auth.validateProperty(Arrays.toString(config.getBrowserAndVersion()), "browserWithVersion");
+                Auth.validateProperty(Arrays.toString(config.browserAndVersion()), "browserWithVersion");
                 break;
             case "remote":
                 Auth.validateProperty(config.remoteDriverUrl(), "remoteDriverUrl");
                 break;
             case "android_browserstack":
-                Auth.validateProperty(config.getBrowserstackUser(), "browserstack.user");
-                Auth.validateProperty(config.getBrowserstackKey(), "browserstack.key");
+                Auth.validateProperty(config.browserstackUser(), "browserstack.user");
+                Auth.validateProperty(config.browserstackKey(), "browserstack.key");
                 break;
             case "android_emulator":
                 Auth.validateProperty(config.remoteDriverUrl(), "remoteDriver");

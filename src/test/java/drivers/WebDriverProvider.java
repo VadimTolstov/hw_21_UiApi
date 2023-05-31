@@ -13,9 +13,9 @@ import static config.Project.isRemoteDriver;
 public class WebDriverProvider {
 
     public static void configure() {
-        Configuration.baseUrl = Project.config.getBaseUrl();
-        Configuration.browserSize = Project.config.getBrowserSize();
-        String[] browserWithVersion = Project.config.getBrowserAndVersion();
+        Configuration.baseUrl = Project.config.baseUrl();
+        Configuration.browserSize = Project.config.browserSize();
+        String[] browserWithVersion = Project.config.browserAndVersion();
         Configuration.browser = browserWithVersion[0];
         Configuration.browserVersion = browserWithVersion[1];
         Configuration.pageLoadStrategy = "eager";
