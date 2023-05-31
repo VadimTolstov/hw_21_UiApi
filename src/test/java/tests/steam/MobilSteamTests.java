@@ -1,6 +1,5 @@
 package tests.steam;
 
-import com.codeborne.selenide.Selenide;
 import config.AuthConfig;
 import helpers.Android;
 import io.appium.java_client.AppiumBy;
@@ -27,7 +26,7 @@ import static io.appium.java_client.touch.offset.PointOption.point;
 import static io.qameta.allure.Allure.step;
 import static java.time.temporal.ChronoUnit.MILLIS;
 
-public class MabielSteamTests extends TestBase {
+public class MobilSteamTests extends TestBase {
 
     static AuthConfig config = ConfigFactory.create(AuthConfig.class, System.getProperties());
 
