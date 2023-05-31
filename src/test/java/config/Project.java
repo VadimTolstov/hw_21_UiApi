@@ -31,7 +31,7 @@ public class Project {
                 Auth.validateProperty(config.getBrowserstackKey(), "browserstack.key");
                 break;
             case "android_emulator":
-              //todo  Auth.validateProperty(config.remoteDriver(), "remoteDriver");
+                Auth.validateProperty(config.remoteDriverUrl(), "remoteDriver");
                 Auth.validateProperty(config.deviceName(), "deviceName");
                 Auth.validateProperty(config.platformVersion(), "platformVersion");
                 break;
