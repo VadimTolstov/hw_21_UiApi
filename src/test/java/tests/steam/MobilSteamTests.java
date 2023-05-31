@@ -1,5 +1,6 @@
 package tests.steam;
 
+import com.codeborne.selenide.Selenide;
 import config.AuthConfig;
 import helpers.Android;
 import io.appium.java_client.AppiumBy;
@@ -42,10 +43,11 @@ public class MobilSteamTests extends TestBase {
             $$(AppiumBy.className("android.widget.EditText")).get(1).sendKeys(config.steamPassword());
             $(AppiumBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]")).click();
             $(AppiumBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView")).shouldHave(visible).shouldHave(text("WELCOME TO"));
-           // Selenide.sleep(5000);
-            swipeRightQuick(4000);
-            swipeRightQuick(4000);
-            swipeRightQuick(4000);
+
+            swipeRightQuick(14000);
+            swipeRightQuick(14000);
+            swipeRightQuick(14000);
+            Selenide.sleep(5000);
         });
     }
 
