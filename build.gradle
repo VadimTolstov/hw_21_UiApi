@@ -59,7 +59,8 @@ dependencies {
             "io.rest-assured:json-path:$restAssuredVersion",
             "io.rest-assured:json-schema-validator:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
-            "io.qameta.allure:allure-selenide:$allureVersion"
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "commons-io:commons-io:2.11.0"
 
     )
     // testImplementation 'org.testng:testng:7.1.0'

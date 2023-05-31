@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.Project;
 import drivers.BrowserstackAndroidDriver;
+import drivers.LocalAndroidDriver;
 import drivers.WebDriverProvider;
 import helpers.Attachments;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -29,6 +30,9 @@ public class TestBase {
                 break;
             case "android_browserstack":
                 Configuration.browser = BrowserstackAndroidDriver.class.getName();
+                break;
+            case "android_emulator":
+                Configuration.browser = LocalAndroidDriver.class.getName();
                 break;
         }
     }
@@ -61,6 +65,9 @@ public class TestBase {
             case "android_browserstack":
                 Attachments.videoBrowserstack(sessionId);
                 Attachments.browserstackFullInfoLink(sessionId);
+                break;
+            case "android_emulator":
+                Attachments.screenshotAs("Last screenshot");
                 break;
         }
     }
