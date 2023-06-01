@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="LocalAndroidDriver">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/steam/MobilSteamTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/steam/MobilSteamTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature15" />
+        <entry key="$PROJECT_DIR$" value="feature16" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -99,18 +100,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "TODO_SCOPE": "All Places",
-    "last_opened_file_path": "D:/program/IntelliJIDEA/Proect/hw_21_UiApi/src/test/resources/config",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/program/IntelliJIDEA/Proect/hw_21_UiApi/src/test/resources/config&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources\config" />
@@ -266,41 +267,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682955498221</updated>
-    </task>
-    <task id="LOCAL-00026" summary="v 0.91">
-      <created>1684515157348</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1684515157348</updated>
-    </task>
-    <task id="LOCAL-00027" summary="v 0.91">
-      <created>1684565434908</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1684565434908</updated>
-    </task>
-    <task id="LOCAL-00028" summary="v 0.91">
-      <created>1684600199902</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1684600199902</updated>
-    </task>
-    <task id="LOCAL-00029" summary="v 0.91">
-      <created>1684600568846</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1684600568846</updated>
-    </task>
-    <task id="LOCAL-00030" summary="v 0.91">
-      <created>1684651194295</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1684651194296</updated>
     </task>
     <task id="LOCAL-00031" summary="v 0.91">
       <created>1684652432571</created>
@@ -610,7 +576,42 @@
       <option name="project" value="LOCAL" />
       <updated>1685531662722</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="LocalAndroidDriver">
+      <created>1685532239940</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1685532239940</updated>
+    </task>
+    <task id="LOCAL-00076" summary="LocalAndroidDriver">
+      <created>1685532320552</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1685532320552</updated>
+    </task>
+    <task id="LOCAL-00077" summary="LocalAndroidDriver">
+      <created>1685532366267</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1685532366267</updated>
+    </task>
+    <task id="LOCAL-00078" summary="LocalAndroidDriver">
+      <created>1685532399102</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1685532399102</updated>
+    </task>
+    <task id="LOCAL-00079" summary="LocalAndroidDriver">
+      <created>1685532431058</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1685532431058</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

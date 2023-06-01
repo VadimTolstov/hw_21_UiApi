@@ -5,28 +5,14 @@ import config.AuthConfig;
 import helpers.Android;
 import helpers.PhoneManagerHelper;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
 import org.aeonbits.owner.ConfigFactory;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Dimension;
 import tests.TestBase;
 
-import java.time.Duration;
-
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static io.appium.java_client.touch.offset.PointOption.point;
 import static io.qameta.allure.Allure.step;
-import static java.time.temporal.ChronoUnit.MILLIS;
 
 public class MobilSteamTests extends TestBase {
 
@@ -53,6 +39,7 @@ public class MobilSteamTests extends TestBase {
             PhoneManagerHelper.swipeFromRightToLeft();
             PhoneManagerHelper.swipeFromRightToLeft();
             PhoneManagerHelper.swipeFromRightToLeft();
+            back();
 
             Selenide.sleep(5000);
         });
