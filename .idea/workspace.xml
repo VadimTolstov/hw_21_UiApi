@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="no mobile">
-      <change afterPath="$PROJECT_DIR$/src/test/java/helpers/Web.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/data/DataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/data/DataGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiAllureTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiTestBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiTestBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" afterDir="false" />
-    </list>
+    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="no mobile" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +55,7 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/feature17" />
+    <option name="BRANCH" value="feature-01" />
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -80,7 +73,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="feature-01" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -130,8 +123,8 @@
       <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="drivers" />
       <recent name="helpers" />
+      <recent name="drivers" />
       <recent name="tests" />
       <recent name="tests.ui" />
       <recent name="api.models" />
