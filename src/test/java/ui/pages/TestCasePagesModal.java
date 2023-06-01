@@ -70,37 +70,41 @@ public class TestCasePagesModal {
     }
 
     @Step("Открываем tag в test case")
-    public TestCasePagesModal openTagTestCase(){
+    public TestCasePagesModal openTagTestCase() {
         $x("//section[@data-testid='section__tags']//button").click();
         return this;
     }
 
     @Step("Добовляем tag {tag} в test case")
-    public TestCasePagesModal createTagTestCase(String tag){
+    public TestCasePagesModal createTagTestCase(String tag) {
+        $x("//label[@class='FormLabel ']").sendKeys(tag);
+        $(byText("Create \"" + tag + "\"")).shouldBe(visible).click();
+//
         return this;
     }
 
+
     @Step("Проверяем имя {testCaseName} у test case")
     public TestCasePagesModal verifyNameTestCase(String testCaseName) {
-        testCaseInput.shouldHave(text(testCaseName)).shouldHave(visible);
+        testCaseInput.shouldHave(text(testCaseName)).shouldBe(visible);
         return this;
     }
 
     @Step("Проверяем описание у test case")
     public TestCasePagesModal verifyDescriptionTestCase(String testCaseDescription) {
-        testCaseDescriptionInput.shouldHave(text(testCaseDescription)).shouldHave(visible);
+        testCaseDescriptionInput.shouldBe(visible).shouldHave(text(testCaseDescription));
         return this;
     }
 
     @Step("Проверяем, что tag {tagName} добавлен в test case")
     public TestCasePagesModal verifyAddendumTagTestCase(String tagName) {
-        testCaseTagInput.shouldHave(text(tagName)).shouldHave(visible);
+        testCaseTagInput.shouldBe(visible).shouldHave(text(tagName));
         return this;
     }
 
     @Step("Проверяем, что коментарий {comment} добавлен к test case")
     public TestCasePagesModal verifyCommentTestCase(String comment) {
-        testCaseCommentInput.shouldHave(text(comment)).shouldHave(visible);
+        testCaseCommentInput.shouldBe(visible).shouldHave(text(comment));
         return this;
     }
 
@@ -113,13 +117,13 @@ public class TestCasePagesModal {
     @Step("Проверяем, что test case {nameTestCase} создался")
     public TestCasePagesModal verifyTestCaseName(String nameTestCase) {
         $(byText(nameTestCase)).click();
-        testCaseInput.shouldHave(visible).shouldHave(text(nameTestCase));
+        testCaseInput.shouldBe(visible).shouldHave(text(nameTestCase));
         return this;
     }
 
     @Step("Проверяем, что step {step} добавлен в test case")
     public TestCasePagesModal verifyStepTestCase(String step) {
-        $("[data-testid='section__scenario']").shouldHave(visible).shouldHave(text(step));
+        $("[data-testid='section__scenario']").shouldBe(visible).shouldHave(text(step));
         return this;
     }
 }
