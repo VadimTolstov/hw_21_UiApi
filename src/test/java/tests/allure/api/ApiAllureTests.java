@@ -2,16 +2,16 @@ package tests.allure.api;
 
 import api.models.*;
 import api.pages.TestCaseApi;
-import api.pages.ApiVerify;
 import helpers.ApiTest;
 import helpers.Regress;
 import helpers.WithLogin;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Owner;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ui.pages.TestCasePagesModal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Ui and Api tests Allure")
 public class ApiAllureTests extends ApiTestBase {
 
-    TestCasePagesModal testCasePages = new TestCasePagesModal();
-    ApiVerify apiVerify = new ApiVerify();
     private String testCaseName,
             testCaseDescription;
 
@@ -35,10 +33,12 @@ public class ApiAllureTests extends ApiTestBase {
     private final Long PROJECT_ID = 2237L;
 
     @BeforeEach
+    @Epic("API")
+    @Owner("толстов вадим")
     @DisplayName("Создаем test case")
     public void createTestCase() {
-        testCaseName = dataGenerator.getTestCaseName();
-        testCaseDescription = dataGenerator.getTestDescription();
+        testCaseName = dataGenerator.getRandomSentence(2);
+        testCaseDescription = dataGenerator.getRandomSentence(3);
 
         CreateTestCaseRequestDto testCase = CreateTestCaseRequestDto.builder()
                 .name(testCaseName)
@@ -54,18 +54,22 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @AfterEach
+    @Epic("API")
+    @Owner("толстов вадим")
     @DisplayName("Удаляем test case")
     public void deleteTestCase() {
         testCaseApi.deleteTestCase(testCaseId);
     }
 
     @Test
+    @Epic("API")
+    @Owner("толстов вадим")
     @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Редактирование имени test case")
     void changingNameTestCase() {
-        String testCaseNewName = dataGenerator.getTestCaseNewName();
+        String testCaseNewName = dataGenerator.getRandomSentence(4);
 
         step("Проверяем через ui, что у test case есть имя", () -> {
             testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
@@ -88,12 +92,14 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Epic("API")
+    @Owner("толстов вадим")
     @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавляем описания в test case")
     void descriptionTestCase() {
-        String testCaseNewDescription = dataGenerator.getNewDescriptionTest();
+        String testCaseNewDescription = dataGenerator.getRandomSentence(4);
 
         step("Проверяем через ui, что у  test cases есть описание", () -> {
             testCasePages.openPageTestCase(PROJECT_ID, testCaseId)
@@ -117,13 +123,15 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Epic("API")
+    @Owner("толстов вадим")
     @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавление tag в test case")
     void addendumTagTestCase() {
-        String tag1Name = dataGenerator.getStepTestCaseThree();
-        String tag2Name = dataGenerator.getStepTestCaseTwo();
+        String tag1Name = dataGenerator.getRandomSentence(1);
+        String tag2Name = dataGenerator.getRandomSentence(2);
 
         TestCaseTagRequest tag1 = new TestCaseTagRequest();
         TestCaseTagRequest tag2 = new TestCaseTagRequest();
@@ -152,12 +160,14 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Epic("API")
+    @Owner("толстов вадим")
     @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавление коментарий к test case")
     void commentTestCase() {
-        String comment = dataGenerator.getComment();
+        String comment = dataGenerator.getRandomSentence(5);
 
         TestCaseCommentDto requestComment = new TestCaseCommentDto();
         requestComment.setBody(comment);
@@ -176,14 +186,16 @@ public class ApiAllureTests extends ApiTestBase {
     }
 
     @Test
+    @Epic("API")
+    @Owner("толстов вадим")
     @ApiTest
     @Regress
     @WithLogin
     @DisplayName("Добавляем шагов в test case")
     void updateTestCaseStepsTest() {
-        String step1 = dataGenerator.getStepTestCaseOne();
-        String step2 = dataGenerator.getStepTestCaseTwo();
-        String step3 = dataGenerator.getStepTestCaseThree();
+        String step1 = dataGenerator.getRandomSentence(2);
+        String step2 = dataGenerator.getRandomSentence(3);
+        String step3 = dataGenerator.getRandomSentence(4);
 
         TestCaseScenarioDto scenarioDto = new TestCaseScenarioDto()
                 .addStep(new TestCaseScenarioDto.Step(step1))

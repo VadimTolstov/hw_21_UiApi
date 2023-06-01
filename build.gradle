@@ -119,6 +119,12 @@ task regress_test(type: Test) {
         includeTags("REGRESS")
     }
 }
+
+task web_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("WEB")
+    }
+}
 //
 //task remote_test(type: Test) {
 //    useJUnitPlatform {

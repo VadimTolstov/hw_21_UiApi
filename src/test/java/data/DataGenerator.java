@@ -6,6 +6,10 @@ public class DataGenerator {
 
     static final Faker faker = new Faker();
 
+    public String getRandomSentence (int length) {
+        return faker.lorem().sentence(length);
+    }
+
     public String getTestCaseName() {
         return faker.name().fullName();
     }
