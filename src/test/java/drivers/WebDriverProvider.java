@@ -1,8 +1,8 @@
 package drivers;
 
+import com.codeborne.selenide.Configuration;
 import config.Auth;
 import config.Project;
-import com.codeborne.selenide.Configuration;
 import io.restassured.RestAssured;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -19,7 +19,7 @@ public class WebDriverProvider {
         Configuration.browser = browserWithVersion[0];
         Configuration.browserVersion = browserWithVersion[1];
         Configuration.pageLoadStrategy = "eager";
-        RestAssured.baseURI = "https://allure.autotests.cloud";//todo
+        RestAssured.baseURI = "https://allure.autotests.cloud"; //todo
 
         if (isRemoteDriver()) {
             Configuration.remote = String.format("https://%s:%s@%s/wd/hub",

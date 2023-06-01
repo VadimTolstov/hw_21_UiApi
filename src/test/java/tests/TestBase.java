@@ -1,11 +1,8 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.Project;
-import drivers.BrowserstackAndroidDriver;
-import drivers.LocalAndroidDriver;
 import drivers.WebDriverProvider;
 import helpers.Attachments;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -27,12 +24,6 @@ public class TestBase {
             case "local":
             case "remote":
                 WebDriverProvider.configure();
-                break;
-            case "android_browserstack":
-                Configuration.browser = BrowserstackAndroidDriver.class.getName();
-                break;
-            case "android_emulator":
-                Configuration.browser = LocalAndroidDriver.class.getName();
                 break;
         }
     }
@@ -61,13 +52,6 @@ public class TestBase {
             case "local":
                 Attachments.screenshotAs("Last screenshot");
                 Attachments.browserConsoleLogs();
-                break;
-            case "android_browserstack":
-                Attachments.videoBrowserstack(sessionId);
-                Attachments.browserstackFullInfoLink(sessionId);
-                break;
-            case "android_emulator":
-                Attachments.screenshotAs("Last screenshot");
                 break;
         }
     }

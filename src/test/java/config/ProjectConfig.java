@@ -26,27 +26,4 @@ public interface ProjectConfig extends Config {
 
 
     String platform();
-
-    @Key("browserstack.user")
-    String browserstackUser();
-
-    @Key("browserstack.key")
-    String browserstackKey();
-
-    @Key("deviceName")
-    String getDeviceName();
-
-    @Key("platformVersion")
-    String getPlatformVersion();
-
-    @Key("app")
-    String app();
-
-    @Key("base_url")
-    @DefaultValue("https://api.browserstack.com/app-automate/sessions/%s.json")
-    String getSessionsUrl();
-    @Key("deviceName")
-    String deviceName();
-    @Key("platformVersion")
-    String platformVersion();
 }

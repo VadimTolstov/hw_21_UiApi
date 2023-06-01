@@ -18,8 +18,6 @@ public class Auth {
         validateProperty(config.apiToken(), "apiToken");
         validateProperty(config.userNameSelenoid(), "userNameSelenoid");
         validateProperty(config.passwordSelenoid(), "passwordSelenoid");
-        validateProperty(config.steamName(), "steamName");
-        validateProperty(config.steamPassword(), "steamPassword");
         logger.info(config.toString());
     }
 

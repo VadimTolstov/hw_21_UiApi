@@ -4,7 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="LocalAndroidDriver" />
+    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="LocalAndroidDriver">
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/config/Auth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/config/Auth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/config/AuthConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/config/AuthConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/config/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/config/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/config/ProjectConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/config/ProjectConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/drivers/BrowserstackAndroidDriver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/drivers/LocalAndroidDriver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/drivers/WebDriverProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/drivers/WebDriverProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/helpers/Android.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/helpers/Attachments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/helpers/Attachments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/helpers/Browserstack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/helpers/PhoneManagerHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/TestBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/TestBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/steam/MobilSteamTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/config/android_browserstack.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/config/android_emulator.properties" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -251,8 +269,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.SearchTests.successfulSearchTest" />
         <item itemvalue="Gradle.hw_21_UiApi [allureServe]" />
+        <item itemvalue="Gradle.SearchTests.successfulSearchTest" />
         <item itemvalue="Gradle.ApiTestCaseTests.updateTestCaseStepsTest2" />
         <item itemvalue="Gradle.ApiTestCaseTests.updateTestCaseStepsTest" />
         <item itemvalue="Gradle.ApiTestCaseTests.descriptionTestCase" />
@@ -267,13 +285,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682955498221</updated>
-    </task>
-    <task id="LOCAL-00031" summary="v 0.91">
-      <created>1684652432571</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1684652432571</updated>
     </task>
     <task id="LOCAL-00032" summary="v 0.91">
       <created>1684653705353</created>
@@ -611,7 +622,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685532431058</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="LocalAndroidDriver">
+      <created>1685596259083</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1685596259083</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

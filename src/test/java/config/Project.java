@@ -10,7 +10,7 @@ public class Project {
 
     public static ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
 
-    private static final Logger logger = LoggerFactory.getLogger(Project.class);//todo
+    private static final Logger logger = LoggerFactory.getLogger(Project.class);  // todo
 
     static {
         validateEnvDependentProperties();
@@ -25,15 +25,6 @@ public class Project {
                 break;
             case "remote":
                 Auth.validateProperty(config.remoteDriverUrl(), "remoteDriverUrl");
-                break;
-            case "android_browserstack":
-                Auth.validateProperty(config.browserstackUser(), "browserstack.user");
-                Auth.validateProperty(config.browserstackKey(), "browserstack.key");
-                break;
-            case "android_emulator":
-                Auth.validateProperty(config.remoteDriverUrl(), "remoteDriver");
-                Auth.validateProperty(config.deviceName(), "deviceName");
-                Auth.validateProperty(config.platformVersion(), "platformVersion");
                 break;
             default:
                 throw new IllegalStateException("Неправильное значение в 'platform' " + config);
