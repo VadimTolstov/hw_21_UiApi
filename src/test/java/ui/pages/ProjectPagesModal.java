@@ -19,7 +19,7 @@ public class ProjectPagesModal {
     @Step("Удаляем проект")
     public void deleteProject() {
         $("[aria-label=Settings]").click();
-        $(byText("Delete project")).click();
+        $(byText("Delete project")).shouldHave(visible).click();
         $x("//button[contains(@class, 'ProjectSettings__confirm-button')]//span").click();
 
     }
