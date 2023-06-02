@@ -55,7 +55,7 @@ public class TestCasePagesModal {
         return this;
     }
 
-    @Step("Открываем test case {}")
+    @Step("Открываем test case {nameTestCase}")
     public TestCasePagesModal openTestCase(String nameTestCase) {
         $(byText(nameTestCase)).click();
         return this;

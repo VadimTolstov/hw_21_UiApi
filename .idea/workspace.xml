@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="tag">
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/AuthorizationUi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/AuthorizationUi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/ProjectPagesModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/ProjectPagesModal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/ProjectsPagesModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/ProjectsPagesModal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +61,7 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/feature17" />
+    <option name="BRANCH" value="origin/master" />
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -269,13 +273,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682955498221</updated>
-    </task>
-    <task id="LOCAL-00034" summary="v 0.92">
-      <created>1684655902215</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1684655902215</updated>
     </task>
     <task id="LOCAL-00035" summary="v 0.92">
       <created>1684656052447</created>
@@ -613,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685640245867</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="select">
+      <created>1685708080695</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1685708080695</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

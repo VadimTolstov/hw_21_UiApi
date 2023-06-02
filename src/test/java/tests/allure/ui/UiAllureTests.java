@@ -7,10 +7,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -148,9 +145,8 @@ public class UiAllureTests extends UiTestBase {
     }
 
     @CsvFileSource(resources = "/attachment.csv", delimiter = '|')
-
     @ParameterizedTest(name = "Добовление attachment {0} в test case")
-    @DisplayName("")
+    @DisplayName("-")
     @Epic("WEB")
     @Owner("толстов вадим")
     @Regress
