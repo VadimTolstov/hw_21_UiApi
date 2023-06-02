@@ -60,6 +60,25 @@ public class UiAllureTests extends UiTestBase {
     @Test
     @Epic("WEB")
     @Owner("толстов вадим")
+    @Regress
+    @Web
+    @DisplayName("Изменяем имя test case")
+    public void renameTestCase() {
+        String nameTestCase = dataGenerator.getRandomSentence(1);
+        String newNameTestCase = dataGenerator.getRandomSentence(1);
+
+        testCasePages
+                .openTestCasesPages()
+                .createTestCase(nameTestCase)
+                .verifyTestCaseName(nameTestCase)
+                .renameTestCase(newNameTestCase);
+        Selenide.sleep(5000);
+    }
+
+
+    @Test
+    @Epic("WEB")
+    @Owner("толстов вадим")
     @Severity(SeverityLevel.CRITICAL)
     @Regress
     @Web

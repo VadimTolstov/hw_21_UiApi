@@ -82,6 +82,18 @@ public class TestCasePagesModal {
         return this;
     }
 
+    @Step("Изменяем имя test case")
+    public TestCasePagesModal renameTestCase(String newNameTestCase) {
+        $(".LeafStatus").hover();
+        $(".LoadableTreeNodeView__controls").shouldHave(visible).click();
+        $(".Form_inline").click();
+        $(".AutosizeTextarea").setValue(newNameTestCase);
+        $("[type='submit']").click();
+        return this;
+    }
+
+   @Step("Проверяем, что имя тест кейса изменилось")
+
 
     @Step("Проверяем имя {testCaseName} у test case")
     public TestCasePagesModal verifyNameTestCase(String testCaseName) {
@@ -106,12 +118,6 @@ public class TestCasePagesModal {
         testCaseCommentInput.shouldHave(text(comment)).shouldHave(visible);
         return this;
     }
-
-//    @Step("Проверяем, что шаг {step} добавлен в test case")
-//    public TestCasePagesModal verifyStepsTestCase(String step) {
-//        $x("//pre[text()='" + step + "']").shouldHave(text(step)).shouldHave(visible);
-//        return this;
-//    }
 
     @Step("Проверяем, что test case {nameTestCase} создался")
     public TestCasePagesModal verifyTestCaseName(String nameTestCase) {
