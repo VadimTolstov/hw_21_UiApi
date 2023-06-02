@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="tag">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/attachment.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/hqdefault.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/maxresdefault.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" afterDir="false" />
     </list>
@@ -103,27 +106,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/program/IntelliJIDEA/Proect/QA_Test_demo&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "TODO_SCOPE": "All Places",
+    "last_opened_file_path": "D:/program/IntelliJIDEA/Proect/hw_21_UiApi/src/test/resources",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources\config" />
       <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources" />
+      <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources\config" />
       <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources\config" />
       <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources" />
+      <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources\config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="drivers" />
@@ -133,31 +136,7 @@
       <recent name="api.models" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.UiAllureTests.renameTestCase">
-    <configuration name="ApiTestCaseTests.updateTestCaseStepsTest2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;tests.ApiTestCaseTests.updateTestCaseStepsTest2&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.hw_21_UiApi [allureServe]">
     <configuration name="SearchTests.successfulSearchTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -172,6 +151,30 @@
             <option value=":android_test" />
             <option value="--tests" />
             <option value="&quot;tests.steam.SearchTests.successfulSearchTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="UiAllureTests.createAttachmentTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;tests.allure.ui.UiAllureTests.createAttachmentTestCase&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -254,11 +257,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.UiAllureTests.renameTestCase" />
         <item itemvalue="Gradle.hw_21_UiApi [allureServe]" />
+        <item itemvalue="Gradle.UiAllureTests.createAttachmentTestCase" />
+        <item itemvalue="Gradle.UiAllureTests.renameTestCase" />
         <item itemvalue="Gradle.UiAllureTests.createTagTestCase" />
         <item itemvalue="Gradle.SearchTests.successfulSearchTest" />
-        <item itemvalue="Gradle.ApiTestCaseTests.updateTestCaseStepsTest2" />
       </list>
     </recent_temporary>
   </component>

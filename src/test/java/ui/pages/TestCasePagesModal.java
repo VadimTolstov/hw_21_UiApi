@@ -82,17 +82,40 @@ public class TestCasePagesModal {
         return this;
     }
 
-    @Step("Изменяем имя test case")
+    @Step("Изменяем имя у test case")
     public TestCasePagesModal renameTestCase(String newNameTestCase) {
         $(".LeafStatus").hover();
         $(".LoadableTreeNodeView__controls").shouldHave(visible).click();
         $(".Form_inline").click();
         $(".AutosizeTextarea").setValue(newNameTestCase);
         $("[type='submit']").click();
+        Selenide.refresh();
         return this;
     }
 
-   @Step("Проверяем, что имя тест кейса изменилось")
+    @Step("Открываем вкладку attachments")
+    public TestCasePagesModal openAttachmentTestCase() {
+        $(byText("Attachments")).click();
+        return this;
+    }
+
+    @Step("Загружаем файл {filePath}")
+    public TestCasePagesModal setUploadAttachments(String filePath) {
+        $("input[type='file']").uploadFromClasspath(filePath);
+        return this;
+    }
+
+    @Step("Проверяем, что attachment {attachment} добавлен")
+    public TestCasePagesModal verifyAddAttachment(String attachment) {
+        $(".AttachmentRow__name").shouldHave(text(attachment)).shouldHave(visible);
+        return this;
+    }
+
+    @Step("Проверяем, что у test case {name}{newName} изменилось имя")
+    public TestCasePagesModal verifyNewNameTestCase(String name, String newName) {
+        testCaseInput.shouldHave(text(name + newName)).shouldHave(visible);
+        return this;
+    }
 
 
     @Step("Проверяем имя {testCaseName} у test case")

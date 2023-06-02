@@ -11,6 +11,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("Ui tests Allure")
 @Epic("UI")
@@ -62,7 +65,7 @@ public class UiAllureTests extends UiTestBase {
     @Owner("толстов вадим")
     @Regress
     @Web
-    @DisplayName("Изменяем имя test case")
+    @DisplayName("Изменяем имя у test case")
     public void renameTestCase() {
         String nameTestCase = dataGenerator.getRandomSentence(1);
         String newNameTestCase = dataGenerator.getRandomSentence(1);
@@ -71,10 +74,9 @@ public class UiAllureTests extends UiTestBase {
                 .openTestCasesPages()
                 .createTestCase(nameTestCase)
                 .verifyTestCaseName(nameTestCase)
-                .renameTestCase(newNameTestCase);
-        Selenide.sleep(5000);
+                .renameTestCase(newNameTestCase)
+                .verifyNewNameTestCase(nameTestCase, newNameTestCase);
     }
-
 
     @Test
     @Epic("WEB")
@@ -143,5 +145,26 @@ public class UiAllureTests extends UiTestBase {
                 .saveDataTestCase()
                 .verifyTagTestCase(tag1Name)
                 .verifyTagTestCase(tag2Name);
+    }
+
+    @CsvFileSource(resources = "/attachment.csv", delimiter = '|')
+
+    @ParameterizedTest(name = "Добовление attachment {0} в test case")
+    @DisplayName("")
+    @Epic("WEB")
+    @Owner("толстов вадим")
+    @Regress
+    @Web
+    public void createAttachmentTestCase(String attachments) {
+        String nameTestCase = dataGenerator.getRandomSentence(3);
+
+        testCasePages
+                .openTestCasesPages()
+                .createTestCase(nameTestCase)
+                .openTestCase(nameTestCase)
+                .openAttachmentTestCase()
+                .setUploadAttachments(attachments)
+                .saveDataTestCase()
+                .verifyAddAttachment(attachments);
     }
 }
