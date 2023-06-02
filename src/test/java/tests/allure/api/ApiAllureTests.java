@@ -154,8 +154,8 @@ public class ApiAllureTests extends ApiTestBase {
 
         step("Проверяем через ui, что tag добавлен в test case ", () -> {
             testCasePages.openPageTestCase(PROJECT_ID, testCaseId);
-            testCasePages.verifyAddendumTagTestCase(tag1Name)
-                    .verifyAddendumTagTestCase(tag2Name);
+            testCasePages.verifyTagTestCase(tag1Name)
+                    .verifyTagTestCase(tag2Name);
         });
     }
 

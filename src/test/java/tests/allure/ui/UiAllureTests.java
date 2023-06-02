@@ -121,7 +121,8 @@ public class UiAllureTests extends UiTestBase {
                 .openTagTestCase()
                 .createTagTestCase(tag1Name)
                 .createTagTestCase(tag2Name)
-                .saveDataTestCase();
-        Selenide.sleep(6000);
+                .saveDataTestCase()
+                .verifyTagTestCase(tag1Name)
+                .verifyTagTestCase(tag2Name);
     }
 }

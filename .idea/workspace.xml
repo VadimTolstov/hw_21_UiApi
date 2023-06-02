@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="no mobile">
-      <change afterPath="$PROJECT_DIR$/src/test/java/helpers/Web.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/data/DataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/data/DataGenerator.java" afterDir="false" />
+    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="tag">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiAllureTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiTestBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiTestBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +110,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;TODO_SCOPE&quot;: &quot;All Places&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/program/IntelliJIDEA/Proect/hw_21_UiApi/src/test/resources/config&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/program/IntelliJIDEA/Proect/QA_Test_demo&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -137,31 +135,7 @@
       <recent name="api.models" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.hw_21_UiApi [allureServe]">
-    <configuration name="ApiTestCaseTests.descriptionTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;tests.ApiTestCaseTests.descriptionTestCase&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.UiAllureTests.createTagTestCase">
     <configuration name="ApiTestCaseTests.updateTestCaseStepsTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -234,6 +208,30 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="UiAllureTests.createTagTestCase" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;tests.allure.ui.UiAllureTests.createTagTestCase&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="hw_21_UiApi [allureServe]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -258,11 +256,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.UiAllureTests.createTagTestCase" />
         <item itemvalue="Gradle.hw_21_UiApi [allureServe]" />
         <item itemvalue="Gradle.SearchTests.successfulSearchTest" />
         <item itemvalue="Gradle.ApiTestCaseTests.updateTestCaseStepsTest2" />
         <item itemvalue="Gradle.ApiTestCaseTests.updateTestCaseStepsTest" />
-        <item itemvalue="Gradle.ApiTestCaseTests.descriptionTestCase" />
       </list>
     </recent_temporary>
   </component>
@@ -274,13 +272,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682955498221</updated>
-    </task>
-    <task id="LOCAL-00033" summary="v 0.91">
-      <created>1684653756698</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1684653756698</updated>
     </task>
     <task id="LOCAL-00034" summary="v 0.92">
       <created>1684655902215</created>
@@ -618,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685599745347</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="tag">
+      <created>1685640245867</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1685640245867</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -657,6 +655,7 @@
     <MESSAGE value="v 0.94" />
     <MESSAGE value="LocalAndroidDriver" />
     <MESSAGE value="no mobile" />
-    <option name="LAST_COMMIT_MESSAGE" value="no mobile" />
+    <MESSAGE value="tag" />
+    <option name="LAST_COMMIT_MESSAGE" value="tag" />
   </component>
 </project>
