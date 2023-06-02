@@ -5,6 +5,8 @@ import helpers.Regress;
 import helpers.Web;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,6 +60,7 @@ public class UiAllureTests extends UiTestBase {
     @Test
     @Epic("WEB")
     @Owner("толстов вадим")
+    @Severity(SeverityLevel.CRITICAL)
     @Regress
     @Web
     @DisplayName("Добавляем шаги в test case")
@@ -109,14 +112,17 @@ public class UiAllureTests extends UiTestBase {
     public void createTagTestCase() {
         String nameTestCase = dataGenerator.getRandomSentence(3);
         String tag1Name = dataGenerator.getRandomSentence(1);
-        String tag2Name = dataGenerator.getRandomSentence(2);
+        String tag2Name = dataGenerator.getRandomSentence(1);
 
         testCasePages
                 .openTestCasesPages()
                 .createTestCase(nameTestCase)
                 .openTestCase(nameTestCase)
-                .openTagTestCase();
-        Selenide.sleep(6000);
-
+                .openTagTestCase()
+                .createTagTestCase(tag1Name)
+                .createTagTestCase(tag2Name)
+                .saveDataTestCase()
+                .verifyTagTestCase(tag1Name)
+                .verifyTagTestCase(tag2Name);
     }
 }

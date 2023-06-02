@@ -70,15 +70,18 @@ public class TestCasePagesModal {
     }
 
     @Step("Открываем tag в test case")
-    public TestCasePagesModal openTagTestCase(){
+    public TestCasePagesModal openTagTestCase() {
         $x("//section[@data-testid='section__tags']//button").click();
         return this;
     }
 
     @Step("Добовляем tag {tag} в test case")
-    public TestCasePagesModal createTagTestCase(String tag){
+    public TestCasePagesModal createTagTestCase(String tag) {
+        $x("//label[@class='FormLabel ']").sendKeys(tag);
+        $(byText("Create \"" + tag + "\"")).shouldHave(visible).click();
         return this;
     }
+
 
     @Step("Проверяем имя {testCaseName} у test case")
     public TestCasePagesModal verifyNameTestCase(String testCaseName) {
@@ -93,7 +96,7 @@ public class TestCasePagesModal {
     }
 
     @Step("Проверяем, что tag {tagName} добавлен в test case")
-    public TestCasePagesModal verifyAddendumTagTestCase(String tagName) {
+    public TestCasePagesModal verifyTagTestCase(String tagName) {
         testCaseTagInput.shouldHave(text(tagName)).shouldHave(visible);
         return this;
     }
@@ -113,13 +116,13 @@ public class TestCasePagesModal {
     @Step("Проверяем, что test case {nameTestCase} создался")
     public TestCasePagesModal verifyTestCaseName(String nameTestCase) {
         $(byText(nameTestCase)).click();
-        testCaseInput.shouldHave(visible).shouldHave(text(nameTestCase));
+        testCaseInput.shouldHave(text(nameTestCase)).shouldHave(visible);
         return this;
     }
 
     @Step("Проверяем, что step {step} добавлен в test case")
     public TestCasePagesModal verifyStepTestCase(String step) {
-        $("[data-testid='section__scenario']").shouldHave(visible).shouldHave(text(step));
+        $("[data-testid='section__scenario']").shouldHave(text(step)).shouldHave(visible);
         return this;
     }
 }

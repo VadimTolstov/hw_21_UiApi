@@ -23,7 +23,6 @@ public interface ProjectConfig extends Config {
     @Key("baseUrl")
     @DefaultValue("https://allure.autotests.cloud")
     String baseUrl();
-
-
+@DefaultValue("local")
     String platform();
 }

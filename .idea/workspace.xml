@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="no mobile" />
+    <list default="true" id="aaaf1bfd-b1ba-4d5d-b686-deb8a95a371b" name="Changes" comment="tag">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/api/ApiAllureTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/allure/ui/UiAllureTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ui/pages/TestCasePagesModal.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +60,7 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="feature-01" />
+    <option name="BRANCH" value="origin/feature17" />
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -73,7 +78,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature-01" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -123,8 +128,8 @@
       <recent name="D:\program\IntelliJIDEA\Proect\hw_21_UiApi\src\test\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="helpers" />
       <recent name="drivers" />
+      <recent name="helpers" />
       <recent name="tests" />
       <recent name="tests.ui" />
       <recent name="api.models" />
@@ -650,6 +655,7 @@
     <MESSAGE value="v 0.94" />
     <MESSAGE value="LocalAndroidDriver" />
     <MESSAGE value="no mobile" />
-    <option name="LAST_COMMIT_MESSAGE" value="no mobile" />
+    <MESSAGE value="tag" />
+    <option name="LAST_COMMIT_MESSAGE" value="tag" />
   </component>
 </project>
