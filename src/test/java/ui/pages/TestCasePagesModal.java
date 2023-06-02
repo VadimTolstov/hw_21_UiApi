@@ -18,7 +18,24 @@ public class TestCasePagesModal {
             testCaseInput = $(".TestCaseLayout__name"),
             testCaseDescriptionInput = $("[data-testid='section__description']"),
             testCaseTagInput = $("[data-testid='section__tags']"),
-            testCaseCommentInput = $(".Comment__body");
+            testCaseCommentInput = $(".Comment__body"),
+            createTestCaseInput = $("[data-testid='input__create_test_case']"),
+            openTestCasesPagesInput = $("[name='test-cases-icon']"),
+            openStepTestCaseInput = $x("//div[@class='ScenarioSection__name']/../..//div[@class='PaneSection__controls']"),
+            createStepTestCaseInput = $(".TestCaseScenarioStepEdit__textarea"),
+            createDescriptionTestCaseInput = $x("//section[@data-testid='section__description']/../..//div[@class='PaneSection__controls']"),
+            createDescriptionTestCase = $("[name='description']"),
+            openTagTestCaseInput = $x("//section[@data-testid='section__tags']//button"),
+            createTagTestCase = $x("//label[@class='FormLabel ']"),
+            leafStatusInout = $(".LeafStatus"),
+            openRenameTestCaseInput = $(".LoadableTreeNodeView__controls"),
+            clickFormRename = $(".Form_inline"),
+            renameTestCaseInput = $(".AutosizeTextarea"),
+            saveRenameTestCaseInput = $("[type='submit']"),
+            openAttachmentTestCaseInput = $(byText("Attachments")),
+            setUploadAttachmentsInput = $("input[type='file']"),
+            verifyAddAttachmentInput = $(".AttachmentRow__name"),
+            verifyStepTestCaseInput = $("[data-testid='section__scenario']");
 
     @Step("Открываем страницу проекта {projectId} с test case {testCaseId}")
     public TestCasePagesModal openPageTestCase(Long projectId, Long testCaseId) {
@@ -28,13 +45,13 @@ public class TestCasePagesModal {
 
     @Step("Открываем страницу с test cases")
     public TestCasePagesModal openTestCasesPages() {
-        $("[name='test-cases-icon']").click();
+        openTestCasesPagesInput.click();
         return this;
     }
 
     @Step("Создаем test case {name}")
     public TestCasePagesModal createTestCase(String name) {
-        $("[data-testid='input__create_test_case']").setValue(name).pressEnter();
+        createTestCaseInput.setValue(name).pressEnter();
         return this;
     }
 
@@ -46,13 +63,13 @@ public class TestCasePagesModal {
 
     @Step("Открываем step в test case")
     public TestCasePagesModal openStepTestCase() {
-        $x("//div[@class='ScenarioSection__name']/../..//div[@class='PaneSection__controls']").click();
+        openStepTestCaseInput.click();
         return this;
     }
 
     @Step("Добовляем step {step} в test case")
     public TestCasePagesModal createStepTestCase(String step) {
-        $(".TestCaseScenarioStepEdit__textarea").setValue(step).pressEnter();
+        createStepTestCaseInput.setValue(step).pressEnter();
         return this;
     }
 
@@ -64,50 +81,50 @@ public class TestCasePagesModal {
 
     @Step("Добовляем description {description} в test case")
     public TestCasePagesModal createDescriptionTestCase(String description) {
-        $x("//section[@data-testid='section__description']/../..//div[@class='PaneSection__controls']").click();
-        $("[name='description']").setValue(description);
+        createDescriptionTestCaseInput.click();
+        createDescriptionTestCase.setValue(description);
         return this;
     }
 
     @Step("Открываем tag в test case")
     public TestCasePagesModal openTagTestCase() {
-        $x("//section[@data-testid='section__tags']//button").click();
+        openTagTestCaseInput.click();
         return this;
     }
 
     @Step("Добовляем tag {tag} в test case")
     public TestCasePagesModal createTagTestCase(String tag) {
-        $x("//label[@class='FormLabel ']").sendKeys(tag);
+        createTagTestCase.sendKeys(tag);
         $(byText("Create \"" + tag + "\"")).shouldHave(visible).click();
         return this;
     }
 
     @Step("Изменяем имя у test case")
     public TestCasePagesModal renameTestCase(String newNameTestCase) {
-        $(".LeafStatus").hover();
-        $(".LoadableTreeNodeView__controls").shouldHave(visible).click();
-        $(".Form_inline").click();
-        $(".AutosizeTextarea").setValue(newNameTestCase);
-        $("[type='submit']").click();
+        leafStatusInout.hover();
+        openRenameTestCaseInput.shouldHave(visible).click();
+        clickFormRename.click();
+        renameTestCaseInput.setValue(newNameTestCase);
+        saveRenameTestCaseInput.click();
         Selenide.refresh();
         return this;
     }
 
     @Step("Открываем вкладку attachments")
     public TestCasePagesModal openAttachmentTestCase() {
-        $(byText("Attachments")).click();
+        openAttachmentTestCaseInput.click();
         return this;
     }
 
     @Step("Загружаем файл {filePath}")
     public TestCasePagesModal setUploadAttachments(String filePath) {
-        $("input[type='file']").uploadFromClasspath(filePath);
+        setUploadAttachmentsInput.uploadFromClasspath(filePath);
         return this;
     }
 
     @Step("Проверяем, что attachment {attachment} добавлен")
     public TestCasePagesModal verifyAddAttachment(String attachment) {
-        $(".AttachmentRow__name").shouldHave(text(attachment)).shouldHave(visible);
+        verifyAddAttachmentInput.shouldHave(text(attachment)).shouldHave(visible);
         return this;
     }
 
@@ -151,7 +168,7 @@ public class TestCasePagesModal {
 
     @Step("Проверяем, что step {step} добавлен в test case")
     public TestCasePagesModal verifyStepTestCase(String step) {
-        $("[data-testid='section__scenario']").shouldHave(text(step)).shouldHave(visible);
+        verifyStepTestCaseInput.shouldHave(text(step)).shouldHave(visible);
         return this;
     }
 }
